@@ -1,0 +1,19 @@
+这个库提供了查找指定类型文件的功能（后台服务形式检索本地存储）
+获取检索结果提供了2种方式
+1、  public void getMediaList(int fileModel, Context context)
+     查找结果放于MediaStoreUtil相应的字段内；
+     MediaStoreUtil提供了数据改变监听解决办法，通过观察者模式向所有注册了MediaStoreListener的对象发送数据改变结果，
+     添加数据监听
+     public static void setListener(MediaStoreListener listener)
+     移除数据监听
+     public static void removeListener(int index)
+     public static void removeListener(MediaStoreListener listener)
+
+2、  public void getMediaList(int searchId, Handler handler)
+     查找结果交给handler处理
+     Message message = new Message();
+     message.what = GetListCallbak.SUCCESS;
+     message.obj = list;
+     handler.sendMessage(message);
+
+使用方法：开启服务根据需要调用服务的相应public方法
