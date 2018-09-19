@@ -85,7 +85,7 @@ public class FolderPickerConfig {
 
         private static FolderPickerConfig folderPickerConfig;
 
-        private ImageLoader imageLoader = new GlideImageLoader().placeholder(R.mipmap.ic_launcher);
+        private ImageLoader imageLoader = new GlideImageLoader().placeholder(R.mipmap.repository_folder_ico);
         private IHandlerCallBack iHandlerCallBack = new HandlerCallBack();
 
         private boolean multiSelect = true;

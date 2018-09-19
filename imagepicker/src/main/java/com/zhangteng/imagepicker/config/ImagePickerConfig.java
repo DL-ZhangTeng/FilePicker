@@ -101,7 +101,7 @@ public class ImagePickerConfig {
 
         private static ImagePickerConfig imagePickerConfig;
 
-        private ImageLoader imageLoader = new GlideImageLoader().placeholder(R.mipmap.ic_launcher);
+        private ImageLoader imageLoader = new GlideImageLoader().placeholder(R.mipmap.repository_picture_ico);
         private IHandlerCallBack iHandlerCallBack = new HandlerCallBack();
 
         private boolean multiSelect = true;

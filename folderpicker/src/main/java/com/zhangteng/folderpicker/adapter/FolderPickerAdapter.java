@@ -54,7 +54,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ((ImageViewHolder) holder).name.getLayoutParams();
             layoutParams.setMargins(0, DensityUtils.dp2px(((ImageViewHolder) holder).name.getContext(), 40), 0, 0);
             ((ImageViewHolder) holder).name.setLayoutParams(layoutParams);
-            ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.ic_launcher);
+            ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_folder_ico);
             ((ImageViewHolder) holder).time.setVisibility(View.GONE);
             ((ImageViewHolder) holder).size.setVisibility(View.GONE);
             ((ImageViewHolder) holder).checkBox.setVisibility(View.GONE);
@@ -79,7 +79,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case MediaEntity.MEDIA_ZIP:
                 initView(holder, folderInfo);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.ic_launcher);
+                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_zipfile_ico);
                 break;
             case MediaEntity.MEDIA_PDF:
             case MediaEntity.MEDIA_DOC:
@@ -89,32 +89,32 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case MediaEntity.MEDIA_DOCUMENT:
                 initView(holder, folderInfo);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.ic_launcher);
+                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_manuscripts_ico);
                 break;
             case MediaEntity.MEDIA_AUDIO:
                 initView(holder, folderInfo);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.ic_launcher);
+                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_audio_ico);
                 break;
             case MediaEntity.MEDIA_IMAGE:
                 initView(holder, folderInfo);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.ic_launcher);
+                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_picture_ico);
                 break;
             case MediaEntity.MEDIA_VIDEO:
                 initView(holder, folderInfo);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.ic_launcher);
+                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_video_ico);
                 break;
             case MediaEntity.MEDIA_FOLDER:
                 initView(holder, null);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.ic_launcher);
+                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_folder_ico);
                 break;
             case MediaEntity.MEDIA_UNKNOWN:
                 initView(holder, null);
                 initClick(((ImageViewHolder) holder).itemView, null);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.ic_launcher);
+                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_unknown_ico);
                 break;
             default:
                 initView(holder, null);

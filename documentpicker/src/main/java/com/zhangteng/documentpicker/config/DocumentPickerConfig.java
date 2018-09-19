@@ -85,7 +85,7 @@ public class DocumentPickerConfig {
 
         private static DocumentPickerConfig documentPickerConfig;
 
-        private ImageLoader imageLoader = new GlideImageLoader().placeholder(R.mipmap.ic_launcher);
+        private ImageLoader imageLoader = new GlideImageLoader().placeholder(R.mipmap.repository_manuscripts_ico);
         private IHandlerCallBack iHandlerCallBack = new HandlerCallBack();
 
         private boolean multiSelect = true;

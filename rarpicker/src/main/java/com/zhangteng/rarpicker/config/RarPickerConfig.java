@@ -85,7 +85,7 @@ public class RarPickerConfig {
 
         private static RarPickerConfig rarPickerConfig;
 
-        private ImageLoader imageLoader = new GlideImageLoader().placeholder(R.mipmap.ic_launcher);
+        private ImageLoader imageLoader = new GlideImageLoader().placeholder(R.mipmap.repository_zipfile_ico);
         private IHandlerCallBack iHandlerCallBack = new HandlerCallBack();
 
         private boolean multiSelect = true;

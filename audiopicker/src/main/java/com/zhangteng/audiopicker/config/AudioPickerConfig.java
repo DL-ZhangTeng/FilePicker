@@ -101,7 +101,7 @@ public class AudioPickerConfig {
 
         private static AudioPickerConfig audioPickerConfig;
 
-        private ImageLoader imageLoader = new GlideImageLoader().placeholder(R.mipmap.ic_launcher);
+        private ImageLoader imageLoader = new GlideImageLoader().placeholder(R.mipmap.repository_audio_ico);
         private IHandlerCallBack iHandlerCallBack = new HandlerCallBack();
 
         private boolean multiSelect = true;
