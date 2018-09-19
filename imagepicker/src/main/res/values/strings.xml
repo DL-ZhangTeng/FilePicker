@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ImagePicker</string>
+
+    <string name="image_picker_selected">%d 个图片已选择</string>
+    <string name="image_picker_shoot">拍摄照片</string>
+    <string name="image_picker_folder_name">文件夹名</string>
+    <string name="image_picker_photo_num">%d 张</string>
+
 </resources>

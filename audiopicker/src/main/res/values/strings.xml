@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AudioPicker</string>
+
+    <string name="audio_picker_selected">%d 个音频已选择</string>
+    <string name="audio_picker_shoot">录制音频</string>
+    <string name="audio_picker_folder_name">文件夹名</string>
+    <string name="audio_picker_audio_num">%d 首</string>
+    <string name="audio_picker_audio_size">%d KB</string>
 </resources>

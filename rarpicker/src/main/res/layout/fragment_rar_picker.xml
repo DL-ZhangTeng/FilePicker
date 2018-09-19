@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.RarPickerFragment">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rar_picker_rv_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/picker_background"
+        app:layout_constraintBottom_toTopOf="@id/rar_picker_rv_title"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/rar_picker_rv_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tabbar_height"
+        android:background="@color/picker_blue"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/rar_picker_tv_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/tabbar_height"
+            android:gravity="center"
+            android:text="预览"
+            android:textColor="@color/picker_white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/rar_picker_tv_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="0个视频被选择"
+            android:textColor="@color/picker_white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/rar_picker_tv_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="上传"
+            android:textColor="@color/picker_white"
+            android:textSize="18sp" />
+
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

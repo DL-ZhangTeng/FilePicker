@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">DocumentPicker</string>
+
+    <string name="document_picker_selected">%d 个文档已选择</string>
+    <string name="document_picker_folder_name">文件夹名</string>
+    <string name="document_picker_document_num">%d 个</string>
+    <string name="document_picker_document_size">%d KB</string>
+
 </resources>

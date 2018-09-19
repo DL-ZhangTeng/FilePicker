@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">RarPicker</string>
+
+    <string name="rar_picker_selected">%d 个文件已选择</string>
+    <string name="rar_picker_folder_name">文件夹名</string>
+    <string name="rar_picker_rar_num">%d 个</string>
+    <string name="rar_picker_rar_size">%d KB</string>
+
 </resources>

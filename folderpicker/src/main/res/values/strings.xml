@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FolderPicker</string>
+
+    <string name="folder_picker_selected">%d 个文件已选择</string>
+    <string name="folder_picker_folder_name">文件夹名</string>
+    <string name="folder_picker_folder_num">%d 个</string>
+    <string name="folder_picker_folder_size">%d KB</string>
+
 </resources>

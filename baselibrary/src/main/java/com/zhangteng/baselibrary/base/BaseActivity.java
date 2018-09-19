@@ -65,13 +65,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void buttonClick(View v) {
-        switch (v.getId()) {
-            case R.id.titlebar_left_back:
-                goBack();
-                break;
-            default:
-                localButtonClick(v);
-                break;
+        int i = v.getId();
+        if (i == R.id.titlebar_left_back) {
+            goBack();
+        } else {
+            localButtonClick(v);
         }
     }
 

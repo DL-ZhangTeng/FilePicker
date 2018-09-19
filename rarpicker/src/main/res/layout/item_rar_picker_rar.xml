@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/rar_picker_iv_rar_image"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:layout_margin="10dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/rar_picker_tv_rar_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/rar_picker_iv_rar_image"
+            android:hint="@string/rar_picker_folder_name"
+            android:textColor="@color/picker_text_black"
+            android:textColorHint="@color/picker_text_black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/rar_picker_tv_rar_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rar_picker_tv_rar_name"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/rar_picker_iv_rar_image"
+            android:hint="@string/rar_picker_rar_num"
+            android:textColor="@color/picker_text_gray"
+            android:textColorHint="@color/picker_text_gray"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/rar_picker_tv_rar_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rar_picker_tv_rar_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/rar_picker_tv_rar_time"
+            android:hint="@string/rar_picker_rar_num"
+            android:textColor="@color/picker_text_gray"
+            android:textColorHint="@color/picker_text_gray"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/rar_picker_iv_rar_image"
+            android:background="@color/picker_separation" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/rar_picker_v_photo_mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0.5dp"
+        android:background="@color/picker_photo_mask"
+        android:scaleType="centerInside"
+        android:visibility="visible" />
+
+    <CheckBox
+        android:id="@+id/rar_picker_cb_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:button="@mipmap/picker_select_unchecked"
+        android:clickable="false"
+        android:contentDescription="@null" />
+
+
+</FrameLayout>
