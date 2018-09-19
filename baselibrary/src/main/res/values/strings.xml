@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BaseLibrary</string>
+
+    <string name="hello_base_fragment">hello_base_fragment</string>
+</resources>
