@@ -20,21 +20,12 @@ public class AudioEntity implements MediaEntity {
     public AudioEntity() {
     }
 
-    public AudioEntity(String fileName, String filePath, long updateTime, int type) {
-        this.fileName = fileName;
-        this.filePath = filePath;
-        this.type = type;
-        this.updateTime = updateTime;
-    }
-
-    public AudioEntity(String fileName, String filePath, long fileLength, int type, int time, String album, String artist) {
+    public AudioEntity(String fileName, String filePath, long fileLength, int type, long updateTime) {
         this.fileName = fileName;
         this.filePath = filePath;
         this.fileLength = fileLength;
         this.type = type;
-        this.time = time;
-        this.album = album;
-        this.artist = artist;
+        this.updateTime = updateTime;
     }
 
     public AudioEntity(String fileName, String filePath, long fileLength, int type, int time, String artist, String album, long updateTime) {

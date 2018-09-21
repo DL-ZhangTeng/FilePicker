@@ -160,6 +160,9 @@ public class AudioPickerFragment extends BaseFragment {
                 for (MediaEntity audioEntity : audios) {
                     imageInfos.add((AudioEntity) audioEntity);
                 }
+                if (getActivity() == null) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

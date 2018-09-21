@@ -91,8 +91,9 @@ public class ApkRunnable implements Runnable {
                                 String fPath = f.getAbsolutePath();
                                 long fileLength = f.length();
                                 int fileType = MathFile(fileName);
+                                long updateTime = f.lastModified();
                                 if (fileLength > 10) {
-                                    MediaEntity entity = new RarEntity(fileName, fPath, fileLength, fileType);
+                                    MediaEntity entity = new RarEntity(fileName, fPath, fileLength, fileType, updateTime);
                                     Log.i("ApkRunnable", "====检索的文件的====" + entity.toString());
                                     file_lists.add(entity);
                                 }

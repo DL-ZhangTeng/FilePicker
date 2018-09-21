@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         myTabLayout = findViewById(R.id.mytablayout);
         viewPager = findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(6);
         mainAdapter = new MainAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mainAdapter);
         myTabLayout.setupWithViewPager(viewPager);

@@ -148,7 +148,9 @@ public class ImagePickerFragment extends BaseFragment {
                 for (MediaEntity imageEntity : images) {
                     imageInfos.add((ImageEntity) imageEntity);
                 }
-
+                if (getActivity() == null) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

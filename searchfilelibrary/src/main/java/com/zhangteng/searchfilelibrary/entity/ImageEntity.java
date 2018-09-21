@@ -12,6 +12,7 @@ public class ImageEntity implements MediaEntity {
     String filePath;
     long fileLength;
     int type;
+    long updateTime;
 
     public ImageEntity() {
     }
@@ -21,6 +22,14 @@ public class ImageEntity implements MediaEntity {
         this.filePath = filePath;
         this.fileLength = fileLength;
         this.type = type;
+    }
+
+    public ImageEntity(String fileName, String filePath, long fileLength, int type, long updateTime) {
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.fileLength = fileLength;
+        this.type = type;
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -104,12 +113,12 @@ public class ImageEntity implements MediaEntity {
 
     @Override
     public long getUpdateTime() {
-        return 0;
+        return updateTime;
     }
 
     @Override
     public void setUpdateTime(long updateTime) {
-
+        this.updateTime = updateTime;
     }
 
     @Override

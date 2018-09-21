@@ -6,6 +6,7 @@ import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 /**
@@ -28,7 +29,7 @@ public class MediaStoreUtil {
     private static List<MediaEntity> video = new ArrayList<>();
     private static List<MediaEntity> folder = new ArrayList<>();
 
-    private static List<MediaStoreListener> listeners = new ArrayList<>();
+    private static List<MediaStoreListener> listeners = new CopyOnWriteArrayList<>();
 
     public static void addApk(@NonNull List<MediaEntity> list) {
         MediaStoreUtil.apk.addAll(list);

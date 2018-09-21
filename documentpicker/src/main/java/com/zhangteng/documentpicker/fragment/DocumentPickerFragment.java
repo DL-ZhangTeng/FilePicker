@@ -130,6 +130,9 @@ public class DocumentPickerFragment extends BaseFragment {
                 for (MediaEntity documentEntity : documents) {
                     imageInfos.add((DocumentEntity) documentEntity);
                 }
+                if (getActivity() == null) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

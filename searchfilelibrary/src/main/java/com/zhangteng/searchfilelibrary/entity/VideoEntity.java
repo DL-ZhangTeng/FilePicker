@@ -15,9 +15,10 @@ public class VideoEntity implements MediaEntity {
     Bitmap thumbPath;
     long updateTime;
 
-    public VideoEntity(String fileName, String filePath, long updateTime, int type) {
+    public VideoEntity(String fileName, String filePath, long fileLength, int type, long updateTime) {
         this.fileName = fileName;
         this.filePath = filePath;
+        this.fileLength = fileLength;
         this.type = type;
         this.updateTime = updateTime;
     }

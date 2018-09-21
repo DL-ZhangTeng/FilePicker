@@ -16,13 +16,6 @@ public class DocumentEntity implements MediaEntity {
     public DocumentEntity() {
     }
 
-    public DocumentEntity(String fileName, String filePath, long fileLength, int type) {
-        this.fileName = fileName;
-        this.filePath = filePath;
-        this.fileLength = fileLength;
-        this.type = type;
-    }
-
     public DocumentEntity(String fileName, String filePath, long fileLength, int type, long updateTime) {
         this.fileName = fileName;
         this.filePath = filePath;

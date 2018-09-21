@@ -147,7 +147,9 @@ public class VideoPickerFragment extends BaseFragment {
                 for (MediaEntity videoEntity : videos) {
                     videoInfos.add((VideoEntity) videoEntity);
                 }
-
+                if (getActivity() == null) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

@@ -44,12 +44,13 @@ public class FileErgodicUtil {
                         String fileName = file.getName();
                         long fileLength = file.length();
                         int fileType = MathFileByType(type);
+                        long updateTime = file.lastModified();
                         if (fileLength > 10) {
                             MediaEntity entity = null;
                             switch (fileType) {
                                 case MediaEntity.MEDIA_APK:
                                 case MediaEntity.MEDIA_ZIP:
-                                    entity = new RarEntity(fileName, path, fileLength, fileType);
+                                    entity = new RarEntity(fileName, path, fileLength, fileType, updateTime);
                                     break;
                                 case MediaEntity.MEDIA_PDF:
                                 case MediaEntity.MEDIA_DOC:
@@ -57,16 +58,16 @@ public class FileErgodicUtil {
                                 case MediaEntity.MEDIA_EXCEL:
                                 case MediaEntity.MEDIA_TXT:
                                 case MediaEntity.MEDIA_DOCUMENT:
-                                    entity = new DocumentEntity(fileName, path, fileLength, fileType);
+                                    entity = new DocumentEntity(fileName, path, fileLength, fileType, updateTime);
                                     break;
                                 case MediaEntity.MEDIA_AUDIO:
-                                    entity = new AudioEntity(fileName, path, fileLength, fileType);
+                                    entity = new AudioEntity(fileName, path, fileLength, fileType, updateTime);
                                     break;
                                 case MediaEntity.MEDIA_IMAGE:
-                                    entity = new ImageEntity(fileName, path, fileLength, fileType);
+                                    entity = new ImageEntity(fileName, path, fileLength, fileType, updateTime);
                                     break;
                                 case MediaEntity.MEDIA_VIDEO:
-                                    entity = new VideoEntity(fileName, path, fileLength, fileType);
+                                    entity = new VideoEntity(fileName, path, fileLength, fileType, updateTime);
                                     break;
                                 case MediaEntity.MEDIA_FOLDER:
                                 case MediaEntity.MEDIA_UNKNOWN:

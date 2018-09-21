@@ -162,10 +162,13 @@ public class FolderPickerFragment extends BaseFragment {
             public void onFolderChange(int imageCount, List<MediaEntity> folders) {
                 imageInfos.clear();
                 imageInfos.addAll(folders);
+                if (getActivity() == null) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        folderPickerAdapter.setFolderInfoList(imageInfos);
+                        folderPickerAdapter.notifyDataSetChanged();
                     }
                 });
             }

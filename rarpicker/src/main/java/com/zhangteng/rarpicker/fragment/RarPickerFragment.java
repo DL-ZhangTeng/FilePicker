@@ -130,6 +130,9 @@ public class RarPickerFragment extends BaseFragment {
                 for (MediaEntity rarEntity : rars) {
                     imageInfos.add((RarEntity) rarEntity);
                 }
+                if (getActivity() == null) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
