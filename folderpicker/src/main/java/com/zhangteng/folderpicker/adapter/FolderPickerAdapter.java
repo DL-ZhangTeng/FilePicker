@@ -42,8 +42,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ImageViewHolder imageViewHolder = new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_folder_picker_document, parent, false));
-        return imageViewHolder;
+        return new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_folder_picker_document, parent, false));
     }
 
     @Override
@@ -62,9 +61,12 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onPreviousFolder(previousPath);
-                        previousPath = new File(previousPath).getParent();
+                    if (onItemClickListener != null && null != previousPath && !previousPath.isEmpty()) {
+                        File previousFile = new File(previousPath);
+                        if (previousFile.exists() && !SearchCofig.BASE_SD_PATH.equals(previousPath)) {
+                            onItemClickListener.onPreviousFolder(previousPath);
+                            previousPath = previousFile.getParent();
+                        }
                     }
                 }
             });
