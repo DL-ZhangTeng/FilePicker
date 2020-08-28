@@ -18,11 +18,11 @@ import java.util.ArrayList;
  * Created by Lanxumit on 2017/11/24.
  */
 
-public class MainAdapter extends FragmentPagerAdapter {
+public class FilePickerAdapter extends FragmentPagerAdapter {
     private String[] titles = {"image", "video", "audio", "rar", "document", "folder"};
     private ArrayList<Fragment> fragmentlist = new ArrayList<Fragment>();
 
-    public MainAdapter(FragmentManager fm) {
+    public FilePickerAdapter(FragmentManager fm) {
         super(fm);
     }
 
