@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zhangteng.baselibrary.utils.DateUtils;
+import com.zhangteng.base.utils.DateUtils;
 import com.zhangteng.rarpicker.R;
 import com.zhangteng.rarpicker.config.RarPickerConfig;
 import com.zhangteng.searchfilelibrary.entity.RarEntity;
@@ -46,7 +46,7 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         rarInfo = rarInfoList.get(position);
         rarPickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, rarInfo.getThumPath());
         ((ImageViewHolder) holder).name.setText(rarInfo.getFileName());
-        ((ImageViewHolder) holder).time.setText(DateUtils.getDay(rarInfo.getUpdateTime()));//rarInfo.getTime()音频持续时间
+        ((ImageViewHolder) holder).time.setText(DateUtils.getTime(rarInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//rarInfo.getTime()音频持续时间
         ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.rar_picker_rar_size, rarInfo.getFileLength() / 1024));
         final RarEntity finalRarInfo1 = rarInfo;
         ((ImageViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {

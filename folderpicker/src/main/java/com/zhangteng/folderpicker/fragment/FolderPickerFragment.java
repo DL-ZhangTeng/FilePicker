@@ -12,11 +12,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zhangteng.baselibrary.base.BaseFragment;
-import com.zhangteng.baselibrary.callback.IHandlerCallBack;
+import com.zhangteng.base.base.BaseFragment;
+import com.zhangteng.common.callback.IHandlerCallBack;
 import com.zhangteng.folderpicker.R;
 import com.zhangteng.folderpicker.adapter.FolderPickerAdapter;
 import com.zhangteng.folderpicker.config.FolderPickerConfig;
@@ -81,15 +83,10 @@ public class FolderPickerFragment extends BaseFragment {
         }
     }
 
+    @Nullable
     @Override
-    protected int getResourceId() {
-        return R.layout.fragment_folder_picker;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initView(view);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_folder_picker, container, false);
     }
 
     @Override

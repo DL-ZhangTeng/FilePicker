@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.zhangteng.base.widget.MyTabLayout;
 import com.zhangteng.filepicker.adapter.MainAdapter;
-import com.zhangteng.filepicker.widget.MyTabLayout;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zhangteng.baselibrary.utils.DateUtils;
+import com.zhangteng.base.utils.DateUtils;
 import com.zhangteng.documentpicker.R;
 import com.zhangteng.documentpicker.config.DocumentPickerConfig;
 import com.zhangteng.searchfilelibrary.entity.DocumentEntity;
@@ -46,7 +46,7 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         documentInfo = documentInfoList.get(position);
         documentPickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, documentInfo.getThumPath());
         ((ImageViewHolder) holder).name.setText(documentInfo.getFileName());
-        ((ImageViewHolder) holder).time.setText(DateUtils.getDay(documentInfo.getUpdateTime()));//documentInfo.getTime()音频持续时间
+        ((ImageViewHolder) holder).time.setText(DateUtils.getTime(documentInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//documentInfo.getTime()音频持续时间
         ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.document_picker_document_size, documentInfo.getFileLength() / 1024));
         final DocumentEntity finalDocumentInfo1 = documentInfo;
         ((ImageViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {

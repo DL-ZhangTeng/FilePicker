@@ -15,15 +15,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zhangteng.audiopicker.R;
 import com.zhangteng.audiopicker.adapter.AudioPickerAdapter;
 import com.zhangteng.audiopicker.config.AudioPickerConfig;
-import com.zhangteng.baselibrary.base.BaseFragment;
-import com.zhangteng.baselibrary.callback.IHandlerCallBack;
-import com.zhangteng.baselibrary.utils.FileUtils;
+import com.zhangteng.base.base.BaseFragment;
+import com.zhangteng.base.utils.FileUtils;
+import com.zhangteng.common.callback.IHandlerCallBack;
 import com.zhangteng.searchfilelibrary.FileService;
 import com.zhangteng.searchfilelibrary.entity.AudioEntity;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
@@ -76,11 +78,6 @@ public class AudioPickerFragment extends BaseFragment {
     }
 
     @Override
-    protected int getResourceId() {
-        return R.layout.fragment_audio_picker;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -89,11 +86,10 @@ public class AudioPickerFragment extends BaseFragment {
         }
     }
 
-
+    @Nullable
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initView(view);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_audio_picker, container, false);
     }
 
     @Override
@@ -194,7 +190,7 @@ public class AudioPickerFragment extends BaseFragment {
                     selectAudio.add(recordTempFile.getAbsolutePath());
                     // 通知系统扫描该文件夹
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                    Uri uri = Uri.fromFile(new File(FileUtils.getFilePath(mContext) + audioPickerConfig.getFilePath()));
+                    Uri uri = Uri.fromFile(new File(FileUtils.getFilesDir(mContext) + audioPickerConfig.getFilePath()));
                     intent.setData(uri);
                     getActivity().sendBroadcast(intent);
                     iHandlerCallBack.onSuccess(selectAudio);

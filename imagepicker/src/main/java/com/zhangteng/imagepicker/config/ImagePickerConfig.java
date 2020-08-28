@@ -1,9 +1,9 @@
 package com.zhangteng.imagepicker.config;
 
-import com.zhangteng.baselibrary.callback.HandlerCallBack;
-import com.zhangteng.baselibrary.callback.IHandlerCallBack;
-import com.zhangteng.baselibrary.imageloader.GlideImageLoader;
-import com.zhangteng.baselibrary.imageloader.ImageLoader;
+import com.zhangteng.common.callback.HandlerCallBack;
+import com.zhangteng.common.callback.IHandlerCallBack;
+import com.zhangteng.common.imageloader.GlideImageLoader;
+import com.zhangteng.common.imageloader.ImageLoader;
 import com.zhangteng.imagepicker.R;
 
 import java.io.Serializable;
@@ -109,7 +109,7 @@ public class ImagePickerConfig {
         private boolean isShowCamera = true;
         private String filePath = "/imagePicker/ImagePickerPictures";
 
-        private String provider = "com.zhangteng.baselibrary.fileprovider";
+        private String provider = "com.zhangteng.base.fileprovider";
 
         private ArrayList<String> pathList = new ArrayList<>();
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.zhangteng.filepicker.widget.MyTabLayout
+    <com.zhangteng.base.widget.MyTabLayout
         android:id="@+id/mytablayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tabbar_height"

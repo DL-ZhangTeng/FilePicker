@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zhangteng.baselibrary.utils.DateUtils;
-import com.zhangteng.baselibrary.utils.DensityUtils;
+import com.zhangteng.base.utils.DateUtils;
+import com.zhangteng.base.utils.DensityUtil;
 import com.zhangteng.folderpicker.R;
 import com.zhangteng.folderpicker.config.FolderPickerConfig;
 import com.zhangteng.searchfilelibrary.config.SearchCofig;
@@ -51,7 +51,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (hasPreviousBtn && position == 0) {
             ((ImageViewHolder) holder).name.setText("返回上一级");
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ((ImageViewHolder) holder).name.getLayoutParams();
-            layoutParams.setMargins(0, DensityUtils.dp2px(((ImageViewHolder) holder).name.getContext(), 40), 0, 0);
+            layoutParams.setMargins(0, DensityUtil.dp2px(((ImageViewHolder) holder).name.getContext(), 40), 0, 0);
             ((ImageViewHolder) holder).name.setLayoutParams(layoutParams);
             ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_folder_ico);
             ((ImageViewHolder) holder).time.setVisibility(View.GONE);
@@ -63,9 +63,11 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 public void onClick(View view) {
                     if (onItemClickListener != null && null != previousPath && !previousPath.isEmpty()) {
                         File previousFile = new File(previousPath);
-                        if (previousFile.exists() && !SearchCofig.BASE_SD_PATH.equals(previousPath)) {
+                        if (previousFile.exists()) {
                             onItemClickListener.onPreviousFolder(previousPath);
-                            previousPath = previousFile.getParent();
+                            if (!SearchCofig.BASE_SD_PATH.equals(previousPath)) {
+                                previousPath = previousFile.getParent();
+                            }
                         }
                     }
                 }
@@ -74,7 +76,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         folderInfo = folderInfoList.get(hasPreviousBtn ? position - 1 : position);
         ((ImageViewHolder) holder).name.setText(folderInfo.getFileName());
-        ((ImageViewHolder) holder).time.setText(DateUtils.getDay(folderInfo.getUpdateTime()));//folderInfo.getTime()音频持续时间
+        ((ImageViewHolder) holder).time.setText(DateUtils.getTime(folderInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//folderInfo.getTime()音频持续时间
         ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.folder_picker_folder_size, folderInfo.getFileLength() / 1024));
         switch (folderInfo.getMediaType()) {
             case MediaEntity.MEDIA_APK:

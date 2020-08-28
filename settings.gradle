@@ -1,1 +1,1 @@
-include ':app', ':searchfilelibrary', ':videopicker', ':audiopicker', ':imagepicker', ':documentpicker', ':rarpicker', ':folderpicker', ':baselibrary'
+include ':app', ':searchfilelibrary', ':videopicker', ':audiopicker', ':imagepicker', ':documentpicker', ':rarpicker', ':folderpicker', ':common'

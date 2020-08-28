@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.zhangteng.audiopicker.fragment.AudioPickerFragment;
-import com.zhangteng.baselibrary.base.BaseFragment;
+import com.zhangteng.base.base.BaseFragment;
 import com.zhangteng.documentpicker.fragment.DocumentPickerFragment;
 import com.zhangteng.folderpicker.fragment.FolderPickerFragment;
 import com.zhangteng.imagepicker.fragment.ImagePickerFragment;

@@ -1,10 +1,10 @@
 package com.zhangteng.audiopicker.config;
 
 import com.zhangteng.audiopicker.R;
-import com.zhangteng.baselibrary.callback.HandlerCallBack;
-import com.zhangteng.baselibrary.callback.IHandlerCallBack;
-import com.zhangteng.baselibrary.imageloader.GlideImageLoader;
-import com.zhangteng.baselibrary.imageloader.ImageLoader;
+import com.zhangteng.common.callback.HandlerCallBack;
+import com.zhangteng.common.callback.IHandlerCallBack;
+import com.zhangteng.common.imageloader.GlideImageLoader;
+import com.zhangteng.common.imageloader.ImageLoader;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -109,7 +109,7 @@ public class AudioPickerConfig {
         private boolean isShowRecord = false;
         private String filePath = "/audioPicker/AudioPickerPictures";
 
-        private String provider = "com.zhangteng.baselibrary.fileprovider";
+        private String provider = "com.zhangteng.base.fileprovider";
 
         private ArrayList<String> pathList = new ArrayList<>();
 

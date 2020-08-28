@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.zhangteng.audiopicker.R;
 import com.zhangteng.audiopicker.config.AudioPickerConfig;
-import com.zhangteng.baselibrary.utils.DateUtils;
+import com.zhangteng.base.utils.DateUtils;
 import com.zhangteng.searchfilelibrary.entity.AudioEntity;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 audioInfo = audioInfoList.get(position - 1);
                 audioPickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, audioInfo.getThumPath());
                 ((ImageViewHolder) holder).name.setText(audioInfo.getFileName());
-                ((ImageViewHolder) holder).time.setText(DateUtils.getDay(audioInfo.getUpdateTime()));//audioInfo.getTime()音频持续时间
+                ((ImageViewHolder) holder).time.setText(DateUtils.getTime(audioInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//audioInfo.getTime()音频持续时间
                 ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.audio_picker_audio_size, audioInfo.getFileLength() / 1024));
                 final AudioEntity finalAudioInfo = audioInfo;
                 ((ImageViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +98,7 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             audioInfo = audioInfoList.get(position);
             audioPickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, audioInfo.getThumPath());
             ((ImageViewHolder) holder).name.setText(audioInfo.getFileName());
-            ((ImageViewHolder) holder).time.setText(DateUtils.getDay(audioInfo.getUpdateTime()));//audioInfo.getTime()音频持续时间
+            ((ImageViewHolder) holder).time.setText(DateUtils.getTime(audioInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//audioInfo.getTime()音频持续时间
             ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.audio_picker_audio_size, audioInfo.getFileLength() / 1024));
             final AudioEntity finalAudioInfo1 = audioInfo;
             ((ImageViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {

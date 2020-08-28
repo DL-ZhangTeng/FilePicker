@@ -3,6 +3,4 @@
 
     <string name="video_picker_selected">%d 个视频已选择</string>
     <string name="video_picker_shoot">拍摄视频</string>
-    <string name="video_picker_folder_name">文件夹名</string>
-    <string name="video_picker_photo_num">%d 个</string>
 </resources>

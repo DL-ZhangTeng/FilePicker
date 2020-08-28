@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-import com.zhangteng.baselibrary.utils.ScreenUtils;
+import com.zhangteng.base.utils.ScreenUtils;
 import com.zhangteng.searchfilelibrary.entity.VideoEntity;
 import com.zhangteng.videopicker.R;
 import com.zhangteng.videopicker.config.VideoPickerConfig;
