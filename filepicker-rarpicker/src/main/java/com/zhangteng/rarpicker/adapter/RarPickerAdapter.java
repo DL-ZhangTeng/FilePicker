@@ -10,10 +10,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zhangteng.base.utils.DateUtils;
+import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.rarpicker.R;
-import com.zhangteng.rarpicker.config.RarPickerConfig;
 import com.zhangteng.searchfilelibrary.entity.RarEntity;
+import com.zhangteng.searchfilelibrary.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.List;
 public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<RarEntity> rarInfoList;
-    private RarPickerConfig rarPickerConfig = RarPickerConfig.getInstance();
+    private FilePickerConfig rarPickerConfig = FilePickerConfig.getInstance();
     private List<String> selectRar = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -36,32 +36,27 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ImageViewHolder imageViewHolder = new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_rar_picker_rar, parent, false));
-        return imageViewHolder;
+        return new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_rar_picker_rar, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
-        RarEntity rarInfo = null;
-        rarInfo = rarInfoList.get(position);
+        RarEntity rarInfo = rarInfoList.get(position);
         rarPickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, rarInfo.getThumPath());
         ((ImageViewHolder) holder).name.setText(rarInfo.getFileName());
         ((ImageViewHolder) holder).time.setText(DateUtils.getTime(rarInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//rarInfo.getTime()音频持续时间
         ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.rar_picker_rar_size, rarInfo.getFileLength() / 1024));
         final RarEntity finalRarInfo1 = rarInfo;
-        ((ImageViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (selectRar.contains(finalRarInfo1.getFilePath())) {
-                    selectRar.remove(finalRarInfo1.getFilePath());
-                } else {
-                    if (selectRar.size() < rarPickerConfig.getMaxSize())
-                        selectRar.add(finalRarInfo1.getFilePath());
-                }
-                if (onItemClickListener != null)
-                    onItemClickListener.onImageClick(selectRar);
-                notifyDataSetChanged();
+        ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
+            if (selectRar.contains(finalRarInfo1.getFilePath())) {
+                selectRar.remove(finalRarInfo1.getFilePath());
+            } else {
+                if (selectRar.size() < rarPickerConfig.getMaxSize())
+                    selectRar.add(finalRarInfo1.getFilePath());
             }
+            if (onItemClickListener != null)
+                onItemClickListener.onImageClick(selectRar);
+            notifyDataSetChanged();
         });
         initView(holder, rarInfo);
     }
@@ -115,12 +110,12 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            this.imageView = (ImageView) itemView.findViewById(R.id.rar_picker_iv_rar_image);
-            this.mask = (View) itemView.findViewById(R.id.rar_picker_v_photo_mask);
-            this.checkBox = (CheckBox) itemView.findViewById(R.id.rar_picker_cb_select);
-            this.name = (TextView) itemView.findViewById(R.id.rar_picker_tv_rar_name);
-            this.time = (TextView) itemView.findViewById(R.id.rar_picker_tv_rar_time);
-            this.size = (TextView) itemView.findViewById(R.id.rar_picker_tv_rar_size);
+            this.imageView = itemView.findViewById(R.id.rar_picker_iv_rar_image);
+            this.mask = itemView.findViewById(R.id.rar_picker_v_photo_mask);
+            this.checkBox = itemView.findViewById(R.id.rar_picker_cb_select);
+            this.name = itemView.findViewById(R.id.rar_picker_tv_rar_name);
+            this.time = itemView.findViewById(R.id.rar_picker_tv_rar_time);
+            this.size = itemView.findViewById(R.id.rar_picker_tv_rar_size);
         }
     }
 }

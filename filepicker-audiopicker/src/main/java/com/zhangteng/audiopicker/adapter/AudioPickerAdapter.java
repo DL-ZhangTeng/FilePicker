@@ -11,9 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhangteng.audiopicker.R;
-import com.zhangteng.audiopicker.config.AudioPickerConfig;
-import com.zhangteng.base.utils.DateUtils;
+import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.searchfilelibrary.entity.AudioEntity;
+import com.zhangteng.searchfilelibrary.entity.MediaEntity;
+import com.zhangteng.searchfilelibrary.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int PHOTO = 1;
     private Context mContext;
     private List<AudioEntity> audioInfoList;
-    private AudioPickerConfig audioPickerConfig = AudioPickerConfig.getInstance();
+    private FilePickerConfig audioPickerConfig = FilePickerConfig.getInstance();
     private List<String> selectAudio = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -39,11 +40,9 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == HEAD) {
-            RecordViewHolder recordViewHolder = new RecordViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_audio_picker_record, parent, false));
-            return recordViewHolder;
+            return new RecordViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_audio_picker_record, parent, false));
         } else {
-            ImageViewHolder imageViewHolder = new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_audio_picker_audio, parent, false));
-            return imageViewHolder;
+            return new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_audio_picker_audio, parent, false));
         }
     }
 
@@ -54,66 +53,57 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 //        layoutParams.height = heightOrWidth;
 //        layoutParams.width = heightOrWidth;
 //        holder.itemView.setLayoutParams(layoutParams);
-        AudioEntity audioInfo = null;
-        if (audioPickerConfig.isShowRecord()) {
+        AudioEntity audioInfo;
+        if (audioPickerConfig.isShowCamera()) {
             if (position == 0) {
-                ((RecordViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (onItemClickListener != null) {
-                            if (audioPickerConfig.isMultiSelect() && selectAudio.size() < audioPickerConfig.getMaxSize()) {
-                                onItemClickListener.onRecordClick(selectAudio);
-                            } else {
-                                onItemClickListener.onRecordClick(selectAudio);
-                            }
+                ((RecordViewHolder) holder).itemView.setOnClickListener(view -> {
+                    if (onItemClickListener != null) {
+                        if (audioPickerConfig.isMultiSelect() && selectAudio.size() < audioPickerConfig.getMaxSize()) {
+                            onItemClickListener.onRecordClick(selectAudio);
+                        } else if (!audioPickerConfig.isMultiSelect() && selectAudio.isEmpty()) {
+                            onItemClickListener.onRecordClick(selectAudio);
                         }
-                        notifyDataSetChanged();
                     }
+                    notifyDataSetChanged();
                 });
             } else {
                 audioInfo = audioInfoList.get(position - 1);
-                audioPickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, audioInfo.getThumPath());
+                ((ImageViewHolder) holder).imageView.setImageResource(audioPickerConfig.getIconResources(MediaEntity.MEDIA_AUDIO));
                 ((ImageViewHolder) holder).name.setText(audioInfo.getFileName());
                 ((ImageViewHolder) holder).time.setText(DateUtils.getTime(audioInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//audioInfo.getTime()音频持续时间
                 ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.audio_picker_audio_size, audioInfo.getFileLength() / 1024));
                 final AudioEntity finalAudioInfo = audioInfo;
-                ((ImageViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (selectAudio.contains(finalAudioInfo.getFilePath())) {
-                            selectAudio.remove(finalAudioInfo.getFilePath());
-                        } else {
-                            if (selectAudio.size() < audioPickerConfig.getMaxSize()) {
-                                selectAudio.add(finalAudioInfo.getFilePath());
-                            }
+                ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
+                    if (selectAudio.contains(finalAudioInfo.getFilePath())) {
+                        selectAudio.remove(finalAudioInfo.getFilePath());
+                    } else {
+                        if (selectAudio.size() < audioPickerConfig.getMaxSize()) {
+                            selectAudio.add(finalAudioInfo.getFilePath());
                         }
-                        if (onItemClickListener != null)
-                            onItemClickListener.onImageClick(selectAudio);
-                        notifyDataSetChanged();
                     }
+                    if (onItemClickListener != null)
+                        onItemClickListener.onImageClick(selectAudio);
+                    notifyDataSetChanged();
                 });
                 initView(holder, audioInfo);
             }
         } else {
             audioInfo = audioInfoList.get(position);
-            audioPickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, audioInfo.getThumPath());
+            ((ImageViewHolder) holder).imageView.setImageResource(audioPickerConfig.getIconResources(MediaEntity.MEDIA_AUDIO));
             ((ImageViewHolder) holder).name.setText(audioInfo.getFileName());
             ((ImageViewHolder) holder).time.setText(DateUtils.getTime(audioInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//audioInfo.getTime()音频持续时间
             ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.audio_picker_audio_size, audioInfo.getFileLength() / 1024));
             final AudioEntity finalAudioInfo1 = audioInfo;
-            ((ImageViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (selectAudio.contains(finalAudioInfo1.getFilePath())) {
-                        selectAudio.remove(finalAudioInfo1.getFilePath());
-                    } else {
-                        if (selectAudio.size() < audioPickerConfig.getMaxSize())
-                            selectAudio.add(finalAudioInfo1.getFilePath());
-                    }
-                    if (onItemClickListener != null)
-                        onItemClickListener.onImageClick(selectAudio);
-                    notifyDataSetChanged();
+            ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
+                if (selectAudio.contains(finalAudioInfo1.getFilePath())) {
+                    selectAudio.remove(finalAudioInfo1.getFilePath());
+                } else {
+                    if (selectAudio.size() < audioPickerConfig.getMaxSize())
+                        selectAudio.add(finalAudioInfo1.getFilePath());
                 }
+                if (onItemClickListener != null)
+                    onItemClickListener.onImageClick(selectAudio);
+                notifyDataSetChanged();
             });
             initView(holder, audioInfo);
         }
@@ -141,13 +131,13 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return audioInfoList.isEmpty() ? 0 : audioPickerConfig.isShowRecord() ? audioInfoList.size() + 1 : audioInfoList.size();
+        return audioInfoList.isEmpty() ? 0 : audioPickerConfig.isShowCamera() ? audioInfoList.size() + 1 : audioInfoList.size();
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-            if (audioPickerConfig.isShowRecord()) {
+            if (audioPickerConfig.isShowCamera()) {
                 return HEAD;
             }
         }
@@ -181,12 +171,12 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            this.imageView = (ImageView) itemView.findViewById(R.id.audio_picker_iv_audio_image);
-            this.mask = (View) itemView.findViewById(R.id.audio_picker_v_photo_mask);
-            this.checkBox = (CheckBox) itemView.findViewById(R.id.audio_picker_cb_select);
-            this.name = (TextView) itemView.findViewById(R.id.audio_picker_tv_audio_name);
-            this.time = (TextView) itemView.findViewById(R.id.audio_picker_tv_audio_time);
-            this.size = (TextView) itemView.findViewById(R.id.audio_picker_tv_audio_size);
+            this.imageView = itemView.findViewById(R.id.audio_picker_iv_audio_image);
+            this.mask = itemView.findViewById(R.id.audio_picker_v_photo_mask);
+            this.checkBox = itemView.findViewById(R.id.audio_picker_cb_select);
+            this.name = itemView.findViewById(R.id.audio_picker_tv_audio_name);
+            this.time = itemView.findViewById(R.id.audio_picker_tv_audio_time);
+            this.size = itemView.findViewById(R.id.audio_picker_tv_audio_size);
         }
     }
 

@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-import com.zhangteng.base.utils.ScreenUtils;
+import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.imagepicker.R;
-import com.zhangteng.imagepicker.config.ImagePickerConfig;
 import com.zhangteng.searchfilelibrary.entity.ImageEntity;
+import com.zhangteng.searchfilelibrary.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int PHOTO = 1;
     private Context mContext;
     private List<ImageEntity> imageInfoList;
-    private ImagePickerConfig imagePickerConfig = ImagePickerConfig.getInstance();
+    private FilePickerConfig imagePickerConfig = FilePickerConfig.getInstance();
     private List<String> selectImage = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -38,11 +38,9 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == HEAD) {
-            CameraViewHolder cameraViewHolder = new CameraViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_image_picker_camera, parent, false));
-            return cameraViewHolder;
+            return new CameraViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_image_picker_camera, parent, false));
         } else {
-            ImageViewHolder imageViewHolder = new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_image_picker_photo, parent, false));
-            return imageViewHolder;
+            return new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_image_picker_photo, parent, false));
         }
     }
 
@@ -53,40 +51,34 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         layoutParams.height = heightOrWidth;
         layoutParams.width = heightOrWidth;
         holder.itemView.setLayoutParams(layoutParams);
-        ImageEntity imageInfo = null;
+        ImageEntity imageInfo;
         if (imagePickerConfig.isShowCamera()) {
             if (position == 0) {
-                ((CameraViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (onItemClickListener != null) {
-                            if (imagePickerConfig.isMultiSelect() && selectImage.size() < imagePickerConfig.getMaxSize()) {
-                                onItemClickListener.onCameraClick(selectImage);
-                            } else {
-                                onItemClickListener.onCameraClick(selectImage);
-                            }
+                ((CameraViewHolder) holder).itemView.setOnClickListener(view -> {
+                    if (onItemClickListener != null) {
+                        if (imagePickerConfig.isMultiSelect() && selectImage.size() < imagePickerConfig.getMaxSize()) {
+                            onItemClickListener.onCameraClick(selectImage);
+                        } else if (!imagePickerConfig.isMultiSelect() && selectImage.isEmpty()) {
+                            onItemClickListener.onCameraClick(selectImage);
                         }
-                        notifyDataSetChanged();
                     }
+                    notifyDataSetChanged();
                 });
             } else {
                 imageInfo = imageInfoList.get(position - 1);
                 imagePickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, imageInfo.getFilePath());
                 final ImageEntity finalImageInfo = imageInfo;
-                ((ImageViewHolder) holder).imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (selectImage.contains(finalImageInfo.getFilePath())) {
-                            selectImage.remove(finalImageInfo.getFilePath());
-                        } else {
-                            if (selectImage.size() < imagePickerConfig.getMaxSize()) {
-                                selectImage.add(finalImageInfo.getFilePath());
-                            }
+                ((ImageViewHolder) holder).imageView.setOnClickListener(view -> {
+                    if (selectImage.contains(finalImageInfo.getFilePath())) {
+                        selectImage.remove(finalImageInfo.getFilePath());
+                    } else {
+                        if (selectImage.size() < imagePickerConfig.getMaxSize()) {
+                            selectImage.add(finalImageInfo.getFilePath());
                         }
-                        if (onItemClickListener != null)
-                            onItemClickListener.onImageClick(selectImage);
-                        notifyDataSetChanged();
                     }
+                    if (onItemClickListener != null)
+                        onItemClickListener.onImageClick(selectImage);
+                    notifyDataSetChanged();
                 });
                 initView(holder, imageInfo);
             }
@@ -94,19 +86,16 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             imageInfo = imageInfoList.get(position);
             imagePickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, imageInfo.getFilePath());
             final ImageEntity finalImageInfo1 = imageInfo;
-            ((ImageViewHolder) holder).imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (selectImage.contains(finalImageInfo1.getFilePath())) {
-                        selectImage.remove(finalImageInfo1.getFilePath());
-                    } else {
-                        if (selectImage.size() < imagePickerConfig.getMaxSize())
-                            selectImage.add(finalImageInfo1.getFilePath());
-                    }
-                    if (onItemClickListener != null)
-                        onItemClickListener.onImageClick(selectImage);
-                    notifyDataSetChanged();
+            ((ImageViewHolder) holder).imageView.setOnClickListener(view -> {
+                if (selectImage.contains(finalImageInfo1.getFilePath())) {
+                    selectImage.remove(finalImageInfo1.getFilePath());
+                } else {
+                    if (selectImage.size() < imagePickerConfig.getMaxSize())
+                        selectImage.add(finalImageInfo1.getFilePath());
                 }
+                if (onItemClickListener != null)
+                    onItemClickListener.onImageClick(selectImage);
+                notifyDataSetChanged();
             });
             initView(holder, imageInfo);
         }
@@ -170,9 +159,9 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            this.imageView = (ImageView) itemView.findViewById(R.id.image_picker_im_photo);
-            this.mask = (View) itemView.findViewById(R.id.image_picker_v_photo_mask);
-            this.checkBox = (CheckBox) itemView.findViewById(R.id.image_picker_cb_select);
+            this.imageView = itemView.findViewById(R.id.image_picker_im_photo);
+            this.mask = itemView.findViewById(R.id.image_picker_v_photo_mask);
+            this.checkBox = itemView.findViewById(R.id.image_picker_cb_select);
         }
     }
 

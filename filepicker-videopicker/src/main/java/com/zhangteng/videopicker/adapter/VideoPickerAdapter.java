@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-import com.zhangteng.base.utils.ScreenUtils;
+import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.searchfilelibrary.entity.VideoEntity;
+import com.zhangteng.searchfilelibrary.utils.ScreenUtils;
 import com.zhangteng.videopicker.R;
-import com.zhangteng.videopicker.config.VideoPickerConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int PHOTO = 1;
     private Context mContext;
     private List<VideoEntity> videoInfoList;
-    private VideoPickerConfig videoPickerConfig = VideoPickerConfig.getInstance();
+    private FilePickerConfig videoPickerConfig = FilePickerConfig.getInstance();
     private List<String> selectVideo = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -38,11 +38,9 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == HEAD) {
-            CameraViewHolder cameraViewHolder = new CameraViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_video_picker_camera, parent, false));
-            return cameraViewHolder;
+            return new CameraViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_video_picker_camera, parent, false));
         } else {
-            VideoViewHolder videoViewHolder = new VideoViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_video_picker_photo, parent, false));
-            return videoViewHolder;
+            return new VideoViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_video_picker_photo, parent, false));
         }
     }
 
@@ -53,40 +51,34 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         layoutParams.height = heightOrWidth;
         layoutParams.width = heightOrWidth;
         holder.itemView.setLayoutParams(layoutParams);
-        VideoEntity videoInfo = null;
+        VideoEntity videoInfo;
         if (videoPickerConfig.isShowCamera()) {
             if (position == 0) {
-                ((CameraViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (onItemClickListener != null) {
-                            if (videoPickerConfig.isMultiSelect() && selectVideo.size() < videoPickerConfig.getMaxSize()) {
-                                onItemClickListener.onCameraClick(selectVideo);
-                            } else {
-                                onItemClickListener.onCameraClick(selectVideo);
-                            }
+                ((CameraViewHolder) holder).itemView.setOnClickListener(view -> {
+                    if (onItemClickListener != null) {
+                        if (videoPickerConfig.isMultiSelect() && selectVideo.size() < videoPickerConfig.getMaxSize()) {
+                            onItemClickListener.onCameraClick(selectVideo);
+                        } else if (!videoPickerConfig.isMultiSelect() && selectVideo.isEmpty()) {
+                            onItemClickListener.onCameraClick(selectVideo);
                         }
-                        notifyDataSetChanged();
                     }
+                    notifyDataSetChanged();
                 });
             } else {
                 videoInfo = videoInfoList.get(position - 1);
                 videoPickerConfig.getImageLoader().loadImage(mContext, ((VideoViewHolder) holder).imageView, videoInfo.getFilePath());
                 final VideoEntity finalVideoInfo = videoInfo;
-                ((VideoViewHolder) holder).imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (selectVideo.contains(finalVideoInfo.getFilePath())) {
-                            selectVideo.remove(finalVideoInfo.getFilePath());
-                        } else {
-                            if (selectVideo.size() < videoPickerConfig.getMaxSize()) {
-                                selectVideo.add(finalVideoInfo.getFilePath());
-                            }
+                ((VideoViewHolder) holder).imageView.setOnClickListener(view -> {
+                    if (selectVideo.contains(finalVideoInfo.getFilePath())) {
+                        selectVideo.remove(finalVideoInfo.getFilePath());
+                    } else {
+                        if (selectVideo.size() < videoPickerConfig.getMaxSize()) {
+                            selectVideo.add(finalVideoInfo.getFilePath());
                         }
-                        if (onItemClickListener != null)
-                            onItemClickListener.onVideoClick(selectVideo);
-                        notifyDataSetChanged();
                     }
+                    if (onItemClickListener != null)
+                        onItemClickListener.onVideoClick(selectVideo);
+                    notifyDataSetChanged();
                 });
                 initView(holder, videoInfo);
             }
@@ -94,19 +86,16 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             videoInfo = videoInfoList.get(position);
             videoPickerConfig.getImageLoader().loadImage(mContext, ((VideoViewHolder) holder).imageView, videoInfo.getFilePath());
             final VideoEntity finalVideoInfo1 = videoInfo;
-            ((VideoViewHolder) holder).imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (selectVideo.contains(finalVideoInfo1.getFilePath())) {
-                        selectVideo.remove(finalVideoInfo1.getFilePath());
-                    } else {
-                        if (selectVideo.size() < videoPickerConfig.getMaxSize())
-                            selectVideo.add(finalVideoInfo1.getFilePath());
-                    }
-                    if (onItemClickListener != null)
-                        onItemClickListener.onVideoClick(selectVideo);
-                    notifyDataSetChanged();
+            ((VideoViewHolder) holder).imageView.setOnClickListener(view -> {
+                if (selectVideo.contains(finalVideoInfo1.getFilePath())) {
+                    selectVideo.remove(finalVideoInfo1.getFilePath());
+                } else {
+                    if (selectVideo.size() < videoPickerConfig.getMaxSize())
+                        selectVideo.add(finalVideoInfo1.getFilePath());
                 }
+                if (onItemClickListener != null)
+                    onItemClickListener.onVideoClick(selectVideo);
+                notifyDataSetChanged();
             });
             initView(holder, videoInfo);
         }
@@ -170,9 +159,9 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         public VideoViewHolder(View itemView) {
             super(itemView);
-            this.imageView = (ImageView) itemView.findViewById(R.id.video_picker_im_photo);
-            this.mask = (View) itemView.findViewById(R.id.video_picker_v_photo_mask);
-            this.checkBox = (CheckBox) itemView.findViewById(R.id.video_picker_cb_select);
+            this.imageView = itemView.findViewById(R.id.video_picker_im_photo);
+            this.mask = itemView.findViewById(R.id.video_picker_v_photo_mask);
+            this.checkBox = itemView.findViewById(R.id.video_picker_cb_select);
         }
     }
 

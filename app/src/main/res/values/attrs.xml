@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="MyTabLayout">
-        <attr name="tabMyGravity" format="integer" />
-        <attr name="tabMyMode" format="integer" />
+        <attr name="tabMyGravity" format="enum">
+            <enum name="GRAVITY_FILL" value="0" />
+            <enum name="GRAVITY_CENTER" value="1" />
+        </attr>
+        <attr name="tabMyMode" format="enum">
+            <enum name="MODE_SCROLLABLE" value="0" />
+            <enum name="MODE_FIXED" value="1" />
+        </attr>
+        <attr name="tabMyTypeface" format="enum">
+            <enum name="NORMAL" value="0" />
+            <enum name="BOLD" value="1" />
+            <enum name="ITALIC" value="2" />
+            <enum name="BOLD_ITALIC" value="3" />
+        </attr>
+        <attr name="tabMySelectedTypeface" format="enum">
+            <enum name="NORMAL" value="0" />
+            <enum name="BOLD" value="1" />
+            <enum name="ITALIC" value="2" />
+            <enum name="BOLD_ITALIC" value="3" />
+        </attr>
         <attr name="tabMyIndicatorColor" format="color" />
         <attr name="tabMyIndicatorHeight" format="dimension" />
         <attr name="tabMyPaddingStart" format="dimension" />
@@ -14,12 +32,21 @@
         <attr name="tabMyTextAppearance" format="reference" />
         <attr name="tabMyIndicatorPaddingLeft" format="dimension" />
         <attr name="tabMyIndicatorPaddingRight" format="dimension" />
+        <attr name="tabMyIndicatorMarginBottom" format="dimension" />
+        <attr name="tabMyIndicatorMarginTop" format="dimension" />
+        <attr name="tabMyIndicatorSelfFit" format="boolean" />
+        <attr name="tabMyIndicatorMarginBottomSelfFit" format="boolean" />
+        <attr name="tabMyIndicatorBottomLayer" format="boolean" />
+        <attr name="tabMyIndicatorRoundRadius" format="dimension" />
         <attr name="tabMyContentStart" format="dimension" />
         <attr name="tabMyMinWidth" format="dimension" />
         <attr name="tabMyPaddingBottom" format="dimension" />
         <attr name="tabMyPaddingTop" format="dimension" />
         <attr name="tabMyPadding" format="dimension" />
         <attr name="tabMyTextIconGap" format="dimension" />
+        <attr name="tabMyViewNumber" format="integer" />
+        <attr name="tabMySelectedTextSize" format="dimension" />
+        <attr name="tabMyTextSize" format="dimension" />
     </declare-styleable>
     <declare-styleable name="MyTabItem">
         <attr name="myText" format="string" />

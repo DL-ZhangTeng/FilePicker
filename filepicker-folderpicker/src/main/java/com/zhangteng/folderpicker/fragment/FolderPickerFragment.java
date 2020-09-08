@@ -1,15 +1,11 @@
 package com.zhangteng.folderpicker.fragment;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,11 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zhangteng.base.base.BaseFragment;
 import com.zhangteng.common.callback.IHandlerCallBack;
+import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.folderpicker.R;
 import com.zhangteng.folderpicker.adapter.FolderPickerAdapter;
-import com.zhangteng.folderpicker.config.FolderPickerConfig;
 import com.zhangteng.searchfilelibrary.FileService;
 import com.zhangteng.searchfilelibrary.config.SearchCofig;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
@@ -32,16 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * 文件选择器
  */
-public class FolderPickerFragment extends BaseFragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
+public class FolderPickerFragment extends Fragment {
     private RecyclerView mRecyclerViewImageList;
+    private TextView mTextViewPreview;
     private TextView mTextViewSelected;
     private TextView mTextViewUpload;
     private Context mContext;
@@ -51,36 +41,12 @@ public class FolderPickerFragment extends BaseFragment {
     private File currentFile = new File(SearchCofig.BASE_SD_PATH);
 
     private FolderPickerAdapter folderPickerAdapter;
-    private FolderPickerConfig folderPickerConfig;
+    private FilePickerConfig folderPickerConfig;
     private IHandlerCallBack iHandlerCallBack;
     private List<String> selectFolder;
 
     public FolderPickerFragment() {
 
-    }
-
-
-    /**
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FolderPickerFragment.
-     */
-    public static FolderPickerFragment newInstance(String param1, String param2) {
-        FolderPickerFragment fragment = new FolderPickerFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Nullable
@@ -90,23 +56,36 @@ public class FolderPickerFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView(View view) {
-        mRecyclerViewImageList = (RecyclerView) view.findViewById(R.id.folder_picker_rv_list);
-        mRecyclerViewImageList.setLayoutManager(new LinearLayoutManager(getContext()));
-        mTextViewSelected = (TextView) view.findViewById(R.id.folder_picker_tv_selected);
-        mTextViewUpload = (TextView) view.findViewById(R.id.folder_picker_tv_upload);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            }
-        }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView(view);
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initData();
+    }
+
+    protected void initView(View view) {
+        mRecyclerViewImageList = view.findViewById(R.id.folder_picker_rv_list);
+        mRecyclerViewImageList.setLayoutManager(new LinearLayoutManager(getContext()));
+        mTextViewPreview = view.findViewById(R.id.file_picker_tv_preview);
+        mTextViewSelected = view.findViewById(R.id.file_picker_tv_selected);
+        mTextViewUpload = view.findViewById(R.id.file_picker_tv_upload);
+        mTextViewPreview.setOnClickListener(v -> iHandlerCallBack.onPreview(selectFolder));
+        mTextViewSelected.setOnClickListener(view1 -> iHandlerCallBack.onSuccess(selectFolder));
+        mTextViewUpload.setOnClickListener(view12 -> {
+            iHandlerCallBack.onSuccess(selectFolder);
+            iHandlerCallBack.onFinish();
+            if (null != getActivity()) {
+                getActivity().finish();
+            }
+        });
+    }
+
     public void initData() {
-        super.initData();
-        folderPickerConfig = FolderPickerConfig.getInstance();
+        folderPickerConfig = FilePickerConfig.getInstance();
         selectFolder = folderPickerConfig.getPathList();
         iHandlerCallBack = folderPickerConfig.getiHandlerCallBack();
         iHandlerCallBack.onStart();
@@ -115,14 +94,11 @@ public class FolderPickerFragment extends BaseFragment {
 
         mTextViewSelected.setText(mContext.getString(R.string.folder_picker_selected, 0));
 
-        mTextViewSelected.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!SearchCofig.BASE_SD_PATH.equals(currentFile.getAbsolutePath())) {
-                    mTextViewSelected.setText(currentFile.getParentFile().getName());
-                    FileService.getInstance().getFileList(currentFile.getParent());
-                    currentFile = currentFile.getParentFile();
-                }
+        mTextViewSelected.setOnClickListener(view -> {
+            if (!SearchCofig.BASE_SD_PATH.equals(currentFile.getAbsolutePath())) {
+                mTextViewSelected.setText(currentFile.getParentFile().getName());
+                FileService.getInstance().getFileList(currentFile.getParent());
+                currentFile = currentFile.getParentFile();
             }
         });
         folderPickerAdapter = new FolderPickerAdapter(mContext, imageInfos);
@@ -162,12 +138,7 @@ public class FolderPickerFragment extends BaseFragment {
                 if (getActivity() == null) {
                     return;
                 }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        folderPickerAdapter.notifyDataSetChanged();
-                    }
-                });
+                getActivity().runOnUiThread(() -> folderPickerAdapter.notifyDataSetChanged());
             }
         });
     }

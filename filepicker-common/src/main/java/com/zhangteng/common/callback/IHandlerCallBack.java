@@ -17,4 +17,5 @@ public interface IHandlerCallBack {
 
     void onError();
 
+    void onPreview(List<String> selectAudio);
 }

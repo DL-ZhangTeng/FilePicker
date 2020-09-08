@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-    api 'com.zhangteng.base:base:1.0.2'
+    implementation project(':filepicker-searchfilelibrary')
 }
 ////上传命令：1、gradlew javadocJar 2、gradlew sourcesJar 3、gradlew install 4、gradlew bintrayUpload
 //def siteUrl = 'https://github.com/duoluo9/FilePicker' //项目在github主页地址

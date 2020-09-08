@@ -34,4 +34,9 @@ public class HandlerCallBack implements IHandlerCallBack {
     public void onError() {
         Log.i(TAG, "onError: 出错");
     }
+
+    @Override
+    public void onPreview(List<String> selectAudio) {
+        Log.i(TAG, "onPreview: 预览");
+    }
 }

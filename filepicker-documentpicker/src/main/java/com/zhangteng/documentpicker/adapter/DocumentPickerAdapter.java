@@ -10,10 +10,11 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zhangteng.base.utils.DateUtils;
+import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.documentpicker.R;
-import com.zhangteng.documentpicker.config.DocumentPickerConfig;
 import com.zhangteng.searchfilelibrary.entity.DocumentEntity;
+import com.zhangteng.searchfilelibrary.entity.MediaEntity;
+import com.zhangteng.searchfilelibrary.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<DocumentEntity> documentInfoList;
-    private DocumentPickerConfig documentPickerConfig = DocumentPickerConfig.getInstance();
+    private FilePickerConfig documentPickerConfig = FilePickerConfig.getInstance();
     private List<String> selectDocument = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -42,26 +43,23 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
-        DocumentEntity documentInfo = null;
+        DocumentEntity documentInfo;
         documentInfo = documentInfoList.get(position);
-        documentPickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, documentInfo.getThumPath());
+        ((ImageViewHolder) holder).imageView.setImageResource(documentPickerConfig.getIconResources(MediaEntity.MEDIA_DOCUMENT));
         ((ImageViewHolder) holder).name.setText(documentInfo.getFileName());
         ((ImageViewHolder) holder).time.setText(DateUtils.getTime(documentInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//documentInfo.getTime()音频持续时间
         ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.document_picker_document_size, documentInfo.getFileLength() / 1024));
         final DocumentEntity finalDocumentInfo1 = documentInfo;
-        ((ImageViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (selectDocument.contains(finalDocumentInfo1.getFilePath())) {
-                    selectDocument.remove(finalDocumentInfo1.getFilePath());
-                } else {
-                    if (selectDocument.size() < documentPickerConfig.getMaxSize())
-                        selectDocument.add(finalDocumentInfo1.getFilePath());
-                }
-                if (onItemClickListener != null)
-                    onItemClickListener.onImageClick(selectDocument);
-                notifyDataSetChanged();
+        ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
+            if (selectDocument.contains(finalDocumentInfo1.getFilePath())) {
+                selectDocument.remove(finalDocumentInfo1.getFilePath());
+            } else {
+                if (selectDocument.size() < documentPickerConfig.getMaxSize())
+                    selectDocument.add(finalDocumentInfo1.getFilePath());
             }
+            if (onItemClickListener != null)
+                onItemClickListener.onImageClick(selectDocument);
+            notifyDataSetChanged();
         });
         initView(holder, documentInfo);
     }
@@ -115,12 +113,12 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            this.imageView = (ImageView) itemView.findViewById(R.id.document_picker_iv_document_image);
-            this.mask = (View) itemView.findViewById(R.id.document_picker_v_photo_mask);
-            this.checkBox = (CheckBox) itemView.findViewById(R.id.document_picker_cb_select);
-            this.name = (TextView) itemView.findViewById(R.id.document_picker_tv_document_name);
-            this.time = (TextView) itemView.findViewById(R.id.document_picker_tv_document_time);
-            this.size = (TextView) itemView.findViewById(R.id.document_picker_tv_document_size);
+            this.imageView = itemView.findViewById(R.id.document_picker_iv_document_image);
+            this.mask = itemView.findViewById(R.id.document_picker_v_photo_mask);
+            this.checkBox = itemView.findViewById(R.id.document_picker_cb_select);
+            this.name = itemView.findViewById(R.id.document_picker_tv_document_name);
+            this.time = itemView.findViewById(R.id.document_picker_tv_document_time);
+            this.size = itemView.findViewById(R.id.document_picker_tv_document_size);
         }
     }
 }

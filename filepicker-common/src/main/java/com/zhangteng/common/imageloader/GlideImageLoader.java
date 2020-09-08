@@ -6,13 +6,12 @@ import android.support.annotation.DrawableRes;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.zhangteng.common.R;
 
 /**
  * Created by swing on 2018/4/18.
  */
 public class GlideImageLoader implements ImageLoader {
-    private int placeHolder = R.mipmap.ic_launcher_round;
+    private int placeHolder;
 
     public GlideImageLoader placeholder(@DrawableRes int placeHolder) {
         this.placeHolder = placeHolder;

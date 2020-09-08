@@ -11,12 +11,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zhangteng.base.utils.DateUtils;
-import com.zhangteng.base.utils.DensityUtil;
+import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.folderpicker.R;
-import com.zhangteng.folderpicker.config.FolderPickerConfig;
 import com.zhangteng.searchfilelibrary.config.SearchCofig;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
+import com.zhangteng.searchfilelibrary.utils.DateUtils;
+import com.zhangteng.searchfilelibrary.utils.DensityUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Context mContext;
     private String previousPath = SearchCofig.BASE_SD_PATH;
     private List<MediaEntity> folderInfoList;
-    private FolderPickerConfig folderPickerConfig = FolderPickerConfig.getInstance();
+    private FilePickerConfig folderPickerConfig = FilePickerConfig.getInstance();
     private List<String> selectFolder = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private boolean hasPreviousBtn = false;
@@ -47,27 +47,24 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
-        MediaEntity folderInfo = null;
+        MediaEntity folderInfo;
         if (hasPreviousBtn && position == 0) {
             ((ImageViewHolder) holder).name.setText("返回上一级");
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ((ImageViewHolder) holder).name.getLayoutParams();
             layoutParams.setMargins(0, DensityUtil.dp2px(((ImageViewHolder) holder).name.getContext(), 40), 0, 0);
             ((ImageViewHolder) holder).name.setLayoutParams(layoutParams);
-            ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_folder_ico);
+            ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_FOLDER));
             ((ImageViewHolder) holder).time.setVisibility(View.GONE);
             ((ImageViewHolder) holder).size.setVisibility(View.GONE);
             ((ImageViewHolder) holder).checkBox.setVisibility(View.GONE);
             ((ImageViewHolder) holder).mask.setVisibility(View.GONE);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (onItemClickListener != null && null != previousPath && !previousPath.isEmpty()) {
-                        File previousFile = new File(previousPath);
-                        if (previousFile.exists()) {
-                            onItemClickListener.onPreviousFolder(previousPath);
-                            if (!SearchCofig.BASE_SD_PATH.equals(previousPath)) {
-                                previousPath = previousFile.getParent();
-                            }
+            holder.itemView.setOnClickListener(view -> {
+                if (onItemClickListener != null && null != previousPath && !previousPath.isEmpty()) {
+                    File previousFile = new File(previousPath);
+                    if (previousFile.exists()) {
+                        onItemClickListener.onPreviousFolder(previousPath);
+                        if (!SearchCofig.BASE_SD_PATH.equals(previousPath)) {
+                            previousPath = previousFile.getParent();
                         }
                     }
                 }
@@ -83,7 +80,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case MediaEntity.MEDIA_ZIP:
                 initView(holder, folderInfo);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_zipfile_ico);
+                ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_ZIP));
                 break;
             case MediaEntity.MEDIA_PDF:
             case MediaEntity.MEDIA_DOC:
@@ -93,32 +90,32 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case MediaEntity.MEDIA_DOCUMENT:
                 initView(holder, folderInfo);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_manuscripts_ico);
+                ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_DOCUMENT));
                 break;
             case MediaEntity.MEDIA_AUDIO:
                 initView(holder, folderInfo);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_audio_ico);
+                ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_AUDIO));
                 break;
             case MediaEntity.MEDIA_IMAGE:
                 initView(holder, folderInfo);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_picture_ico);
+                ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_IMAGE));
                 break;
             case MediaEntity.MEDIA_VIDEO:
                 initView(holder, folderInfo);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_video_ico);
+                ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_VIDEO));
                 break;
             case MediaEntity.MEDIA_FOLDER:
                 initView(holder, null);
                 initClick(((ImageViewHolder) holder).itemView, folderInfo);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_folder_ico);
+                ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_FOLDER));
                 break;
             case MediaEntity.MEDIA_UNKNOWN:
                 initView(holder, null);
                 initClick(((ImageViewHolder) holder).itemView, null);
-                ((ImageViewHolder) holder).imageView.setImageResource(R.mipmap.repository_unknown_ico);
+                ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_UNKNOWN));
                 break;
             default:
                 initView(holder, null);
@@ -130,27 +127,24 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private void initClick(View itemView, final MediaEntity finalFolderInfo) {
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (finalFolderInfo != null) {
-                    if (finalFolderInfo.getMediaType() == MediaEntity.MEDIA_FOLDER) {
-                        if (onItemClickListener != null) {
-                            previousPath = new File(finalFolderInfo.getFilePath()).getParent();
-                            onItemClickListener.onNextFolder(finalFolderInfo.getFilePath());
-                        }
-                    } else {
-                        if (selectFolder.contains(finalFolderInfo.getFilePath())) {
-                            selectFolder.remove(finalFolderInfo.getFilePath());
-                        } else {
-                            if (selectFolder.size() < folderPickerConfig.getMaxSize())
-                                selectFolder.add(finalFolderInfo.getFilePath());
-                        }
-                        if (onItemClickListener != null)
-                            onItemClickListener.onImageClick(selectFolder);
+        itemView.setOnClickListener(view -> {
+            if (finalFolderInfo != null) {
+                if (finalFolderInfo.getMediaType() == MediaEntity.MEDIA_FOLDER) {
+                    if (onItemClickListener != null) {
+                        previousPath = new File(finalFolderInfo.getFilePath()).getParent();
+                        onItemClickListener.onNextFolder(finalFolderInfo.getFilePath());
                     }
-                    notifyDataSetChanged();
+                } else {
+                    if (selectFolder.contains(finalFolderInfo.getFilePath())) {
+                        selectFolder.remove(finalFolderInfo.getFilePath());
+                    } else {
+                        if (selectFolder.size() < folderPickerConfig.getMaxSize())
+                            selectFolder.add(finalFolderInfo.getFilePath());
+                    }
+                    if (onItemClickListener != null)
+                        onItemClickListener.onImageClick(selectFolder);
                 }
+                notifyDataSetChanged();
             }
         });
     }
@@ -220,12 +214,12 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            this.imageView = (ImageView) itemView.findViewById(R.id.folder_picker_iv_folder_image);
-            this.mask = (View) itemView.findViewById(R.id.folder_picker_v_photo_mask);
-            this.checkBox = (CheckBox) itemView.findViewById(R.id.folder_picker_cb_select);
-            this.name = (TextView) itemView.findViewById(R.id.folder_picker_tv_folder_name);
-            this.time = (TextView) itemView.findViewById(R.id.folder_picker_tv_folder_time);
-            this.size = (TextView) itemView.findViewById(R.id.folder_picker_tv_folder_size);
+            this.imageView = itemView.findViewById(R.id.folder_picker_iv_folder_image);
+            this.mask = itemView.findViewById(R.id.folder_picker_v_photo_mask);
+            this.checkBox = itemView.findViewById(R.id.folder_picker_cb_select);
+            this.name = itemView.findViewById(R.id.folder_picker_tv_folder_name);
+            this.time = itemView.findViewById(R.id.folder_picker_tv_folder_time);
+            this.size = itemView.findViewById(R.id.folder_picker_tv_folder_size);
         }
     }
 }
