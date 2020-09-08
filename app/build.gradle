@@ -30,13 +30,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     if (!isRunAlone.toBoolean()) {
-        implementation project(':audiopicker')
-        implementation project(':documentpicker')
-        implementation project(':folderpicker')
-        implementation project(':imagepicker')
-        implementation project(':rarpicker')
-        implementation project(':videopicker')
+        implementation project(':filepicker-audiopicker')
+        implementation project(':filepicker-documentpicker')
+        implementation project(':filepicker-folderpicker')
+        implementation project(':filepicker-imagepicker')
+        implementation project(':filepicker-rarpicker')
+        implementation project(':filepicker-videopicker')
     }
-    implementation project(':searchfilelibrary')
-    implementation project(':common')
+    implementation project(':filepicker-searchfilelibrary')
+    implementation project(':filepicker-common')
 }
