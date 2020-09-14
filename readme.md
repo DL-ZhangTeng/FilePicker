@@ -30,9 +30,9 @@ implementation 'com.zhangteng.documentpicker:filepicker-documentpicker:1.0.1'
 ```
 
 ## 效果图
-![图片选择UI](https://img-blog.csdnimg.cn/20200914093052474.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R1b2x1bzk=,size_16,color_FFFFFF,t_70#pic_center)
-![RAR选择UI](https://img-blog.csdnimg.cn/20200914093222160.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R1b2x1bzk=,size_16,color_FFFFFF,t_70#pic_center)
-![文件夹选择UI](https://img-blog.csdnimg.cn/20200914093256824.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R1b2x1bzk=,size_16,color_FFFFFF,t_70#pic_center)
+![图片选择UI](https://github.com/duoluo9/FilePicker/blob/master/screenshot/20200914093052474.png)
+![RAR选择UI](https://github.com/duoluo9/FilePicker/blob/master/screenshot/20200914093222160.png)
+![文件夹选择UI](https://github.com/duoluo9/FilePicker/blob/master/screenshot/20200914093256824.png)
 ## 检索结果
 获取检索结果提供了2种方式（具体可参照GitHub源码）
 1、  public void getMediaList(int fileModel, Context context)
@@ -214,8 +214,8 @@ v1.0.1| 样式自定义|2020/9/8 0008 at 下午 17:58
 如果您喜欢FilePicker，或感觉FilePicker帮助到了您，可以点右上角“Star”支持一下，您的支持就是我的动力，谢谢
 
 您也可以扫描下面的二维码，请作者喝杯茶 tea
-![支付宝收款码](https://img-blog.csdnimg.cn/20200807160902219.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R1b2x1bzk=,size_16,color_FFFFFF,t_70)
-![微信收款码](https://img-blog.csdnimg.cn/20200807160902112.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R1b2x1bzk=,size_16,color_FFFFFF,t_70)
+![支付宝收款码](https://github.com/duoluo9/FilePicker/blob/master/screenshot/20200807160902219.jpg)
+![微信收款码](https://github.com/duoluo9/FilePicker/blob/master/screenshot/20200807160902112.jpg)
 
 ## 联系我
 邮箱：763263311@qq.com/ztxiaoran@foxmail.com
