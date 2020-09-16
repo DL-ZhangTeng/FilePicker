@@ -15,7 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.zhangteng.androidpermission.AndroidPermission;
+import com.zhangteng.androidpermission.Permission;
+import com.zhangteng.androidpermission.callback.Callback;
 import com.zhangteng.audiopicker.R;
 import com.zhangteng.audiopicker.adapter.AudioPickerAdapter;
 import com.zhangteng.common.callback.IHandlerCallBack;
@@ -103,7 +107,29 @@ public class AudioPickerFragment extends Fragment {
         audioPickerAdapter.setOnItemClickListener(new AudioPickerAdapter.OnItemClickListener() {
             @Override
             public void onRecordClick(List<String> selectImage) {
-                startRecord();
+                AndroidPermission androidPermission = new AndroidPermission.Buidler()
+                        .with(AudioPickerFragment.this)
+                        .permission(Permission.RECORD_AUDIO)
+                        .callback(new Callback() {
+                            @Override
+                            public void success() {
+                                startRecord();
+                            }
+
+                            @Override
+                            public void failure() {
+                                Toast.makeText(mContext, "请开启录音权限！", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void nonExecution() {
+                                //权限已通过，请求未执行
+                                startRecord();
+                            }
+                        })
+                        .build();
+                androidPermission.excute();
+
                 AudioPickerFragment.this.selectAudio = selectImage;
             }
 
@@ -115,6 +141,39 @@ public class AudioPickerFragment extends Fragment {
             }
         });
         mRecyclerViewImageList.setAdapter(audioPickerAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()) {
+            AndroidPermission androidPermission = new AndroidPermission.Buidler()
+                    .with(this)
+                    .permission(Permission.READ_EXTERNAL_STORAGE,
+                            Permission.WRITE_EXTERNAL_STORAGE)
+                    .callback(new Callback() {
+                        @Override
+                        public void success() {
+                            searchFile();
+                        }
+
+                        @Override
+                        public void failure() {
+                            Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void nonExecution() {
+                            //权限已通过，请求未执行
+                            searchFile();
+                        }
+                    })
+                    .build();
+            androidPermission.excute();
+        }
+    }
+
+    private void searchFile() {
         getActivity().startService(new Intent(getActivity(), FileService.class));
         FileService.getInstance().getMediaList(MediaEntity.MEDIA_AUDIO, getActivity());
         MediaStoreUtil.setListener(new MediaStoreUtil.AudioListener() {

@@ -15,7 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.zhangteng.androidpermission.AndroidPermission;
+import com.zhangteng.androidpermission.Permission;
+import com.zhangteng.androidpermission.callback.Callback;
 import com.zhangteng.common.callback.IHandlerCallBack;
 import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.searchfilelibrary.FileService;
@@ -103,7 +107,29 @@ public class VideoPickerFragment extends Fragment {
         videoPickerAdapter.setOnItemClickListener(new VideoPickerAdapter.OnItemClickListener() {
             @Override
             public void onCameraClick(List<String> selectVideo) {
-                startCamera();
+                AndroidPermission androidPermission = new AndroidPermission.Buidler()
+                        .with(VideoPickerFragment.this)
+                        .permission(Permission.CAMERA,
+                                Permission.RECORD_AUDIO)
+                        .callback(new Callback() {
+                            @Override
+                            public void success() {
+                                startCamera();
+                            }
+
+                            @Override
+                            public void failure() {
+                                Toast.makeText(mContext, "请开启相机与录音权限！", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void nonExecution() {
+                                //权限已通过，请求未执行
+                                startCamera();
+                            }
+                        })
+                        .build();
+                androidPermission.excute();
                 VideoPickerFragment.this.selectVideo = selectVideo;
             }
 
@@ -115,7 +141,39 @@ public class VideoPickerFragment extends Fragment {
             }
         });
         mRecyclerViewVideoList.setAdapter(videoPickerAdapter);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()) {
+            AndroidPermission androidPermission = new AndroidPermission.Buidler()
+                    .with(this)
+                    .permission(Permission.READ_EXTERNAL_STORAGE,
+                            Permission.WRITE_EXTERNAL_STORAGE)
+                    .callback(new Callback() {
+                        @Override
+                        public void success() {
+                            searchFile();
+                        }
+
+                        @Override
+                        public void failure() {
+                            Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void nonExecution() {
+                            //权限已通过，请求未执行
+                            searchFile();
+                        }
+                    })
+                    .build();
+            androidPermission.excute();
+        }
+    }
+
+    private void searchFile() {
         getActivity().startService(new Intent(getContext(), FileService.class));
         MediaStoreUtil.setListener(new MediaStoreUtil.VideoListener() {
 

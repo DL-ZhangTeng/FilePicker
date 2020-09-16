@@ -95,7 +95,6 @@ public class FileService extends Service {
      * 传入路径,检索目录下的文件夹和文件
      * @return
      */
-
     public void getFileList(String path) {
         getFolder(path);
     }

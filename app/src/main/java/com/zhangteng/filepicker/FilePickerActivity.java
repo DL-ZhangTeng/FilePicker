@@ -15,7 +15,6 @@ public class FilePickerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MyTabLayout myTabLayout = findViewById(R.id.mytablayout);
         ViewPager viewPager = findViewById(R.id.viewpager);
-        viewPager.setOffscreenPageLimit(6);
         FilePickerAdapter filePickerAdapter = new FilePickerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(filePickerAdapter);
         myTabLayout.setupWithViewPager(viewPager);

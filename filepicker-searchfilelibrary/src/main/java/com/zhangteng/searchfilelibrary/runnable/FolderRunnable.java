@@ -86,10 +86,12 @@ public class FolderRunnable implements Runnable {
                 callBack.onFailed(e.toString());
             }
         }
-        if (callBack != null && !file_lists.isEmpty()) {
-            callBack.onSuccess(file_lists);
+        if (null != file_lists) {
+            if (callBack != null && !file_lists.isEmpty()) {
+                callBack.onSuccess(file_lists);
+            }
+            Log.i("ApkRunnable", "====检索的文件的个数====" + file_lists.size());
         }
-        Log.i("ApkRunnable", "====检索的文件的个数====" + file_lists.size());
         return file_lists;
     }
 }
