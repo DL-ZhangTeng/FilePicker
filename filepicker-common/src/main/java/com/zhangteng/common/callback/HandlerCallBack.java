@@ -2,6 +2,8 @@ package com.zhangteng.common.callback;
 
 import android.util.Log;
 
+import com.zhangteng.searchfilelibrary.entity.MediaEntity;
+
 import java.util.List;
 
 /**
@@ -16,7 +18,7 @@ public class HandlerCallBack implements IHandlerCallBack {
     }
 
     @Override
-    public void onSuccess(List<String> audioList) {
+    public void onSuccess(List<MediaEntity> audioList) {
         Log.i(TAG, "onSuccess: 返回数据");
     }
 
@@ -36,7 +38,7 @@ public class HandlerCallBack implements IHandlerCallBack {
     }
 
     @Override
-    public void onPreview(List<String> selectAudio) {
+    public void onPreview(List<MediaEntity> selectAudio) {
         Log.i(TAG, "onPreview: 预览");
     }
 }

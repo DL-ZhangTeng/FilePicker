@@ -42,7 +42,7 @@ public class DocumentPickerFragment extends Fragment {
     private DocumentPickerAdapter documentPickerAdapter;
     private FilePickerConfig documentPickerConfig;
     private IHandlerCallBack iHandlerCallBack;
-    private List<String> selectDocument;
+    private List<MediaEntity> selectDocument;
 
     public DocumentPickerFragment() {
 

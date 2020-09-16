@@ -51,7 +51,7 @@ public class AudioPickerFragment extends Fragment {
     private File recordTempFile;
     private FilePickerConfig audioPickerConfig;
     private IHandlerCallBack iHandlerCallBack;
-    private List<String> selectAudio;
+    private List<MediaEntity> selectAudio;
 
     public AudioPickerFragment() {
 
@@ -93,7 +93,7 @@ public class AudioPickerFragment extends Fragment {
     }
 
     public void initData() {
-        audioPickerConfig = new FilePickerConfig(new FilePickerConfig.Builder());
+        audioPickerConfig = FilePickerConfig.getInstance();
         selectAudio = audioPickerConfig.getPathList();
         iHandlerCallBack = audioPickerConfig.getiHandlerCallBack();
         iHandlerCallBack.onStart();
@@ -106,7 +106,7 @@ public class AudioPickerFragment extends Fragment {
         audioPickerAdapter = new AudioPickerAdapter(mContext, imageInfos);
         audioPickerAdapter.setOnItemClickListener(new AudioPickerAdapter.OnItemClickListener() {
             @Override
-            public void onRecordClick(List<String> selectImage) {
+            public void onRecordClick(List<MediaEntity> selectImage) {
                 AndroidPermission androidPermission = new AndroidPermission.Buidler()
                         .with(AudioPickerFragment.this)
                         .permission(Permission.RECORD_AUDIO)
@@ -134,7 +134,7 @@ public class AudioPickerFragment extends Fragment {
             }
 
             @Override
-            public void onImageClick(List<String> selectImage) {
+            public void onImageClick(List<MediaEntity> selectImage) {
                 mTextViewSelected.setText(mContext.getString(R.string.audio_picker_selected, selectImage.size()));
                 iHandlerCallBack.onSuccess(selectImage);
                 AudioPickerFragment.this.selectAudio = selectImage;
@@ -209,7 +209,8 @@ public class AudioPickerFragment extends Fragment {
                     if (!audioPickerConfig.isMultiSelect()) {
                         selectAudio.clear();
                     }
-                    selectAudio.add(recordTempFile.getAbsolutePath());
+                    MediaEntity mediaEntity = new AudioEntity(recordTempFile.getName(), recordTempFile.getAbsolutePath(), recordTempFile.length(), MediaEntity.MEDIA_AUDIO, recordTempFile.lastModified());
+                    selectAudio.add(mediaEntity);
                     // 通知系统扫描该文件夹
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     Uri uri = Uri.fromFile(new File(FileUtils.getFilesDir(mContext) + audioPickerConfig.getFilePath()));

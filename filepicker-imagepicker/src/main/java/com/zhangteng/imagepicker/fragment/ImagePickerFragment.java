@@ -51,7 +51,7 @@ public class ImagePickerFragment extends Fragment {
     private File cameraTempFile;
     private FilePickerConfig imagePickerConfig;
     private IHandlerCallBack iHandlerCallBack;
-    private List<String> selectImage;
+    private List<MediaEntity> selectImage;
 
     public ImagePickerFragment() {
 
@@ -106,7 +106,7 @@ public class ImagePickerFragment extends Fragment {
         imagePickerAdapter = new ImagePickerAdapter(mContext, imageInfos);
         imagePickerAdapter.setOnItemClickListener(new ImagePickerAdapter.OnItemClickListener() {
             @Override
-            public void onCameraClick(List<String> selectImage) {
+            public void onCameraClick(List<MediaEntity> selectImage) {
                 AndroidPermission androidPermission = new AndroidPermission.Buidler()
                         .with(ImagePickerFragment.this)
                         .permission(Permission.CAMERA)
@@ -134,7 +134,7 @@ public class ImagePickerFragment extends Fragment {
             }
 
             @Override
-            public void onImageClick(List<String> selectImage) {
+            public void onImageClick(List<MediaEntity> selectImage) {
                 mTextViewSelected.setText(mContext.getString(R.string.image_picker_selected, selectImage.size()));
                 iHandlerCallBack.onSuccess(selectImage);
                 ImagePickerFragment.this.selectImage = selectImage;
@@ -214,7 +214,8 @@ public class ImagePickerFragment extends Fragment {
                     if (!imagePickerConfig.isMultiSelect()) {
                         selectImage.clear();
                     }
-                    selectImage.add(cameraTempFile.getAbsolutePath());
+                    MediaEntity mediaEntity = new ImageEntity(cameraTempFile.getName(), cameraTempFile.getAbsolutePath(), cameraTempFile.length(), MediaEntity.MEDIA_IMAGE, cameraTempFile.lastModified());
+                    selectImage.add(mediaEntity);
                     // 通知系统扫描该文件夹
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     Uri uri = Uri.fromFile(new File(FileUtils.getFilesDir(mContext) + imagePickerConfig.getFilePath()));

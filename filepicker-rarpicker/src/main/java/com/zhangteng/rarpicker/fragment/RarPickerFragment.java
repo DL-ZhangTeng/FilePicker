@@ -43,7 +43,7 @@ public class RarPickerFragment extends Fragment {
     private RarPickerAdapter rarPickerAdapter;
     private FilePickerConfig rarPickerConfig;
     private IHandlerCallBack iHandlerCallBack;
-    private List<String> selectRar;
+    private List<MediaEntity> selectRar;
 
     public RarPickerFragment() {
 

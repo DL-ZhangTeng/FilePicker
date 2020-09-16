@@ -30,7 +30,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private String previousPath = SearchCofig.BASE_SD_PATH;
     private List<MediaEntity> folderInfoList;
     private FilePickerConfig folderPickerConfig = FilePickerConfig.getInstance();
-    private List<String> selectFolder = new ArrayList<>();
+    private List<MediaEntity> selectFolder = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private boolean hasPreviousBtn = false;
 
@@ -135,11 +135,11 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         onItemClickListener.onNextFolder(finalFolderInfo.getFilePath());
                     }
                 } else {
-                    if (selectFolder.contains(finalFolderInfo.getFilePath())) {
-                        selectFolder.remove(finalFolderInfo.getFilePath());
+                    if (selectFolder.contains(finalFolderInfo)) {
+                        selectFolder.remove(finalFolderInfo);
                     } else {
                         if (selectFolder.size() < folderPickerConfig.getMaxSize())
-                            selectFolder.add(finalFolderInfo.getFilePath());
+                            selectFolder.add(finalFolderInfo);
                     }
                     if (onItemClickListener != null)
                         onItemClickListener.onImageClick(selectFolder);
@@ -156,7 +156,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((ImageViewHolder) holder).checkBox.setVisibility(View.GONE);
         }
         if (folderInfo != null) {
-            if (selectFolder.contains(folderInfo.getFilePath())) {
+            if (selectFolder.contains(folderInfo)) {
                 ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
                 ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
                 ((ImageViewHolder) holder).checkBox.setChecked(true);
@@ -196,7 +196,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public interface OnItemClickListener {
-        void onImageClick(List<String> selectImage);
+        void onImageClick(List<MediaEntity> selectImage);
 
         void onNextFolder(String nextPath);
 

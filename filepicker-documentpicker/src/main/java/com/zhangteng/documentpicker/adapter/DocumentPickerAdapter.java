@@ -26,7 +26,7 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Context mContext;
     private List<DocumentEntity> documentInfoList;
     private FilePickerConfig documentPickerConfig = FilePickerConfig.getInstance();
-    private List<String> selectDocument = new ArrayList<>();
+    private List<MediaEntity> selectDocument = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public DocumentPickerAdapter(Context context, ArrayList<DocumentEntity> documentInfoList) {
@@ -37,8 +37,7 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ImageViewHolder imageViewHolder = new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_document_picker_document, parent, false));
-        return imageViewHolder;
+        return new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_document_picker_document, parent, false));
     }
 
     @Override
@@ -51,11 +50,11 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.document_picker_document_size, documentInfo.getFileLength() / 1024));
         final DocumentEntity finalDocumentInfo1 = documentInfo;
         ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
-            if (selectDocument.contains(finalDocumentInfo1.getFilePath())) {
-                selectDocument.remove(finalDocumentInfo1.getFilePath());
+            if (selectDocument.contains(finalDocumentInfo1)) {
+                selectDocument.remove(finalDocumentInfo1);
             } else {
                 if (selectDocument.size() < documentPickerConfig.getMaxSize())
-                    selectDocument.add(finalDocumentInfo1.getFilePath());
+                    selectDocument.add(finalDocumentInfo1);
             }
             if (onItemClickListener != null)
                 onItemClickListener.onImageClick(selectDocument);
@@ -70,7 +69,7 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.GONE);
         }
-        if (selectDocument.contains(documentInfo.getFilePath())) {
+        if (selectDocument.contains(documentInfo)) {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
             ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
             ((ImageViewHolder) holder).checkBox.setChecked(true);
@@ -99,7 +98,7 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public interface OnItemClickListener {
-        void onImageClick(List<String> selectImage);
+        void onImageClick(List<MediaEntity> selectImage);
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {

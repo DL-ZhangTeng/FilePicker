@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.zhangteng.common.config.FilePickerConfig;
+import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 import com.zhangteng.searchfilelibrary.entity.VideoEntity;
 import com.zhangteng.searchfilelibrary.utils.ScreenUtils;
 import com.zhangteng.videopicker.R;
@@ -26,7 +27,7 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Context mContext;
     private List<VideoEntity> videoInfoList;
     private FilePickerConfig videoPickerConfig = FilePickerConfig.getInstance();
-    private List<String> selectVideo = new ArrayList<>();
+    private List<MediaEntity> selectVideo = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public VideoPickerAdapter(Context context, ArrayList<VideoEntity> videoInfoList) {
@@ -69,11 +70,11 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 videoPickerConfig.getImageLoader().loadImage(mContext, ((VideoViewHolder) holder).imageView, videoInfo.getFilePath());
                 final VideoEntity finalVideoInfo = videoInfo;
                 ((VideoViewHolder) holder).imageView.setOnClickListener(view -> {
-                    if (selectVideo.contains(finalVideoInfo.getFilePath())) {
-                        selectVideo.remove(finalVideoInfo.getFilePath());
+                    if (selectVideo.contains(finalVideoInfo)) {
+                        selectVideo.remove(finalVideoInfo);
                     } else {
                         if (selectVideo.size() < videoPickerConfig.getMaxSize()) {
-                            selectVideo.add(finalVideoInfo.getFilePath());
+                            selectVideo.add(finalVideoInfo);
                         }
                     }
                     if (onItemClickListener != null)
@@ -87,11 +88,11 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             videoPickerConfig.getImageLoader().loadImage(mContext, ((VideoViewHolder) holder).imageView, videoInfo.getFilePath());
             final VideoEntity finalVideoInfo1 = videoInfo;
             ((VideoViewHolder) holder).imageView.setOnClickListener(view -> {
-                if (selectVideo.contains(finalVideoInfo1.getFilePath())) {
-                    selectVideo.remove(finalVideoInfo1.getFilePath());
+                if (selectVideo.contains(finalVideoInfo1)) {
+                    selectVideo.remove(finalVideoInfo1);
                 } else {
                     if (selectVideo.size() < videoPickerConfig.getMaxSize())
-                        selectVideo.add(finalVideoInfo1.getFilePath());
+                        selectVideo.add(finalVideoInfo1);
                 }
                 if (onItemClickListener != null)
                     onItemClickListener.onVideoClick(selectVideo);
@@ -108,7 +109,7 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else {
             ((VideoViewHolder) holder).checkBox.setVisibility(View.GONE);
         }
-        if (selectVideo.contains(videoInfo.getFilePath())) {
+        if (selectVideo.contains(videoInfo)) {
             ((VideoViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
             ((VideoViewHolder) holder).mask.setVisibility(View.VISIBLE);
             ((VideoViewHolder) holder).checkBox.setChecked(true);
@@ -147,9 +148,9 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public interface OnItemClickListener {
-        void onCameraClick(List<String> selectVideo);
+        void onCameraClick(List<MediaEntity> selectVideo);
 
-        void onVideoClick(List<String> selectVideo);
+        void onVideoClick(List<MediaEntity> selectVideo);
     }
 
     private static class VideoViewHolder extends RecyclerView.ViewHolder {

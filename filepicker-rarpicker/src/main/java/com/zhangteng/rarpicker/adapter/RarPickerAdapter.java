@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.rarpicker.R;
+import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 import com.zhangteng.searchfilelibrary.entity.RarEntity;
 import com.zhangteng.searchfilelibrary.utils.DateUtils;
 
@@ -25,7 +26,7 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context mContext;
     private List<RarEntity> rarInfoList;
     private FilePickerConfig rarPickerConfig = FilePickerConfig.getInstance();
-    private List<String> selectRar = new ArrayList<>();
+    private List<MediaEntity> selectRar = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public RarPickerAdapter(Context context, ArrayList<RarEntity> rarInfoList) {
@@ -48,11 +49,11 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.rar_picker_rar_size, rarInfo.getFileLength() / 1024));
         final RarEntity finalRarInfo1 = rarInfo;
         ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
-            if (selectRar.contains(finalRarInfo1.getFilePath())) {
-                selectRar.remove(finalRarInfo1.getFilePath());
+            if (selectRar.contains(finalRarInfo1)) {
+                selectRar.remove(finalRarInfo1);
             } else {
                 if (selectRar.size() < rarPickerConfig.getMaxSize())
-                    selectRar.add(finalRarInfo1.getFilePath());
+                    selectRar.add(finalRarInfo1);
             }
             if (onItemClickListener != null)
                 onItemClickListener.onImageClick(selectRar);
@@ -67,7 +68,7 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.GONE);
         }
-        if (selectRar.contains(rarInfo.getFilePath())) {
+        if (selectRar.contains(rarInfo)) {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
             ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
             ((ImageViewHolder) holder).checkBox.setChecked(true);
@@ -96,7 +97,7 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public interface OnItemClickListener {
-        void onImageClick(List<String> selectImage);
+        void onImageClick(List<MediaEntity> selectImage);
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {

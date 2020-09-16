@@ -23,6 +23,7 @@ import com.zhangteng.androidpermission.callback.Callback;
 import com.zhangteng.common.callback.IHandlerCallBack;
 import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.searchfilelibrary.FileService;
+import com.zhangteng.searchfilelibrary.entity.ImageEntity;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 import com.zhangteng.searchfilelibrary.entity.VideoEntity;
 import com.zhangteng.searchfilelibrary.utils.FileUtils;
@@ -51,7 +52,7 @@ public class VideoPickerFragment extends Fragment {
     private File cameraTempFile;
     private FilePickerConfig videoPickerConfig;
     private IHandlerCallBack iHandlerCallBack;
-    private List<String> selectVideo;
+    private List<MediaEntity> selectVideo;
 
     public VideoPickerFragment() {
 
@@ -106,7 +107,7 @@ public class VideoPickerFragment extends Fragment {
         videoPickerAdapter = new VideoPickerAdapter(mContext, videoInfos);
         videoPickerAdapter.setOnItemClickListener(new VideoPickerAdapter.OnItemClickListener() {
             @Override
-            public void onCameraClick(List<String> selectVideo) {
+            public void onCameraClick(List<MediaEntity> selectVideo) {
                 AndroidPermission androidPermission = new AndroidPermission.Buidler()
                         .with(VideoPickerFragment.this)
                         .permission(Permission.CAMERA,
@@ -134,7 +135,7 @@ public class VideoPickerFragment extends Fragment {
             }
 
             @Override
-            public void onVideoClick(List<String> selectVideo) {
+            public void onVideoClick(List<MediaEntity> selectVideo) {
                 mTextViewSelected.setText(mContext.getString(R.string.video_picker_selected, selectVideo.size()));
                 iHandlerCallBack.onSuccess(selectVideo);
                 VideoPickerFragment.this.selectVideo = selectVideo;
@@ -209,7 +210,8 @@ public class VideoPickerFragment extends Fragment {
                     if (!videoPickerConfig.isMultiSelect()) {
                         selectVideo.clear();
                     }
-                    selectVideo.add(cameraTempFile.getAbsolutePath());
+                    MediaEntity mediaEntity = new ImageEntity(cameraTempFile.getName(), cameraTempFile.getAbsolutePath(), cameraTempFile.length(), MediaEntity.MEDIA_VIDEO, cameraTempFile.lastModified());
+                    selectVideo.add(mediaEntity);
                     // 通知系统扫描该文件夹
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     Uri uri = Uri.fromFile(new File(FileUtils.getFilesDir(mContext) + videoPickerConfig.getFilePath()));

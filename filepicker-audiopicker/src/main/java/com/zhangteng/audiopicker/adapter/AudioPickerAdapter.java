@@ -28,7 +28,7 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Context mContext;
     private List<AudioEntity> audioInfoList;
     private FilePickerConfig audioPickerConfig = FilePickerConfig.getInstance();
-    private List<String> selectAudio = new ArrayList<>();
+    private List<MediaEntity> selectAudio = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public AudioPickerAdapter(Context context, ArrayList<AudioEntity> audioInfoList) {
@@ -74,11 +74,11 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.audio_picker_audio_size, audioInfo.getFileLength() / 1024));
                 final AudioEntity finalAudioInfo = audioInfo;
                 ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
-                    if (selectAudio.contains(finalAudioInfo.getFilePath())) {
-                        selectAudio.remove(finalAudioInfo.getFilePath());
+                    if (selectAudio.contains(finalAudioInfo)) {
+                        selectAudio.remove(finalAudioInfo);
                     } else {
                         if (selectAudio.size() < audioPickerConfig.getMaxSize()) {
-                            selectAudio.add(finalAudioInfo.getFilePath());
+                            selectAudio.add(finalAudioInfo);
                         }
                     }
                     if (onItemClickListener != null)
@@ -95,11 +95,11 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.audio_picker_audio_size, audioInfo.getFileLength() / 1024));
             final AudioEntity finalAudioInfo1 = audioInfo;
             ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
-                if (selectAudio.contains(finalAudioInfo1.getFilePath())) {
-                    selectAudio.remove(finalAudioInfo1.getFilePath());
+                if (selectAudio.contains(finalAudioInfo1)) {
+                    selectAudio.remove(finalAudioInfo1);
                 } else {
                     if (selectAudio.size() < audioPickerConfig.getMaxSize())
-                        selectAudio.add(finalAudioInfo1.getFilePath());
+                        selectAudio.add(finalAudioInfo1);
                 }
                 if (onItemClickListener != null)
                     onItemClickListener.onImageClick(selectAudio);
@@ -116,7 +116,7 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.GONE);
         }
-        if (selectAudio.contains(audioInfo.getFilePath())) {
+        if (selectAudio.contains(audioInfo)) {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
             ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
             ((ImageViewHolder) holder).checkBox.setChecked(true);
@@ -155,9 +155,9 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public interface OnItemClickListener {
-        void onRecordClick(List<String> selectImage);
+        void onRecordClick(List<MediaEntity> selectImage);
 
-        void onImageClick(List<String> selectImage);
+        void onImageClick(List<MediaEntity> selectImage);
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {

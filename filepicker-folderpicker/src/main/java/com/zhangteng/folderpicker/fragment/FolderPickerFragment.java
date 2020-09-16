@@ -47,7 +47,7 @@ public class FolderPickerFragment extends Fragment {
     private FolderPickerAdapter folderPickerAdapter;
     private FilePickerConfig folderPickerConfig;
     private IHandlerCallBack iHandlerCallBack;
-    private List<String> selectFolder;
+    private List<MediaEntity> selectFolder;
 
     public FolderPickerFragment() {
 
@@ -109,7 +109,7 @@ public class FolderPickerFragment extends Fragment {
         folderPickerAdapter.setHasPreviousBtn(true);
         folderPickerAdapter.setOnItemClickListener(new FolderPickerAdapter.OnItemClickListener() {
             @Override
-            public void onImageClick(List<String> selectImage) {
+            public void onImageClick(List<MediaEntity> selectImage) {
                 mTextViewSelected.setText(mContext.getString(R.string.folder_picker_selected, selectImage.size()));
                 iHandlerCallBack.onSuccess(selectImage);
                 FolderPickerFragment.this.selectFolder = selectImage;

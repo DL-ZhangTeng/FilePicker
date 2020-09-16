@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.imagepicker.R;
 import com.zhangteng.searchfilelibrary.entity.ImageEntity;
+import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 import com.zhangteng.searchfilelibrary.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Context mContext;
     private List<ImageEntity> imageInfoList;
     private FilePickerConfig imagePickerConfig = FilePickerConfig.getInstance();
-    private List<String> selectImage = new ArrayList<>();
+    private List<MediaEntity> selectImage = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public ImagePickerAdapter(Context context, ArrayList<ImageEntity> imageInfoList) {
@@ -69,11 +70,11 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 imagePickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, imageInfo.getFilePath());
                 final ImageEntity finalImageInfo = imageInfo;
                 ((ImageViewHolder) holder).imageView.setOnClickListener(view -> {
-                    if (selectImage.contains(finalImageInfo.getFilePath())) {
-                        selectImage.remove(finalImageInfo.getFilePath());
+                    if (selectImage.contains(finalImageInfo)) {
+                        selectImage.remove(finalImageInfo);
                     } else {
                         if (selectImage.size() < imagePickerConfig.getMaxSize()) {
-                            selectImage.add(finalImageInfo.getFilePath());
+                            selectImage.add(finalImageInfo);
                         }
                     }
                     if (onItemClickListener != null)
@@ -87,11 +88,11 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             imagePickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, imageInfo.getFilePath());
             final ImageEntity finalImageInfo1 = imageInfo;
             ((ImageViewHolder) holder).imageView.setOnClickListener(view -> {
-                if (selectImage.contains(finalImageInfo1.getFilePath())) {
-                    selectImage.remove(finalImageInfo1.getFilePath());
+                if (selectImage.contains(finalImageInfo1)) {
+                    selectImage.remove(finalImageInfo1);
                 } else {
                     if (selectImage.size() < imagePickerConfig.getMaxSize())
-                        selectImage.add(finalImageInfo1.getFilePath());
+                        selectImage.add(finalImageInfo1);
                 }
                 if (onItemClickListener != null)
                     onItemClickListener.onImageClick(selectImage);
@@ -108,7 +109,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.GONE);
         }
-        if (selectImage.contains(imageInfo.getFilePath())) {
+        if (selectImage.contains(imageInfo)) {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
             ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
             ((ImageViewHolder) holder).checkBox.setChecked(true);
@@ -147,9 +148,9 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public interface OnItemClickListener {
-        void onCameraClick(List<String> selectImage);
+        void onCameraClick(List<MediaEntity> selectImage);
 
-        void onImageClick(List<String> selectImage);
+        void onImageClick(List<MediaEntity> selectImage);
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {

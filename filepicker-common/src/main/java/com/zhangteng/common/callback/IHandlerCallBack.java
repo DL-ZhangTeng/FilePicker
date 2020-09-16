@@ -1,5 +1,7 @@
 package com.zhangteng.common.callback;
 
+import com.zhangteng.searchfilelibrary.entity.MediaEntity;
+
 import java.util.List;
 
 /**
@@ -9,7 +11,7 @@ public interface IHandlerCallBack {
 
     void onStart();
 
-    void onSuccess(List<String> selectAudio);
+    void onSuccess(List<MediaEntity> selectAudio);
 
     void onCancel();
 
@@ -17,5 +19,5 @@ public interface IHandlerCallBack {
 
     void onError();
 
-    void onPreview(List<String> selectAudio);
+    void onPreview(List<MediaEntity> selectAudio);
 }
