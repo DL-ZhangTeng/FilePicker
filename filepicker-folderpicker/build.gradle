@@ -66,7 +66,7 @@ dependencies {
 //def description = '文件选择器'//添加项目描述
 //
 //group = "com.zhangteng.folderpicker"//发布aar前缀根节点
-//version = "1.0.1"//发布aar的库版本
+//version = bintrayVersion.toString()//发布aar的库版本
 //
 //install {
 //    repositories.mavenInstaller {

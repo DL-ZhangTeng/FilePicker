@@ -1,13 +1,12 @@
-if(isRunAlone.toBoolean()){
+if (isRunAlone.toBoolean()) {
     apply plugin: 'com.android.application'
-}else{
-    apply plugin:'com.android.library'
+} else {
+    apply plugin: 'com.android.library'
     apply plugin: 'com.github.dcendents.android-maven'
     apply plugin: 'com.jfrog.bintray'
 }
 android {
     compileSdkVersion 28
-
 
 
     defaultConfig {
@@ -65,7 +64,7 @@ dependencies {
 //def description = '文档选择器'//添加项目描述
 //
 //group = "com.zhangteng.documentpicker"//发布aar前缀根节点
-//version = "1.0.1"//发布aar的库版本
+//version = bintrayVersion.toString()//发布aar的库版本
 //
 //install {
 //    repositories.mavenInstaller {
