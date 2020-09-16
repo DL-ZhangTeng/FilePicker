@@ -109,12 +109,20 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.GONE);
         }
-        if (selectImage.contains(imageInfo)) {
-            ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
-            ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
-            ((ImageViewHolder) holder).checkBox.setChecked(true);
-            ((ImageViewHolder) holder).checkBox.setButtonDrawable(R.mipmap.picker_select_checked);
-        } else {
+        if (null == selectImage) selectImage = new ArrayList<>();
+        boolean isContains = false;
+        for (MediaEntity mediaEntity : selectImage) {
+            if (null != mediaEntity
+                    && null != mediaEntity.getFilePath()
+                    && mediaEntity.getFilePath().equals(imageInfo.getFilePath())) {
+                isContains = true;
+                ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
+                ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
+                ((ImageViewHolder) holder).checkBox.setChecked(true);
+                ((ImageViewHolder) holder).checkBox.setButtonDrawable(R.mipmap.picker_select_checked);
+            }
+        }
+        if (!isContains) {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
             ((ImageViewHolder) holder).mask.setVisibility(View.GONE);
             ((ImageViewHolder) holder).checkBox.setChecked(false);

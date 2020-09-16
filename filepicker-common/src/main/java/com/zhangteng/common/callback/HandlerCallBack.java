@@ -28,7 +28,7 @@ public class HandlerCallBack implements IHandlerCallBack {
     }
 
     @Override
-    public void onFinish() {
+    public void onFinish(List<MediaEntity> selectAudio) {
         Log.i(TAG, "onFinish: 结束");
     }
 

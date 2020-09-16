@@ -86,7 +86,7 @@ public class VideoPickerFragment extends Fragment {
         mTextViewSelected.setOnClickListener(view1 -> iHandlerCallBack.onSuccess(selectVideo));
         mTextViewUpload.setOnClickListener(view12 -> {
             iHandlerCallBack.onSuccess(selectVideo);
-            iHandlerCallBack.onFinish();
+            iHandlerCallBack.onFinish(selectVideo);
             if (null != getActivity()) {
                 getActivity().finish();
             }

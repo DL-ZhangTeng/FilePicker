@@ -76,7 +76,7 @@ public class DocumentPickerFragment extends Fragment {
         mTextViewSelected.setOnClickListener(view1 -> iHandlerCallBack.onSuccess(selectDocument));
         mTextViewUpload.setOnClickListener(view12 -> {
             iHandlerCallBack.onSuccess(selectDocument);
-            iHandlerCallBack.onFinish();
+            iHandlerCallBack.onFinish(selectDocument);
             if (null != getActivity()) {
                 getActivity().finish();
             }

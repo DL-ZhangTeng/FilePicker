@@ -156,12 +156,20 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((ImageViewHolder) holder).checkBox.setVisibility(View.GONE);
         }
         if (folderInfo != null) {
-            if (selectFolder.contains(folderInfo)) {
-                ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
-                ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
-                ((ImageViewHolder) holder).checkBox.setChecked(true);
-                ((ImageViewHolder) holder).checkBox.setButtonDrawable(R.mipmap.picker_select_checked);
-            } else {
+            if (null == selectFolder) selectFolder = new ArrayList<>();
+            boolean isContains = false;
+            for (MediaEntity mediaEntity : selectFolder) {
+                if (null != mediaEntity
+                        && null != mediaEntity.getFilePath()
+                        && mediaEntity.getFilePath().equals(folderInfo.getFilePath())) {
+                    isContains = true;
+                    ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
+                    ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
+                    ((ImageViewHolder) holder).checkBox.setChecked(true);
+                    ((ImageViewHolder) holder).checkBox.setButtonDrawable(R.mipmap.picker_select_checked);
+                }
+            }
+            if (!isContains) {
                 ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
                 ((ImageViewHolder) holder).mask.setVisibility(View.GONE);
                 ((ImageViewHolder) holder).checkBox.setChecked(false);

@@ -77,7 +77,7 @@ public class RarPickerFragment extends Fragment {
         mTextViewSelected.setOnClickListener(view1 -> iHandlerCallBack.onSuccess(selectRar));
         mTextViewUpload.setOnClickListener(view12 -> {
             iHandlerCallBack.onSuccess(selectRar);
-            iHandlerCallBack.onFinish();
+            iHandlerCallBack.onFinish(selectRar);
             if (null != getActivity()) {
                 getActivity().finish();
             }

@@ -85,7 +85,7 @@ public class ImagePickerFragment extends Fragment {
         mTextViewSelected.setOnClickListener(view1 -> iHandlerCallBack.onSuccess(selectImage));
         mTextViewUpload.setOnClickListener(view12 -> {
             iHandlerCallBack.onSuccess(selectImage);
-            iHandlerCallBack.onFinish();
+            iHandlerCallBack.onFinish(selectImage);
             if (null != getActivity()) {
                 getActivity().finish();
             }

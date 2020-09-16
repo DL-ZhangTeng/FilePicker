@@ -85,7 +85,7 @@ public class AudioPickerFragment extends Fragment {
         mTextViewSelected.setOnClickListener(view1 -> iHandlerCallBack.onSuccess(selectAudio));
         mTextViewUpload.setOnClickListener(view12 -> {
             iHandlerCallBack.onSuccess(selectAudio);
-            iHandlerCallBack.onFinish();
+            iHandlerCallBack.onFinish(selectAudio);
             if (null != getActivity()) {
                 getActivity().finish();
             }

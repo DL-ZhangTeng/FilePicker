@@ -15,7 +15,7 @@ public interface IHandlerCallBack {
 
     void onCancel();
 
-    void onFinish();
+    void onFinish(List<MediaEntity> selectAudio);
 
     void onError();
 

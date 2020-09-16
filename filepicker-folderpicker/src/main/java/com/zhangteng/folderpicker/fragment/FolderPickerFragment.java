@@ -81,7 +81,7 @@ public class FolderPickerFragment extends Fragment {
         mTextViewSelected.setOnClickListener(view1 -> iHandlerCallBack.onSuccess(selectFolder));
         mTextViewUpload.setOnClickListener(view12 -> {
             iHandlerCallBack.onSuccess(selectFolder);
-            iHandlerCallBack.onFinish();
+            iHandlerCallBack.onFinish(selectFolder);
             if (null != getActivity()) {
                 getActivity().finish();
             }

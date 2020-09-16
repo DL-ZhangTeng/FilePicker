@@ -68,12 +68,20 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.GONE);
         }
-        if (selectRar.contains(rarInfo)) {
-            ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
-            ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
-            ((ImageViewHolder) holder).checkBox.setChecked(true);
-            ((ImageViewHolder) holder).checkBox.setButtonDrawable(R.mipmap.picker_select_checked);
-        } else {
+        if (null == selectRar) selectRar = new ArrayList<>();
+        boolean isContains = false;
+        for (MediaEntity mediaEntity : selectRar) {
+            if (null != mediaEntity
+                    && null != mediaEntity.getFilePath()
+                    && mediaEntity.getFilePath().equals(rarInfo.getFilePath())) {
+                isContains = true;
+                ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
+                ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
+                ((ImageViewHolder) holder).checkBox.setChecked(true);
+                ((ImageViewHolder) holder).checkBox.setButtonDrawable(R.mipmap.picker_select_checked);
+            }
+        }
+        if (!isContains) {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
             ((ImageViewHolder) holder).mask.setVisibility(View.GONE);
             ((ImageViewHolder) holder).checkBox.setChecked(false);

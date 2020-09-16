@@ -116,12 +116,20 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.GONE);
         }
-        if (selectAudio.contains(audioInfo)) {
-            ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
-            ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
-            ((ImageViewHolder) holder).checkBox.setChecked(true);
-            ((ImageViewHolder) holder).checkBox.setButtonDrawable(R.mipmap.picker_select_checked);
-        } else {
+        if (null == selectAudio) selectAudio = new ArrayList<>();
+        boolean isContains = false;
+        for (MediaEntity mediaEntity : selectAudio) {
+            if (null != mediaEntity
+                    && null != mediaEntity.getFilePath()
+                    && mediaEntity.getFilePath().equals(audioInfo.getFilePath())) {
+                isContains = true;
+                ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
+                ((ImageViewHolder) holder).mask.setVisibility(View.VISIBLE);
+                ((ImageViewHolder) holder).checkBox.setChecked(true);
+                ((ImageViewHolder) holder).checkBox.setButtonDrawable(R.mipmap.picker_select_checked);
+            }
+        }
+        if (!isContains) {
             ((ImageViewHolder) holder).checkBox.setVisibility(View.VISIBLE);
             ((ImageViewHolder) holder).mask.setVisibility(View.GONE);
             ((ImageViewHolder) holder).checkBox.setChecked(false);
