@@ -3,8 +3,11 @@
 
 FilePicker是一个Android版本的文件筛选库。
 [GitHub仓库地址](https://github.com/duoluo9/FilePicker)
+
 ## 引入
+
 ### gradle
+
 ```groovy
 allprojects {
     repositories {
@@ -12,28 +15,34 @@ allprojects {
     }
 }
 
-implementation 'com.zhangteng.searchfilelibrary:filepicker-searchfilelibrary:1.0.1'
+implementation 'com.zhangteng.searchfilelibrary:filepicker-searchfilelibrary:1.0.3'
 //UI 公共库
-implementation 'com.zhangteng.common:filepicker-common:1.0.1'
+implementation 'com.zhangteng.common:filepicker-common:1.0.3'
 //压缩包UI
-implementation 'com.zhangteng.rarpicker:filepicker-rarpicker:1.0.1'
+implementation 'com.zhangteng.rarpicker:filepicker-rarpicker:1.0.3'
 //文件夹UI
-implementation 'com.zhangteng.folderpicker:filepicker-folderpicker:1.0.1'
+implementation 'com.zhangteng.folderpicker:filepicker-folderpicker:1.0.3'
 //图片UI
-implementation 'com.zhangteng.imagepicker:filepicker-imagepicker:1.0.1'
+implementation 'com.zhangteng.imagepicker:filepicker-imagepicker:1.0.3'
 //视频UI
-implementation 'com.zhangteng.videopicker:filepicker-videopicker:1.0.1'
+implementation 'com.zhangteng.videopicker:filepicker-videopicker:1.0.3'
 //音频UI
-implementation 'com.zhangteng.audiopicker:filepicker-audiopicker:1.0.1'
+implementation 'com.zhangteng.audiopicker:filepicker-audiopicker:1.0.3'
 //文档UI
-implementation 'com.zhangteng.documentpicker:filepicker-documentpicker:1.0.1'
+implementation 'com.zhangteng.documentpicker:filepicker-documentpicker:1.0.3'
+//三方库
+implementation 'com.zhangteng.androidpermission:androidpermission:1.0.1'
+implementation 'com.github.bumptech.glide:glide:3.7.0'
 ```
 
 ## 效果图
+
 ![图片选择UI](https://img-blog.csdnimg.cn/20200914093052474.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R1b2x1bzk=,size_16,color_FFFFFF,t_70#pic_center)
 ![RAR选择UI](https://img-blog.csdnimg.cn/20200914093222160.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R1b2x1bzk=,size_16,color_FFFFFF,t_70#pic_center)
 ![文件夹选择UI](https://img-blog.csdnimg.cn/20200914093256824.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R1b2x1bzk=,size_16,color_FFFFFF,t_70#pic_center)
-## 检索结果
+
+## 检索结果(只是用searchfilelibrary时)
+
 获取检索结果提供了2种方式（具体可参照GitHub源码）
 1、  public void getMediaList(int fileModel, Context context)
      查找结果放于MediaStoreUtil相应的字段内；
@@ -53,11 +62,32 @@ implementation 'com.zhangteng.documentpicker:filepicker-documentpicker:1.0.1'
 
 使用方法：开启服务根据需要调用服务的相应public方法
 
+```java
+private void searchFile() {
+        getActivity().startService(new Intent(getContext(), FileService.class));
+        FileService.getInstance().getFileList(null);
+        MediaStoreUtil.setListener(new MediaStoreUtil.FolderListener() {
+
+            @Override
+            public void onFolderChange(int imageCount, List<MediaEntity> folders) {
+                if (getActivity() == null) {
+                    return;
+                }
+                getActivity().runOnUiThread(() -> {
+                    imageInfos.addAll(folders);
+                    folderPickerAdapter.notifyDataSetChanged();
+                });
+            }
+        });
+    }
+```
+
 
 
 
 
 ## UI属性
+
 属性名| 描述
 --- | -----
 multiSelect| 是否单选，默认true
@@ -137,24 +167,8 @@ iconResources|icon资源（可设置每种类型的icon，文档类型中pdf、t
   startActivity(new Intent(this, RarPickerActivity.class));
   startActivity(new Intent(this, DocumentPickerActivity.class));
   startActivity(new Intent(this, FolderPickerActivity.class));
-  //不使用UI
-  getActivity().startService(new Intent(getActivity(), FileService.class));
-  FileService.getInstance().getFileList(null);
-  //FileService.getInstance().getMediaList(MediaEntity.MEDIA_AUDIO, getActivity());
-  MediaStoreUtil.setListener(new MediaStoreUtil.AudioListener() {
-
-      @Override
-      public void onAudioChange(int imageCount, List<MediaEntity> folders) {
-          imageInfos.clear();
-          imageInfos.addAll(folders);
-          if (getActivity() == null) {
-              return;
-          }
-          getActivity().runOnUiThread(() -> folderPickerAdapter.notifyDataSetChanged());
-      }
-  });
   //使用UI时-文件选择回调
-  public class HandlerCallBack implements IHandlerCallBack {
+public class HandlerCallBack implements IHandlerCallBack {
     private String TAG = "---ImagePicker---";
 
     @Override
@@ -163,7 +177,7 @@ iconResources|icon资源（可设置每种类型的icon，文档类型中pdf、t
     }
 
     @Override
-    public void onSuccess(List<String> audioList) {
+    public void onSuccess(List<MediaEntity> audioList) {
         Log.i(TAG, "onSuccess: 返回数据");
     }
 
@@ -173,7 +187,7 @@ iconResources|icon资源（可设置每种类型的icon，文档类型中pdf、t
     }
 
     @Override
-    public void onFinish() {
+    public void onFinish(List<MediaEntity> selectAudio) {
         Log.i(TAG, "onFinish: 结束");
     }
 
@@ -183,21 +197,34 @@ iconResources|icon资源（可设置每种类型的icon，文档类型中pdf、t
     }
 
     @Override
-    public void onPreview(List<String> selectAudio) {
+    public void onPreview(List<MediaEntity> selectAudio) {
         Log.i(TAG, "onPreview: 预览");
     }
 }
-  new FilePickerConfig.Builder()
-          .iHandlerCallBack(new HandlerCallBack())
-          ...//其他图标及属性
-          .build();
+
+  FilePickerConfig.getInstance()
+          .iHandlerCallBack(new com.zhangteng.common.callback.HandlerCallBack() {
+              @Override
+              public void onFinish(List<MediaEntity> mediaEntities) {
+                  super.onFinish(mediaEntities);
+                       
+              }
+          });
   //使用UI时-修改文件图标
-  new FilePickerConfig.Builder()
-          .iconResources(MediaEntity.MEDIA_DOCUMENT, R.mipmap.document_icon)
-          .iconResources(MediaEntity.MEDIA_AUDIO, R.mipmap.audio_icon)
-          .iHandlerCallBack(new HandlerCallBack())
-          ...//其他图标及属性
-          .build();
+  FilePickerConfig.getInstance()
+                .iconResources(MediaEntity.MEDIA_IMAGE, R.drawable.jpg)
+                .iconResources(MediaEntity.MEDIA_AUDIO, R.drawable.audio)
+                .iconResources(MediaEntity.MEDIA_VIDEO, R.drawable.video)
+                .iconResources(MediaEntity.MEDIA_DOCUMENT, R.drawable.text)
+                .iconResources(MediaEntity.MEDIA_ZIP, R.drawable.yasuo)
+                .iconResources(MediaEntity.MEDIA_PDF, R.drawable.pdf)
+                .iconResources(MediaEntity.MEDIA_DOC, R.drawable.word)
+                .iconResources(MediaEntity.MEDIA_PPT, R.drawable.ppt)
+                .iconResources(MediaEntity.MEDIA_EXCEL, R.drawable.excel)
+                .iconResources(MediaEntity.MEDIA_TXT, R.drawable.text)
+                .iconResources(MediaEntity.MEDIA_APK, R.drawable.yasuo)
+                .iconResources(MediaEntity.MEDIA_FOLDER, R.drawable.wenjian)
+                .iconResources(MediaEntity.MEDIA_UNKNOWN, R.drawable.weizhi);
   //使用UI时-修改底部功能条
   //在自己的layout文件加下新建
   //file_picker_layout_upload.xml
@@ -205,11 +232,17 @@ iconResources|icon资源（可设置每种类型的icon，文档类型中pdf、t
   //file_picker_tv_preview、file_picker_tv_selected、file_picker_tv_upload
 ```
 ## 混淆
+
 -keep public class com.zhangteng.**.*{ *; }
+
 ## 历史版本
+
 版本| 更新| 更新时间
 -------- | ----- | -----
+v1.0.3| 返回选中的MediaEntity列表，配置类使用单例模式删除建造者模式|2020/9/16 0016 at 下午 15:26
+v1.0.2| 添加权限请求|2020/9/16 0016 at 上午 11:38
 v1.0.1| 样式自定义|2020/9/8 0008 at 下午 17:58
+
 ## 赞赏
 
 如果您喜欢FilePicker，或感觉FilePicker帮助到了您，可以点右上角“Star”支持一下，您的支持就是我的动力，谢谢
@@ -220,9 +253,11 @@ v1.0.1| 样式自定义|2020/9/8 0008 at 下午 17:58
 ![微信收款码](https://img-blog.csdnimg.cn/20200807160902112.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2R1b2x1bzk=,size_16,color_FFFFFF,t_70)
 
 ## 联系我
+
 邮箱：763263311@qq.com/ztxiaoran@foxmail.com
 
 ## License
+
 Copyright (c) [2020] [Swing]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
