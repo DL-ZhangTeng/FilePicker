@@ -8,30 +8,32 @@ FilePicker是一个Android版本的文件筛选库。
 
 ### gradle
 
+### gradle
 ```groovy
 allprojects {
     repositories {
-        maven { url 'https://dl.bintray.com/duoluo9/FilePicker' }
+        maven { url 'https://jitpack.io' }
     }
 }
 
-implementation 'com.zhangteng.searchfilelibrary:filepicker-searchfilelibrary:1.0.3'
+implementation 'com.github.duoluo9.FilePicker:filepicker-searchfilelibrary:1.0.3'
 //UI 公共库
-implementation 'com.zhangteng.common:filepicker-common:1.0.3'
+implementation 'com.github.duoluo9.FilePicker:filepicker-common:1.0.3'
 //压缩包UI
-implementation 'com.zhangteng.rarpicker:filepicker-rarpicker:1.0.3'
+implementation 'com.github.duoluo9.FilePicker:filepicker-rarpicker:1.0.3'
 //文件夹UI
-implementation 'com.zhangteng.folderpicker:filepicker-folderpicker:1.0.3'
+implementation 'com.github.duoluo9.FilePicker:filepicker-folderpicker:1.0.3'
 //图片UI
-implementation 'com.zhangteng.imagepicker:filepicker-imagepicker:1.0.3'
+implementation 'com.github.duoluo9.FilePicker:filepicker-imagepicker:1.0.3'
 //视频UI
-implementation 'com.zhangteng.videopicker:filepicker-videopicker:1.0.3'
+implementation 'com.github.duoluo9.FilePicker:filepicker-videopicker:1.0.3'
 //音频UI
-implementation 'com.zhangteng.audiopicker:filepicker-audiopicker:1.0.3'
+implementation 'com.github.duoluo9.FilePicker:filepicker-audiopicker:1.0.3'
 //文档UI
-implementation 'com.zhangteng.documentpicker:filepicker-documentpicker:1.0.3'
+implementation 'com.github.duoluo9.FilePicker:filepicker-documentpicker:1.0.3'
+//    或直接使用implementation 'com.github.duoluo9:FilePicker:1.0.3'
 //三方库
-implementation 'com.zhangteng.androidpermission:androidpermission:1.0.1'
+implementation 'com.github.duoluo9:RequestPermission:1.0.1'
 implementation 'com.github.bumptech.glide:glide:3.7.0'
 ```
 

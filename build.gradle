@@ -6,6 +6,7 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://dl.bintray.com/duoluo9/android' }
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.1'
@@ -22,6 +23,7 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://dl.bintray.com/duoluo9/android' }
+        maven { url 'https://jitpack.io' }
     }
     //此处添加的UTF-8格式
     tasks.withType(Javadoc) {
