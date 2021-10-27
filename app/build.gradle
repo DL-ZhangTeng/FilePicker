@@ -30,23 +30,25 @@ dependencies {
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-//    if (!isRunAlone.toBoolean()) {
-//        implementation project(':filepicker-audiopicker')
-//        implementation project(':filepicker-documentpicker')
-//        implementation project(':filepicker-folderpicker')
-//        implementation project(':filepicker-imagepicker')
-//        implementation project(':filepicker-rarpicker')
-//        implementation project(':filepicker-videopicker')
-//    }
-//    implementation project(':filepicker-searchfilelibrary')
-//    implementation project(':filepicker-common')
-    implementation 'com.github.duoluo9.FilePicker:filepicker-audiopicker:1.0.3'
-    implementation 'com.github.duoluo9.FilePicker:filepicker-documentpicker:1.0.3'
-    implementation 'com.github.duoluo9.FilePicker:filepicker-folderpicker:1.0.3'
-    implementation 'com.github.duoluo9.FilePicker:filepicker-imagepicker:1.0.3'
-    implementation 'com.github.duoluo9.FilePicker:filepicker-rarpicker:1.0.3'
-    implementation 'com.github.duoluo9.FilePicker:filepicker-videopicker:1.0.3'
-    implementation 'com.github.duoluo9.FilePicker:filepicker-searchfilelibrary:1.0.3'
-    implementation 'com.github.duoluo9.FilePicker:filepicker-common:1.0.3'
-//    或直接使用implementation 'com.github.duoluo9:FilePicker:1.0.3'
+    if (!isRunAlone.toBoolean()) {
+        implementation project(':filepicker-audiopicker')
+        implementation project(':filepicker-documentpicker')
+        implementation project(':filepicker-folderpicker')
+        implementation project(':filepicker-imagepicker')
+        implementation project(':filepicker-rarpicker')
+        implementation project(':filepicker-videopicker')
+    }
+    implementation project(':filepicker-searchfilelibrary')
+    implementation project(':filepicker-common')
+//    implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-audiopicker:1.0.3'
+//    implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-documentpicker:1.0.3'
+//    implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-folderpicker:1.0.3'
+//    implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-imagepicker:1.0.3'
+//    implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-rarpicker:1.0.3'
+//    implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-videopicker:1.0.3'
+//    implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-searchfilelibrary:1.0.3'
+//    implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-common:1.0.3'
+//    或直接使用implementation 'com.github.DL-ZhangTeng:FilePicker:1.0.3'
+
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.0.1'
 }

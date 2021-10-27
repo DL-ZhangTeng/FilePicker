@@ -7,8 +7,6 @@ FilePicker是一个Android版本的文件筛选库。
 ## 引入
 
 ### gradle
-
-### gradle
 ```groovy
 allprojects {
     repositories {
