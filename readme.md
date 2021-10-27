@@ -2,7 +2,7 @@
 # 文件筛选库（按照某固定类型筛选）
 
 FilePicker是一个Android版本的文件筛选库。
-[GitHub仓库地址](https://github.com/duoluo9/FilePicker)
+[GitHub仓库地址](https://github.com/DL-ZhangTeng/FilePicker)
 
 ## 引入
 
@@ -16,24 +16,24 @@ allprojects {
     }
 }
 
-implementation 'com.github.duoluo9.FilePicker:filepicker-searchfilelibrary:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-searchfilelibrary:1.0.3'
 //UI 公共库
-implementation 'com.github.duoluo9.FilePicker:filepicker-common:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-common:1.0.3'
 //压缩包UI
-implementation 'com.github.duoluo9.FilePicker:filepicker-rarpicker:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-rarpicker:1.0.3'
 //文件夹UI
-implementation 'com.github.duoluo9.FilePicker:filepicker-folderpicker:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-folderpicker:1.0.3'
 //图片UI
-implementation 'com.github.duoluo9.FilePicker:filepicker-imagepicker:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-imagepicker:1.0.3'
 //视频UI
-implementation 'com.github.duoluo9.FilePicker:filepicker-videopicker:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-videopicker:1.0.3'
 //音频UI
-implementation 'com.github.duoluo9.FilePicker:filepicker-audiopicker:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-audiopicker:1.0.3'
 //文档UI
-implementation 'com.github.duoluo9.FilePicker:filepicker-documentpicker:1.0.3'
-//    或直接使用implementation 'com.github.duoluo9:FilePicker:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-documentpicker:1.0.3'
+//    或直接使用implementation 'com.github.DL-ZhangTeng:FilePicker:1.0.3'
 //三方库
-implementation 'com.github.duoluo9:RequestPermission:1.0.1'
+implementation 'com.github.DL-ZhangTeng:RequestPermission:1.0.1'
 implementation 'com.github.bumptech.glide:glide:3.7.0'
 ```
 
