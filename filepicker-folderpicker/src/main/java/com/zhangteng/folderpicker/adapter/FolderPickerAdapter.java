@@ -16,8 +16,8 @@ import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.folderpicker.R;
 import com.zhangteng.searchfilelibrary.config.SearchCofig;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
-import com.zhangteng.searchfilelibrary.utils.DateUtils;
-import com.zhangteng.searchfilelibrary.utils.DensityUtil;
+import com.zhangteng.utils.DateUtilsKt;
+import com.zhangteng.utils.DensityUtilKt;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (hasPreviousBtn && position == 0) {
             ((ImageViewHolder) holder).name.setText("返回上一级");
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ((ImageViewHolder) holder).name.getLayoutParams();
-            layoutParams.setMargins(0, DensityUtil.dp2px(((ImageViewHolder) holder).name.getContext(), 40), 0, 0);
+            layoutParams.setMargins(0, DensityUtilKt.dp2px(((ImageViewHolder) holder).name.getContext(), 40), 0, 0);
             ((ImageViewHolder) holder).name.setLayoutParams(layoutParams);
             ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_FOLDER));
             ((ImageViewHolder) holder).time.setVisibility(View.GONE);
@@ -74,7 +74,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         folderInfo = folderInfoList.get(hasPreviousBtn ? position - 1 : position);
         ((ImageViewHolder) holder).name.setText(folderInfo.getFileName());
-        ((ImageViewHolder) holder).time.setText(DateUtils.getTime(folderInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//folderInfo.getTime()音频持续时间
+        ((ImageViewHolder) holder).time.setText(DateUtilsKt.getTimeStr(folderInfo.getUpdateTime(), DateUtilsKt.FORMAT_YMD));//folderInfo.getTime()音频持续时间
         ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.folder_picker_folder_size, folderInfo.getFileLength() / 1024));
         switch (folderInfo.getMediaType()) {
             case MediaEntity.MEDIA_APK:

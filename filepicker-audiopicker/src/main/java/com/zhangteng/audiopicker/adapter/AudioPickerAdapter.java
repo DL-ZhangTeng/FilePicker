@@ -15,7 +15,7 @@ import com.zhangteng.audiopicker.R;
 import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.searchfilelibrary.entity.AudioEntity;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
-import com.zhangteng.searchfilelibrary.utils.DateUtils;
+import com.zhangteng.utils.DateUtilsKt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +71,7 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 audioInfo = audioInfoList.get(position - 1);
                 ((ImageViewHolder) holder).imageView.setImageResource(audioPickerConfig.getIconResources(MediaEntity.MEDIA_AUDIO));
                 ((ImageViewHolder) holder).name.setText(audioInfo.getFileName());
-                ((ImageViewHolder) holder).time.setText(DateUtils.getTime(audioInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//audioInfo.getTime()音频持续时间
+                ((ImageViewHolder) holder).time.setText(DateUtilsKt.getTimeStr(audioInfo.getUpdateTime(), DateUtilsKt.FORMAT_YMD));//audioInfo.getTime()音频持续时间
                 ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.audio_picker_audio_size, audioInfo.getFileLength() / 1024));
                 final AudioEntity finalAudioInfo = audioInfo;
                 holder.itemView.setOnClickListener(view -> {
@@ -92,7 +92,7 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             audioInfo = audioInfoList.get(position);
             ((ImageViewHolder) holder).imageView.setImageResource(audioPickerConfig.getIconResources(MediaEntity.MEDIA_AUDIO));
             ((ImageViewHolder) holder).name.setText(audioInfo.getFileName());
-            ((ImageViewHolder) holder).time.setText(DateUtils.getTime(audioInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//audioInfo.getTime()音频持续时间
+            ((ImageViewHolder) holder).time.setText(DateUtilsKt.getTimeStr(audioInfo.getUpdateTime(), DateUtilsKt.FORMAT_YMD));//audioInfo.getTime()音频持续时间
             ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.audio_picker_audio_size, audioInfo.getFileLength() / 1024));
             final AudioEntity finalAudioInfo1 = audioInfo;
             holder.itemView.setOnClickListener(view -> {

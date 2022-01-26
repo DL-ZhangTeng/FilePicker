@@ -15,7 +15,7 @@ import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.rarpicker.R;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 import com.zhangteng.searchfilelibrary.entity.RarEntity;
-import com.zhangteng.searchfilelibrary.utils.DateUtils;
+import com.zhangteng.utils.DateUtilsKt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         RarEntity rarInfo = rarInfoList.get(position);
         rarPickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, rarInfo.getThumPath());
         ((ImageViewHolder) holder).name.setText(rarInfo.getFileName());
-        ((ImageViewHolder) holder).time.setText(DateUtils.getTime(rarInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//rarInfo.getTime()音频持续时间
+        ((ImageViewHolder) holder).time.setText(DateUtilsKt.getTimeStr(rarInfo.getUpdateTime(), DateUtilsKt.FORMAT_YMD));//rarInfo.getTime()音频持续时间
         ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.rar_picker_rar_size, rarInfo.getFileLength() / 1024));
         final RarEntity finalRarInfo1 = rarInfo;
         holder.itemView.setOnClickListener(view -> {

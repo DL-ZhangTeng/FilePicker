@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 import com.zhangteng.searchfilelibrary.entity.VideoEntity;
-import com.zhangteng.searchfilelibrary.utils.ScreenUtils;
+import com.zhangteng.utils.DensityUtilKt;
 import com.zhangteng.videopicker.R;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
-        int heightOrWidth = Math.min(ScreenUtils.getScreenHeight(mContext) / 3, ScreenUtils.getScreenWidth(mContext) / 3);
+        int heightOrWidth = Math.min(DensityUtilKt.getScreenHeight(mContext) / 3, DensityUtilKt.getScreenWidth(mContext) / 3);
         layoutParams.height = heightOrWidth;
         layoutParams.width = heightOrWidth;
         holder.itemView.setLayoutParams(layoutParams);

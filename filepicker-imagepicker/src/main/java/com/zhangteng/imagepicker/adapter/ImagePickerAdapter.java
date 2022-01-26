@@ -14,7 +14,6 @@ import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.imagepicker.R;
 import com.zhangteng.searchfilelibrary.entity.ImageEntity;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
-import com.zhangteng.searchfilelibrary.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
