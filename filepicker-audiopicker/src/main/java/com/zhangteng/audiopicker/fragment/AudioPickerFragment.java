@@ -1,21 +1,24 @@
 package com.zhangteng.audiopicker.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.FileProvider;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zhangteng.androidpermission.AndroidPermission;
 import com.zhangteng.androidpermission.Permission;
@@ -34,8 +37,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
-
 /**
  * 音频选择器
  */
@@ -47,7 +48,7 @@ public class AudioPickerFragment extends Fragment {
     private Context mContext;
     private ArrayList<AudioEntity> imageInfos;
     private AudioPickerAdapter audioPickerAdapter;
-    private int REQUEST_CODE = 100;
+    private final int REQUEST_CODE = 100;
     private File recordTempFile;
     private FilePickerConfig audioPickerConfig;
     private IHandlerCallBack iHandlerCallBack;

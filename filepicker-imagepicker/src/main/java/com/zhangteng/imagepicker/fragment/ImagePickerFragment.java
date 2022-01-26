@@ -1,21 +1,24 @@
 package com.zhangteng.imagepicker.fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.FileProvider;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zhangteng.androidpermission.AndroidPermission;
 import com.zhangteng.androidpermission.Permission;
@@ -34,8 +37,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
-
 /**
  * 图片选择器（需要更个性的自定义样式可使用：https://github.com/duoluo9/ImagePicker）
  */
@@ -47,7 +48,7 @@ public class ImagePickerFragment extends Fragment {
     private Context mContext;
     private ArrayList<ImageEntity> imageInfos;
     private ImagePickerAdapter imagePickerAdapter;
-    private int REQUEST_CODE = 100;
+    private final int REQUEST_CODE = 100;
     private File cameraTempFile;
     private FilePickerConfig imagePickerConfig;
     private IHandlerCallBack iHandlerCallBack;

@@ -1,8 +1,9 @@
 package com.zhangteng.common.config;
 
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
 import android.util.SparseIntArray;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 
 import com.zhangteng.common.R;
 import com.zhangteng.common.callback.HandlerCallBack;

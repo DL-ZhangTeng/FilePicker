@@ -1,14 +1,15 @@
 package com.zhangteng.documentpicker.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.documentpicker.R;
@@ -23,9 +24,9 @@ import java.util.List;
  * Created by swing on 2018/4/17.
  */
 public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Context mContext;
+    private final Context mContext;
     private List<DocumentEntity> documentInfoList;
-    private FilePickerConfig documentPickerConfig = FilePickerConfig.getInstance();
+    private final FilePickerConfig documentPickerConfig = FilePickerConfig.getInstance();
     private List<MediaEntity> selectDocument = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -49,7 +50,7 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         ((ImageViewHolder) holder).time.setText(DateUtils.getTime(documentInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//documentInfo.getTime()音频持续时间
         ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.document_picker_document_size, documentInfo.getFileLength() / 1024));
         final DocumentEntity finalDocumentInfo1 = documentInfo;
-        ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
+        holder.itemView.setOnClickListener(view -> {
             if (selectDocument.contains(finalDocumentInfo1)) {
                 selectDocument.remove(finalDocumentInfo1);
             } else {
@@ -110,12 +111,12 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private View mask;
-        private CheckBox checkBox;
-        private TextView name;
-        private TextView time;
-        private TextView size;
+        private final ImageView imageView;
+        private final View mask;
+        private final CheckBox checkBox;
+        private final TextView name;
+        private final TextView time;
+        private final TextView size;
 
 
         public ImageViewHolder(View itemView) {

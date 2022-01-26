@@ -2,8 +2,9 @@ package com.zhangteng.common.imageloader;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.annotation.DrawableRes;
 import android.widget.ImageView;
+
+import androidx.annotation.DrawableRes;
 
 import com.bumptech.glide.Glide;
 

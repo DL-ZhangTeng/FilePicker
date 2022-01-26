@@ -1,11 +1,12 @@
 package com.zhangteng.filepicker;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.zhangteng.base.widget.MyTabLayout;
 import com.zhangteng.filepicker.adapter.FilePickerAdapter;
-import com.zhangteng.filepicker.widget.MyTabLayout;
 
 public class FilePickerActivity extends AppCompatActivity {
 

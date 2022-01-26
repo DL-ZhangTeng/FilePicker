@@ -1,14 +1,15 @@
 package com.zhangteng.rarpicker.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.rarpicker.R;
@@ -23,9 +24,9 @@ import java.util.List;
  * Created by swing on 2018/4/17.
  */
 public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Context mContext;
+    private final Context mContext;
     private List<RarEntity> rarInfoList;
-    private FilePickerConfig rarPickerConfig = FilePickerConfig.getInstance();
+    private final FilePickerConfig rarPickerConfig = FilePickerConfig.getInstance();
     private List<MediaEntity> selectRar = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -48,7 +49,7 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ((ImageViewHolder) holder).time.setText(DateUtils.getTime(rarInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//rarInfo.getTime()音频持续时间
         ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.rar_picker_rar_size, rarInfo.getFileLength() / 1024));
         final RarEntity finalRarInfo1 = rarInfo;
-        ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
+        holder.itemView.setOnClickListener(view -> {
             if (selectRar.contains(finalRarInfo1)) {
                 selectRar.remove(finalRarInfo1);
             } else {
@@ -109,12 +110,12 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private View mask;
-        private CheckBox checkBox;
-        private TextView name;
-        private TextView time;
-        private TextView size;
+        private final ImageView imageView;
+        private final View mask;
+        private final CheckBox checkBox;
+        private final TextView name;
+        private final TextView time;
+        private final TextView size;
 
 
         public ImageViewHolder(View itemView) {

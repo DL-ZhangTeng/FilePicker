@@ -1,6 +1,6 @@
 package com.zhangteng.searchfilelibrary.utils;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 
@@ -21,15 +21,15 @@ public class MediaStoreUtil {
     private static int video_count = 0;
     private static int folder_count = 0;
 
-    private static List<MediaEntity> apk = new ArrayList<>();
-    private static List<MediaEntity> audio = new ArrayList<>();
-    private static List<MediaEntity> document = new ArrayList<>();
-    private static List<MediaEntity> image = new ArrayList<>();
-    private static List<MediaEntity> rar = new ArrayList<>();
-    private static List<MediaEntity> video = new ArrayList<>();
-    private static List<MediaEntity> folder = new ArrayList<>();
+    private static final List<MediaEntity> apk = new ArrayList<>();
+    private static final List<MediaEntity> audio = new ArrayList<>();
+    private static final List<MediaEntity> document = new ArrayList<>();
+    private static final List<MediaEntity> image = new ArrayList<>();
+    private static final List<MediaEntity> rar = new ArrayList<>();
+    private static final List<MediaEntity> video = new ArrayList<>();
+    private static final List<MediaEntity> folder = new ArrayList<>();
 
-    private static List<MediaStoreListener> listeners = new CopyOnWriteArrayList<>();
+    private static final List<MediaStoreListener> listeners = new CopyOnWriteArrayList<>();
 
     public static void addApk(@NonNull List<MediaEntity> list) {
         MediaStoreUtil.apk.addAll(list);

@@ -1,8 +1,6 @@
 package com.zhangteng.folderpicker.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +8,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.folderpicker.R;
@@ -26,10 +27,10 @@ import java.util.List;
  * Created by swing on 2018/4/17.
  */
 public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Context mContext;
+    private final Context mContext;
     private String previousPath = SearchCofig.BASE_SD_PATH;
     private List<MediaEntity> folderInfoList;
-    private FilePickerConfig folderPickerConfig = FilePickerConfig.getInstance();
+    private final FilePickerConfig folderPickerConfig = FilePickerConfig.getInstance();
     private List<MediaEntity> selectFolder = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private boolean hasPreviousBtn = false;
@@ -79,7 +80,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case MediaEntity.MEDIA_APK:
             case MediaEntity.MEDIA_ZIP:
                 initView(holder, folderInfo);
-                initClick(((ImageViewHolder) holder).itemView, folderInfo);
+                initClick(holder.itemView, folderInfo);
                 ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_ZIP));
                 break;
             case MediaEntity.MEDIA_PDF:
@@ -89,37 +90,37 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case MediaEntity.MEDIA_TXT:
             case MediaEntity.MEDIA_DOCUMENT:
                 initView(holder, folderInfo);
-                initClick(((ImageViewHolder) holder).itemView, folderInfo);
+                initClick(holder.itemView, folderInfo);
                 ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_DOCUMENT));
                 break;
             case MediaEntity.MEDIA_AUDIO:
                 initView(holder, folderInfo);
-                initClick(((ImageViewHolder) holder).itemView, folderInfo);
+                initClick(holder.itemView, folderInfo);
                 ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_AUDIO));
                 break;
             case MediaEntity.MEDIA_IMAGE:
                 initView(holder, folderInfo);
-                initClick(((ImageViewHolder) holder).itemView, folderInfo);
+                initClick(holder.itemView, folderInfo);
                 ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_IMAGE));
                 break;
             case MediaEntity.MEDIA_VIDEO:
                 initView(holder, folderInfo);
-                initClick(((ImageViewHolder) holder).itemView, folderInfo);
+                initClick(holder.itemView, folderInfo);
                 ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_VIDEO));
                 break;
             case MediaEntity.MEDIA_FOLDER:
                 initView(holder, null);
-                initClick(((ImageViewHolder) holder).itemView, folderInfo);
+                initClick(holder.itemView, folderInfo);
                 ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_FOLDER));
                 break;
             case MediaEntity.MEDIA_UNKNOWN:
                 initView(holder, null);
-                initClick(((ImageViewHolder) holder).itemView, null);
+                initClick(holder.itemView, null);
                 ((ImageViewHolder) holder).imageView.setImageResource(FilePickerConfig.getInstance().getIconResources(MediaEntity.MEDIA_UNKNOWN));
                 break;
             default:
                 initView(holder, null);
-                initClick(((ImageViewHolder) holder).itemView, null);
+                initClick(holder.itemView, null);
                 folderPickerConfig.getImageLoader().loadImage(mContext, ((ImageViewHolder) holder).imageView, folderInfo.getThumPath());
                 break;
         }
@@ -212,12 +213,12 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private View mask;
-        private CheckBox checkBox;
-        private TextView name;
-        private TextView time;
-        private TextView size;
+        private final ImageView imageView;
+        private final View mask;
+        private final CheckBox checkBox;
+        private final TextView name;
+        private final TextView time;
+        private final TextView size;
 
 
         public ImageViewHolder(View itemView) {

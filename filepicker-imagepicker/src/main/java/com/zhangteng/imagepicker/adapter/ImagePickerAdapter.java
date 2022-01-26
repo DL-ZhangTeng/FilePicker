@@ -1,13 +1,14 @@
 package com.zhangteng.imagepicker.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.imagepicker.R;
@@ -24,9 +25,9 @@ import java.util.List;
 public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int HEAD = 0;
     private static final int PHOTO = 1;
-    private Context mContext;
+    private final Context mContext;
     private List<ImageEntity> imageInfoList;
-    private FilePickerConfig imagePickerConfig = FilePickerConfig.getInstance();
+    private final FilePickerConfig imagePickerConfig = FilePickerConfig.getInstance();
     private List<MediaEntity> selectImage = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -55,7 +56,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ImageEntity imageInfo;
         if (imagePickerConfig.isShowCamera()) {
             if (position == 0) {
-                ((CameraViewHolder) holder).itemView.setOnClickListener(view -> {
+                holder.itemView.setOnClickListener(view -> {
                     if (onItemClickListener != null) {
                         if (imagePickerConfig.isMultiSelect() && selectImage.size() < imagePickerConfig.getMaxSize()) {
                             onItemClickListener.onCameraClick(selectImage);
@@ -162,9 +163,9 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private View mask;
-        private CheckBox checkBox;
+        private final ImageView imageView;
+        private final View mask;
+        private final CheckBox checkBox;
 
         public ImageViewHolder(View itemView) {
             super(itemView);

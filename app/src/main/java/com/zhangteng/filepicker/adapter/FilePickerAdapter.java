@@ -1,8 +1,8 @@
 package com.zhangteng.filepicker.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.zhangteng.audiopicker.fragment.AudioPickerFragment;
 import com.zhangteng.documentpicker.fragment.DocumentPickerFragment;
@@ -18,14 +18,14 @@ import java.util.ArrayList;
  */
 
 public class FilePickerAdapter extends FragmentPagerAdapter {
-    private String[] titles = {"image", "video", "audio", "rar", "document", "folder"};
-    private ArrayList<Fragment> fragmentlist = new ArrayList<Fragment>();
+    private final String[] titles = {"image", "video", "audio", "rar", "document", "folder"};
+    private final ArrayList<Fragment> fragmentlist = new ArrayList<Fragment>();
 
     public FilePickerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public ArrayList<Fragment> getFragmentlist() {
+    public ArrayList<Fragment> getFragmentList() {
         return fragmentlist;
     }
 

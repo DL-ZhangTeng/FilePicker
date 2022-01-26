@@ -1,14 +1,15 @@
 package com.zhangteng.audiopicker.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zhangteng.audiopicker.R;
 import com.zhangteng.common.config.FilePickerConfig;
@@ -25,9 +26,9 @@ import java.util.List;
 public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int HEAD = 0;
     private static final int PHOTO = 1;
-    private Context mContext;
+    private final Context mContext;
     private List<AudioEntity> audioInfoList;
-    private FilePickerConfig audioPickerConfig = FilePickerConfig.getInstance();
+    private final FilePickerConfig audioPickerConfig = FilePickerConfig.getInstance();
     private List<MediaEntity> selectAudio = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -56,7 +57,7 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         AudioEntity audioInfo;
         if (audioPickerConfig.isShowCamera()) {
             if (position == 0) {
-                ((RecordViewHolder) holder).itemView.setOnClickListener(view -> {
+                holder.itemView.setOnClickListener(view -> {
                     if (onItemClickListener != null) {
                         if (audioPickerConfig.isMultiSelect() && selectAudio.size() < audioPickerConfig.getMaxSize()) {
                             onItemClickListener.onRecordClick(selectAudio);
@@ -73,7 +74,7 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((ImageViewHolder) holder).time.setText(DateUtils.getTime(audioInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//audioInfo.getTime()音频持续时间
                 ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.audio_picker_audio_size, audioInfo.getFileLength() / 1024));
                 final AudioEntity finalAudioInfo = audioInfo;
-                ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
+                holder.itemView.setOnClickListener(view -> {
                     if (selectAudio.contains(finalAudioInfo)) {
                         selectAudio.remove(finalAudioInfo);
                     } else {
@@ -94,7 +95,7 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((ImageViewHolder) holder).time.setText(DateUtils.getTime(audioInfo.getUpdateTime(), DateUtils.FORMAT_YMD));//audioInfo.getTime()音频持续时间
             ((ImageViewHolder) holder).size.setText(mContext.getString(R.string.audio_picker_audio_size, audioInfo.getFileLength() / 1024));
             final AudioEntity finalAudioInfo1 = audioInfo;
-            ((ImageViewHolder) holder).itemView.setOnClickListener(view -> {
+            holder.itemView.setOnClickListener(view -> {
                 if (selectAudio.contains(finalAudioInfo1)) {
                     selectAudio.remove(finalAudioInfo1);
                 } else {
@@ -169,12 +170,12 @@ public class AudioPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private View mask;
-        private CheckBox checkBox;
-        private TextView name;
-        private TextView time;
-        private TextView size;
+        private final ImageView imageView;
+        private final View mask;
+        private final CheckBox checkBox;
+        private final TextView name;
+        private final TextView time;
+        private final TextView size;
 
 
         public ImageViewHolder(View itemView) {

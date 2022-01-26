@@ -1,13 +1,14 @@
 package com.zhangteng.videopicker.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
@@ -24,9 +25,9 @@ import java.util.List;
 public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int HEAD = 0;
     private static final int PHOTO = 1;
-    private Context mContext;
+    private final Context mContext;
     private List<VideoEntity> videoInfoList;
-    private FilePickerConfig videoPickerConfig = FilePickerConfig.getInstance();
+    private final FilePickerConfig videoPickerConfig = FilePickerConfig.getInstance();
     private List<MediaEntity> selectVideo = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -55,7 +56,7 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         VideoEntity videoInfo;
         if (videoPickerConfig.isShowCamera()) {
             if (position == 0) {
-                ((CameraViewHolder) holder).itemView.setOnClickListener(view -> {
+                holder.itemView.setOnClickListener(view -> {
                     if (onItemClickListener != null) {
                         if (videoPickerConfig.isMultiSelect() && selectVideo.size() < videoPickerConfig.getMaxSize()) {
                             onItemClickListener.onCameraClick(selectVideo);
@@ -162,9 +163,9 @@ public class VideoPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     private static class VideoViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private View mask;
-        private CheckBox checkBox;
+        private final ImageView imageView;
+        private final View mask;
+        private final CheckBox checkBox;
 
         public VideoViewHolder(View itemView) {
             super(itemView);

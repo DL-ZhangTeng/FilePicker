@@ -1,7 +1,8 @@
 package com.zhangteng.rarpicker;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class RarPickerActivity extends AppCompatActivity {
 
