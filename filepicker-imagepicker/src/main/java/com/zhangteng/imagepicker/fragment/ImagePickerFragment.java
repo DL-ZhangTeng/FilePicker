@@ -2,6 +2,7 @@ package com.zhangteng.imagepicker.fragment;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -30,12 +31,13 @@ import com.zhangteng.imagepicker.adapter.ImagePickerAdapter;
 import com.zhangteng.searchfilelibrary.FileService;
 import com.zhangteng.searchfilelibrary.entity.ImageEntity;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
-import com.zhangteng.searchfilelibrary.utils.FileUtils;
 import com.zhangteng.searchfilelibrary.utils.MediaStoreUtil;
+import com.zhangteng.utils.FileUtilsKt;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 图片选择器（需要更个性的自定义样式可使用：https://github.com/duoluo9/ImagePicker）
@@ -188,6 +190,7 @@ public class ImagePickerFragment extends Fragment {
                     return;
                 }
                 getActivity().runOnUiThread(new Runnable() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void run() {
                         imagePickerAdapter.notifyDataSetChanged();
@@ -199,7 +202,7 @@ public class ImagePickerFragment extends Fragment {
 
     private void startCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraTempFile = FileUtils.createTmpFile(getContext(), imagePickerConfig.getFilePath());
+        cameraTempFile = FileUtilsKt.createImageFile(getContext(), Objects.requireNonNull(FileUtilsKt.getFilesDir(getContext())), imagePickerConfig.getFilePath());
         String provider = imagePickerConfig.getProvider();
         Uri imageUri = FileProvider.getUriForFile(mContext, provider, cameraTempFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -219,7 +222,7 @@ public class ImagePickerFragment extends Fragment {
                     selectImage.add(mediaEntity);
                     // 通知系统扫描该文件夹
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                    Uri uri = Uri.fromFile(new File(FileUtils.getFilesDir(mContext) + imagePickerConfig.getFilePath()));
+                    Uri uri = Uri.fromFile(new File(FileUtilsKt.getFilesDir(mContext) + imagePickerConfig.getFilePath()));
                     intent.setData(uri);
                     getActivity().sendBroadcast(intent);
                     iHandlerCallBack.onSuccess(selectImage);

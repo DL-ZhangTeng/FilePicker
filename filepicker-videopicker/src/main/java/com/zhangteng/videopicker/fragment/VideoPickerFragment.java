@@ -2,6 +2,7 @@ package com.zhangteng.videopicker.fragment;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -29,14 +30,15 @@ import com.zhangteng.searchfilelibrary.FileService;
 import com.zhangteng.searchfilelibrary.entity.ImageEntity;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 import com.zhangteng.searchfilelibrary.entity.VideoEntity;
-import com.zhangteng.searchfilelibrary.utils.FileUtils;
 import com.zhangteng.searchfilelibrary.utils.MediaStoreUtil;
+import com.zhangteng.utils.FileUtilsKt;
 import com.zhangteng.videopicker.R;
 import com.zhangteng.videopicker.adapter.VideoPickerAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 视频选择器
@@ -179,6 +181,7 @@ public class VideoPickerFragment extends Fragment {
         getActivity().startService(new Intent(getContext(), FileService.class));
         MediaStoreUtil.setListener(new MediaStoreUtil.VideoListener() {
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onVideoChange(int videoCount, List<MediaEntity> videos) {
                 for (MediaEntity videoEntity : videos) {
@@ -195,7 +198,7 @@ public class VideoPickerFragment extends Fragment {
 
     private void startCamera() {
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        cameraTempFile = FileUtils.createTmpFile(getContext(), videoPickerConfig.getFilePath());
+        cameraTempFile = FileUtilsKt.createImageFile(getContext(), Objects.requireNonNull(FileUtilsKt.getFilesDir(getContext())), videoPickerConfig.getFilePath());
         String provider = videoPickerConfig.getProvider();
         Uri videoUri = FileProvider.getUriForFile(mContext, provider, cameraTempFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, videoUri);
@@ -215,7 +218,7 @@ public class VideoPickerFragment extends Fragment {
                     selectVideo.add(mediaEntity);
                     // 通知系统扫描该文件夹
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                    Uri uri = Uri.fromFile(new File(FileUtils.getFilesDir(mContext) + videoPickerConfig.getFilePath()));
+                    Uri uri = Uri.fromFile(new File(FileUtilsKt.getFilesDir(mContext) + videoPickerConfig.getFilePath()));
                     intent.setData(uri);
                     getActivity().sendBroadcast(intent);
                     iHandlerCallBack.onSuccess(selectVideo);

@@ -2,6 +2,7 @@ package com.zhangteng.audiopicker.fragment;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -30,12 +31,13 @@ import com.zhangteng.common.config.FilePickerConfig;
 import com.zhangteng.searchfilelibrary.FileService;
 import com.zhangteng.searchfilelibrary.entity.AudioEntity;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
-import com.zhangteng.searchfilelibrary.utils.FileUtils;
 import com.zhangteng.searchfilelibrary.utils.MediaStoreUtil;
+import com.zhangteng.utils.FileUtilsKt;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 音频选择器
@@ -179,6 +181,7 @@ public class AudioPickerFragment extends Fragment {
         FileService.getInstance().getMediaList(MediaEntity.MEDIA_AUDIO, getActivity());
         MediaStoreUtil.setListener(new MediaStoreUtil.AudioListener() {
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onAudioChange(int imageCount, List<MediaEntity> audios) {
                 for (MediaEntity audioEntity : audios) {
@@ -194,7 +197,7 @@ public class AudioPickerFragment extends Fragment {
 
     private void startRecord() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        recordTempFile = FileUtils.createTmpFile(getContext(), audioPickerConfig.getFilePath());
+        recordTempFile = FileUtilsKt.createImageFile(getContext(), Objects.requireNonNull(FileUtilsKt.getFilesDir(getContext())), audioPickerConfig.getFilePath());
         String provider = audioPickerConfig.getProvider();
         Uri imageUri = FileProvider.getUriForFile(mContext, provider, recordTempFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -214,7 +217,7 @@ public class AudioPickerFragment extends Fragment {
                     selectAudio.add(mediaEntity);
                     // 通知系统扫描该文件夹
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                    Uri uri = Uri.fromFile(new File(FileUtils.getFilesDir(mContext) + audioPickerConfig.getFilePath()));
+                    Uri uri = Uri.fromFile(new File(FileUtilsKt.getFilesDir(mContext) + audioPickerConfig.getFilePath()));
                     intent.setData(uri);
                     getActivity().sendBroadcast(intent);
                     iHandlerCallBack.onSuccess(selectAudio);
