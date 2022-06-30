@@ -3,6 +3,7 @@ package com.zhangteng.videopicker.fragment;
 import static android.app.Activity.RESULT_OK;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -117,23 +118,23 @@ public class VideoPickerFragment extends Fragment {
                                 Permission.RECORD_AUDIO)
                         .callback(new Callback() {
                             @Override
-                            public void success() {
+                            public void success(Activity permissionActivity) {
                                 startCamera();
                             }
 
                             @Override
-                            public void failure() {
+                            public void failure(Activity permissionActivity) {
                                 Toast.makeText(mContext, "请开启相机与录音权限！", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
-                            public void nonExecution() {
+                            public void nonExecution(Activity permissionActivity) {
                                 //权限已通过，请求未执行
                                 startCamera();
                             }
                         })
                         .build();
-                androidPermission.excute();
+                androidPermission.execute();
                 VideoPickerFragment.this.selectVideo = selectVideo;
             }
 
@@ -157,23 +158,23 @@ public class VideoPickerFragment extends Fragment {
                             Permission.WRITE_EXTERNAL_STORAGE)
                     .callback(new Callback() {
                         @Override
-                        public void success() {
+                        public void success(Activity permissionActivity) {
                             searchFile();
                         }
 
                         @Override
-                        public void failure() {
+                        public void failure(Activity permissionActivity) {
                             Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
-                        public void nonExecution() {
+                        public void nonExecution(Activity permissionActivity) {
                             //权限已通过，请求未执行
                             searchFile();
                         }
                     })
                     .build();
-            androidPermission.excute();
+            androidPermission.execute();
         }
     }
 

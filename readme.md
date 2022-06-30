@@ -13,26 +13,52 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
-
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-searchfilelibrary:1.0.3'
+//文件搜索公共库
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-searchfilelibrary:1.1.1'
 //UI 公共库
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-common:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-common:1.1.1'
+    //使用的三方库
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
 //压缩包UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-rarpicker:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-rarpicker:1.1.1'
+    //使用的三方库
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.5'
 //文件夹UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-folderpicker:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-folderpicker:1.1.1'
+    //使用的三方库
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.5'
 //图片UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-imagepicker:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-imagepicker:1.1.1'
+    //使用的三方库
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.5'
 //视频UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-videopicker:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-videopicker:1.1.1'
+    //使用的三方库
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.5'
 //音频UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-audiopicker:1.0.3'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-audiopicker:1.1.1'
+    //使用的三方库
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.5'
 //文档UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-documentpicker:1.0.3'
-//    或直接使用implementation 'com.github.DL-ZhangTeng:FilePicker:1.0.3'
-//三方库
-implementation 'com.github.DL-ZhangTeng:RequestPermission:1.0.1'
-implementation 'com.github.bumptech.glide:glide:3.7.0'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-documentpicker:1.1.1'
+    //使用的三方库
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.5'
+//或直接使用
+implementation 'com.github.DL-ZhangTeng:FilePicker:1.1.1'
+    //使用的三方库
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.5'
+    implementation('com.github.DL-ZhangTeng.BaseLibrary:base:1.3.5') {
+        transitive false
+    }
 ```
 
 ## 效果图
@@ -239,6 +265,7 @@ public class HandlerCallBack implements IHandlerCallBack {
 
 版本| 更新| 更新时间
 -------- | ----- | -----
+v1.1.1| 使用最新版本三方库|2022/6/30 at 11:19
 v1.1.0| 迁移到AndroidX、使用base库utils|2022/1/26 at 14:28
 v1.0.3| 返回选中的MediaEntity列表，配置类使用单例模式删除建造者模式|2020/9/16 0016 at 下午 15:26
 v1.0.2| 添加权限请求|2020/9/16 0016 at 上午 11:38
