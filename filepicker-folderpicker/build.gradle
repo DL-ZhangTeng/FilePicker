@@ -55,6 +55,8 @@ dependencies {
 
     implementation project(':filepicker-searchfilelibrary')
     implementation project(':filepicker-common')
-    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
-    implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.5'
+    //noinspection GradleDynamicVersion
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
+    //noinspection GradleDynamicVersion
+    implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.+'
 }
