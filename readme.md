@@ -14,44 +14,44 @@ allprojects {
     }
 }
 //文件搜索公共库
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-searchfilelibrary:1.1.1'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-searchfilelibrary:1.2.0'
 //UI 公共库
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-common:1.1.1'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-common:1.2.0'
     //使用的三方库
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
 //压缩包UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-rarpicker:1.1.1'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-rarpicker:1.2.0'
     //使用的三方库
     implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
     implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
 //文件夹UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-folderpicker:1.1.1'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-folderpicker:1.2.0'
     //使用的三方库
     implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
     implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
 //图片UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-imagepicker:1.1.1'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-imagepicker:1.2.0'
     //使用的三方库
     implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
     implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
 //视频UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-videopicker:1.1.1'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-videopicker:1.2.0'
     //使用的三方库
     implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
     implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
 //音频UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-audiopicker:1.1.1'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-audiopicker:1.2.0'
     //使用的三方库
     implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
     implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
 //文档UI
-implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-documentpicker:1.1.1'
+implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-documentpicker:1.2.0'
     //使用的三方库
     implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
     implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
 //或直接使用
-implementation 'com.github.DL-ZhangTeng:FilePicker:1.1.1'
+implementation 'com.github.DL-ZhangTeng:FilePicker:1.2.0'
     //使用的三方库
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
