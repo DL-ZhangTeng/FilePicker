@@ -89,41 +89,41 @@ implementation 'com.github.DL-ZhangTeng:FilePicker:1.2.0'
 使用方法：开启服务根据需要调用服务的相应public方法
 
 ```java
-private void searchFile() {
-        getActivity().startService(new Intent(getContext(), FileService.class));
-        FileService.getInstance().getFileList(null);
-        MediaStoreUtil.setListener(new MediaStoreUtil.FolderListener() {
+public class FolderPickerFragment extends Fragment {
+    
+    //...
+     
+     private void searchFile() {
+          getActivity().startService(new Intent(getContext(), FileService.class));
+          FileService.getInstance().getFileList(null);
+          MediaStoreUtil.setListener(new MediaStoreUtil.FolderListener() {
 
-            @Override
-            public void onFolderChange(int imageCount, List<MediaEntity> folders) {
-                if (getActivity() == null) {
-                    return;
-                }
-                getActivity().runOnUiThread(() -> {
+               @Override
+               public void onFolderChange(int imageCount, List<MediaEntity> folders) {
+                    imageInfos.clear();
                     imageInfos.addAll(folders);
-                    folderPickerAdapter.notifyDataSetChanged();
-                });
-            }
-        });
-    }
+                    if (getActivity() == null) {
+                         return;
+                    }
+                    getActivity().runOnUiThread(() -> folderPickerAdapter.notifyDataSetChanged());
+               }
+          });
+     }
+}
 ```
-
-
-
-
 
 ## UI属性
 
-属性名| 描述
---- | -----
-multiSelect| 是否单选，默认true
-maxSize| 配置开启多选时 最大可选择的图片数量。   默认：9
-isShowCamera| 是否在第一格显示拍照或录制，默认true（只有图片视频音频有效）
-filePath| 拍照以及截图后 存放的位置。    默认：/filePicker/FilePicker
-provider| 文件提供者，默认com.zhangteng.searchfilelibrary.fileprovider
-pathList| 已选择照片的路径
-isOpenCamera| 是否直接开启相机或录制    默认：false（只有图片视频音频有效）
-iconResources|icon资源（可设置每种类型的icon，文档类型中pdf、txt、word、excel等可单独设置）
+| 属性名           | 描述                                                   |
+|---------------|------------------------------------------------------|
+| multiSelect   | 是否单选，默认true                                          |
+| maxSize       | 配置开启多选时 最大可选择的图片数量。   默认：9                           |
+| isShowCamera  | 是否在第一格显示拍照或录制，默认true（只有图片视频音频有效）                     |
+| filePath      | 拍照以及截图后 存放的位置。    默认：/filePicker/FilePicker          |
+| provider      | 文件提供者，默认com.zhangteng.searchfilelibrary.fileprovider |
+| pathList      | 已选择照片的路径                                             |
+| isOpenCamera  | 是否直接开启相机或录制    默认：false（只有图片视频音频有效）                  |
+| iconResources | icon资源（可设置每种类型的icon，文档类型中pdf、txt、word、excel等可单独设置）   |
 
 ## 使用
 ```java
@@ -180,82 +180,76 @@ iconResources|icon资源（可设置每种类型的icon，文档类型中pdf、t
     }
 }
 
-  TabLayout myTabLayout = findViewById(R.id.mytablayout);
-  ViewPager viewPager = findViewById(R.id.viewpager);
-  viewPager.setOffscreenPageLimit(6);
-  FilePickerAdapter filePickerAdapter = new FilePickerAdapter(getSupportFragmentManager());
-  viewPager.setAdapter(filePickerAdapter);
-  myTabLayout.setupWithViewPager(viewPager);
   //使用UI(直接使用UI中的Activity)
-  startActivity(new Intent(this, ImagePickerActivity.class));
-  startActivity(new Intent(this, VideoPickerActivity.class));
-  startActivity(new Intent(this, AudioPickerActivity.class));
-  startActivity(new Intent(this, RarPickerActivity.class));
-  startActivity(new Intent(this, DocumentPickerActivity.class));
-  startActivity(new Intent(this, FolderPickerActivity.class));
+    //  startActivity(new Intent(this, ImagePickerActivity.class));
+    //  startActivity(new Intent(this, VideoPickerActivity.class));
+    //  startActivity(new Intent(this, AudioPickerActivity.class));
+    //  startActivity(new Intent(this, RarPickerActivity.class));
+    //  startActivity(new Intent(this, DocumentPickerActivity.class));
+    //  startActivity(new Intent(this, FolderPickerActivity.class));
   //使用UI时-文件选择回调
-public class HandlerCallBack implements IHandlerCallBack {
-    private String TAG = "---ImagePicker---";
-
-    @Override
-    public void onStart() {
-        Log.i(TAG, "onStart: 开启");
-    }
-
-    @Override
-    public void onSuccess(List<MediaEntity> audioList) {
-        Log.i(TAG, "onSuccess: 返回数据");
-    }
-
-    @Override
-    public void onCancel() {
-        Log.i(TAG, "onCancel: 取消");
-    }
-
-    @Override
-    public void onFinish(List<MediaEntity> selectAudio) {
-        Log.i(TAG, "onFinish: 结束");
-    }
-
-    @Override
-    public void onError() {
-        Log.i(TAG, "onError: 出错");
-    }
-
-    @Override
-    public void onPreview(List<MediaEntity> selectAudio) {
-        Log.i(TAG, "onPreview: 预览");
-    }
-}
-
-  FilePickerConfig.getInstance()
-          .iHandlerCallBack(new com.zhangteng.common.callback.HandlerCallBack() {
-              @Override
-              public void onFinish(List<MediaEntity> mediaEntities) {
-                  super.onFinish(mediaEntities);
-                       
-              }
-          });
+    //public class HandlerCallBack implements IHandlerCallBack {
+    //    private String TAG = "---ImagePicker---";
+    //
+    //    @Override
+    //    public void onStart() {
+    //        Log.i(TAG, "onStart: 开启");
+    //    }
+    //
+    //    @Override
+    //    public void onSuccess(List<MediaEntity> audioList) {
+    //        Log.i(TAG, "onSuccess: 返回数据");
+    //    }
+    //
+    //    @Override
+    //    public void onCancel() {
+    //        Log.i(TAG, "onCancel: 取消");
+    //    }
+    //
+    //    @Override
+    //    public void onFinish(List<MediaEntity> selectAudio) {
+    //        Log.i(TAG, "onFinish: 结束");
+    //    }
+    //
+    //    @Override
+    //    public void onError() {
+    //        Log.i(TAG, "onError: 出错");
+    //    }
+    //
+    //    @Override
+    //    public void onPreview(List<MediaEntity> selectAudio) {
+    //        Log.i(TAG, "onPreview: 预览");
+    //    }
+    //}
+    //
+    //  FilePickerConfig.getInstance()
+    //          .iHandlerCallBack(new com.zhangteng.common.callback.HandlerCallBack() {
+    //              @Override
+    //              public void onFinish(List<MediaEntity> mediaEntities) {
+    //                  super.onFinish(mediaEntities);
+    //                       
+    //              }
+    //          });
   //使用UI时-修改文件图标
-  FilePickerConfig.getInstance()
-                .iconResources(MediaEntity.MEDIA_IMAGE, R.drawable.jpg)
-                .iconResources(MediaEntity.MEDIA_AUDIO, R.drawable.audio)
-                .iconResources(MediaEntity.MEDIA_VIDEO, R.drawable.video)
-                .iconResources(MediaEntity.MEDIA_DOCUMENT, R.drawable.text)
-                .iconResources(MediaEntity.MEDIA_ZIP, R.drawable.yasuo)
-                .iconResources(MediaEntity.MEDIA_PDF, R.drawable.pdf)
-                .iconResources(MediaEntity.MEDIA_DOC, R.drawable.word)
-                .iconResources(MediaEntity.MEDIA_PPT, R.drawable.ppt)
-                .iconResources(MediaEntity.MEDIA_EXCEL, R.drawable.excel)
-                .iconResources(MediaEntity.MEDIA_TXT, R.drawable.text)
-                .iconResources(MediaEntity.MEDIA_APK, R.drawable.yasuo)
-                .iconResources(MediaEntity.MEDIA_FOLDER, R.drawable.wenjian)
-                .iconResources(MediaEntity.MEDIA_UNKNOWN, R.drawable.weizhi);
+    //  FilePickerConfig.getInstance()
+    //                .iconResources(MediaEntity.MEDIA_IMAGE, R.drawable.jpg)
+    //                .iconResources(MediaEntity.MEDIA_AUDIO, R.drawable.audio)
+    //                .iconResources(MediaEntity.MEDIA_VIDEO, R.drawable.video)
+    //                .iconResources(MediaEntity.MEDIA_DOCUMENT, R.drawable.text)
+    //                .iconResources(MediaEntity.MEDIA_ZIP, R.drawable.yasuo)
+    //                .iconResources(MediaEntity.MEDIA_PDF, R.drawable.pdf)
+    //                .iconResources(MediaEntity.MEDIA_DOC, R.drawable.word)
+    //                .iconResources(MediaEntity.MEDIA_PPT, R.drawable.ppt)
+    //                .iconResources(MediaEntity.MEDIA_EXCEL, R.drawable.excel)
+    //                .iconResources(MediaEntity.MEDIA_TXT, R.drawable.text)
+    //                .iconResources(MediaEntity.MEDIA_APK, R.drawable.yasuo)
+    //                .iconResources(MediaEntity.MEDIA_FOLDER, R.drawable.wenjian)
+    //                .iconResources(MediaEntity.MEDIA_UNKNOWN, R.drawable.weizhi);
   //使用UI时-修改底部功能条
-  //在自己的layout文件加下新建
-  //file_picker_layout_upload.xml
-  //在功能条layout中添加3个TextView样式自定义id分别为
-  //file_picker_tv_preview、file_picker_tv_selected、file_picker_tv_upload
+    //在自己的layout文件加下新建
+    //file_picker_layout_upload.xml
+    //在功能条layout中添加3个TextView样式自定义id分别为
+    //file_picker_tv_preview、file_picker_tv_selected、file_picker_tv_upload
 ```
 ## 混淆
 
@@ -263,14 +257,14 @@ public class HandlerCallBack implements IHandlerCallBack {
 
 ## 历史版本
 
-版本| 更新| 更新时间
--------- | ----- | -----
-v1.2.0| 使用独立的Utils库|2022/9/2 at 20:50
-v1.1.1| 使用最新版本三方库|2022/6/30 at 11:19
-v1.1.0| 迁移到AndroidX、使用base库utils|2022/1/26 at 14:28
-v1.0.3| 返回选中的MediaEntity列表，配置类使用单例模式删除建造者模式|2020/9/16 0016 at 下午 15:26
-v1.0.2| 添加权限请求|2020/9/16 0016 at 上午 11:38
-v1.0.1| 样式自定义|2020/9/8 0008 at 下午 17:58
+| 版本     | 更新                                  | 更新时间                       |
+|--------|-------------------------------------|----------------------------|
+| v1.2.0 | 使用独立的Utils库                         | 2022/9/2 at 20:50          |
+| v1.1.1 | 使用最新版本三方库                           | 2022/6/30 at 11:19         |
+| v1.1.0 | 迁移到AndroidX、使用base库utils            | 2022/1/26 at 14:28         |
+| v1.0.3 | 返回选中的MediaEntity列表，配置类使用单例模式删除建造者模式 | 2020/9/16 0016 at 下午 15:26 |
+| v1.0.2 | 添加权限请求                              | 2020/9/16 0016 at 上午 11:38 |
+| v1.0.1 | 样式自定义                               | 2020/9/8 0008 at 下午 17:58  |
 
 ## 赞赏
 
