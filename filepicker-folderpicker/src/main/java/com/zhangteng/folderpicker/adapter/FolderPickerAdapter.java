@@ -1,5 +1,6 @@
 package com.zhangteng.folderpicker.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,6 +128,7 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void initClick(View itemView, final MediaEntity finalFolderInfo) {
         itemView.setOnClickListener(view -> {
             if (finalFolderInfo != null) {
@@ -190,11 +192,13 @@ public class FolderPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return folderInfoList.isEmpty() ? 0 : folderInfoList.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setFolderInfoList(List<MediaEntity> folderInfoList) {
         this.folderInfoList = folderInfoList;
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
         notifyDataSetChanged();

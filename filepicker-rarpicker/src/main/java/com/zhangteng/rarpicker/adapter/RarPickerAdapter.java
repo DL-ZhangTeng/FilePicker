@@ -1,5 +1,6 @@
 package com.zhangteng.rarpicker.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_rar_picker_rar, parent, false));
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         RarEntity rarInfo = rarInfoList.get(position);
@@ -95,11 +97,13 @@ public class RarPickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return rarInfoList.isEmpty() ? 0 : rarInfoList.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setRarInfoList(List<RarEntity> rarInfoList) {
         this.rarInfoList = rarInfoList;
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
         notifyDataSetChanged();

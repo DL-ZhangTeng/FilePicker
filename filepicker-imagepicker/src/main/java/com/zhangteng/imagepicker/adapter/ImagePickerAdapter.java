@@ -1,5 +1,6 @@
 package com.zhangteng.imagepicker.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
@@ -146,11 +148,13 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return PHOTO;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setImageInfoList(List<ImageEntity> imageInfoList) {
         this.imageInfoList = imageInfoList;
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
         notifyDataSetChanged();

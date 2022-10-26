@@ -1,5 +1,6 @@
 package com.zhangteng.documentpicker.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return new ImageViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_document_picker_document, parent, false));
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         DocumentEntity documentInfo;
@@ -96,11 +98,13 @@ public class DocumentPickerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return documentInfoList.isEmpty() ? 0 : documentInfoList.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setDocumentInfoList(List<DocumentEntity> documentInfoList) {
         this.documentInfoList = documentInfoList;
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
         notifyDataSetChanged();

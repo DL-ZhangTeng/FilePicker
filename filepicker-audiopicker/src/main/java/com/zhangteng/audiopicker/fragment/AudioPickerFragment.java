@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +36,6 @@ import com.zhangteng.utils.FileUtilsKt;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 音频选择器
@@ -96,48 +93,14 @@ public class AudioPickerFragment extends Fragment {
         selectAudio = audioPickerConfig.getPathList();
         iHandlerCallBack = audioPickerConfig.getiHandlerCallBack();
         iHandlerCallBack.onStart();
-        if (audioPickerConfig.isOpenCamera()) {
-            startRecord();
-        }
         mContext = getContext();
         imageInfos = new ArrayList<>();
         mTextViewSelected.setText(mContext.getString(R.string.audio_picker_selected, 0));
         audioPickerAdapter = new AudioPickerAdapter(mContext, imageInfos);
-        audioPickerAdapter.setOnItemClickListener(new AudioPickerAdapter.OnItemClickListener() {
-            @Override
-            public void onRecordClick(List<MediaEntity> selectImage) {
-                AndroidPermission androidPermission = new AndroidPermission.Buidler()
-                        .with(AudioPickerFragment.this)
-                        .permission(Permission.RECORD_AUDIO)
-                        .callback(new Callback() {
-                            @Override
-                            public void success(Activity permissionActivity) {
-                                startRecord();
-                            }
-
-                            @Override
-                            public void failure(Activity permissionActivity) {
-                                Toast.makeText(mContext, "请开启录音权限！", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void nonExecution(Activity permissionActivity) {
-                                //权限已通过，请求未执行
-                                startRecord();
-                            }
-                        })
-                        .build();
-                androidPermission.execute();
-
-                AudioPickerFragment.this.selectAudio = selectImage;
-            }
-
-            @Override
-            public void onImageClick(List<MediaEntity> selectImage) {
-                mTextViewSelected.setText(mContext.getString(R.string.audio_picker_selected, selectImage.size()));
-                iHandlerCallBack.onSuccess(selectImage);
-                AudioPickerFragment.this.selectAudio = selectImage;
-            }
+        audioPickerAdapter.setOnItemClickListener(selectImage -> {
+            mTextViewSelected.setText(mContext.getString(R.string.audio_picker_selected, selectImage.size()));
+            iHandlerCallBack.onSuccess(selectImage);
+            AudioPickerFragment.this.selectAudio = selectImage;
         });
         mRecyclerViewImageList.setAdapter(audioPickerAdapter);
 
@@ -182,15 +145,6 @@ public class AudioPickerFragment extends Fragment {
             }
         });
         FileService.getInstance().getMediaList(MediaEntity.MEDIA_AUDIO, requireActivity());
-    }
-
-    private void startRecord() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        recordTempFile = FileUtilsKt.createImageFile(getContext(), Objects.requireNonNull(FileUtilsKt.getFilesDir(getContext())), audioPickerConfig.getFilePath());
-        String provider = audioPickerConfig.getProvider();
-        Uri imageUri = FileProvider.getUriForFile(mContext, provider, recordTempFile);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override
