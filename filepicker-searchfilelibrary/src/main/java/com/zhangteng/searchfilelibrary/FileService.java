@@ -38,24 +38,29 @@ public class FileService extends Service {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             Log.i(TAG, "===================SD==" + action);
-            if (action.equals(Intent.ACTION_MEDIA_EJECT)) {
-                SearchCofig.EXTERNAL_SD = "";
-                context.sendBroadcast(new Intent(SearchCofig.SDCARD_OUT_BROADCAST));
-                Log.i(TAG, "===================SD____out");
-            } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                context.sendBroadcast(new Intent(SearchCofig.SDCARD_IN_BROADCAST));
-                Log.i(TAG, "===================SD____in");
-            } else if (action.equals(UsbManager.ACTION_USB_DEVICE_ATTACHED)) {
-                context.sendBroadcast(new Intent(SearchCofig.SDCARD_IN_BROADCAST));
-                Log.i(TAG, "===================USB____in");
-            } else if (action.equals(UsbManager.ACTION_USB_DEVICE_DETACHED)) {
-                context.sendBroadcast(new Intent(SearchCofig.SDCARD_OUT_BROADCAST));
-                Log.i(TAG, "===================USB____out");
+            switch (action) {
+                case Intent.ACTION_MEDIA_EJECT:
+                    SearchCofig.EXTERNAL_SD = "";
+                    context.sendBroadcast(new Intent(SearchCofig.SDCARD_OUT_BROADCAST));
+                    Log.i(TAG, "===================SD____out");
+                    break;
+                case Intent.ACTION_MEDIA_MOUNTED:
+                    context.sendBroadcast(new Intent(SearchCofig.SDCARD_IN_BROADCAST));
+                    Log.i(TAG, "===================SD____in");
+                    break;
+                case UsbManager.ACTION_USB_DEVICE_ATTACHED:
+                    context.sendBroadcast(new Intent(SearchCofig.SDCARD_IN_BROADCAST));
+                    Log.i(TAG, "===================USB____in");
+                    break;
+                case UsbManager.ACTION_USB_DEVICE_DETACHED:
+                    context.sendBroadcast(new Intent(SearchCofig.SDCARD_OUT_BROADCAST));
+                    Log.i(TAG, "===================USB____out");
+                    break;
             }
         }
     };
-    Timer timer;
-    TimerTask task;
+    private Timer timer;
+    private TimerTask task;
     private ExecutorService executor = Executors.newFixedThreadPool(10);
 
     public static FileService getInstance() {
@@ -150,7 +155,7 @@ public class FileService extends Service {
             } else if (fileModel == 2) {
                 getVideo(context);
             } else if (fileModel == 3) {
-                getDucoment(context);
+                getDocument(context);
             } else if (fileModel == 4) {
                 getZip(context);
             } else if (fileModel == 10) {
@@ -161,7 +166,7 @@ public class FileService extends Service {
                 getVideo(context);
                 getZip(context);
                 getApk(context);
-                getDucoment(context);
+                getDocument(context);
             }
         } catch (Exception e) {
         }
@@ -174,7 +179,7 @@ public class FileService extends Service {
         }
         timer = new Timer(true);
         task = new MyTask(context);
-        timer.schedule(task, 500);
+        timer.schedule(task, 1000);
     }
 
 
@@ -217,7 +222,7 @@ public class FileService extends Service {
         executor.execute(runnable);
     }
 
-    private void getDucoment(Context context) {
+    private void getDocument(Context context) {
         Runnable runnable = new DocumentRunnable(context);
         executor.execute(runnable);
     }
@@ -274,7 +279,7 @@ public class FileService extends Service {
         }
     }
 
-    public class MyTask extends TimerTask {
+    public static class MyTask extends TimerTask {
         Context context;
 
         public MyTask(Context context) {

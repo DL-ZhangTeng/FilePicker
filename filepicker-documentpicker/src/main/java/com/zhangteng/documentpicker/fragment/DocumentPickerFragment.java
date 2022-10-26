@@ -1,8 +1,8 @@
 package com.zhangteng.documentpicker.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,11 +60,6 @@ public class DocumentPickerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         initData();
     }
 
@@ -100,43 +95,36 @@ public class DocumentPickerFragment extends Fragment {
             DocumentPickerFragment.this.selectDocument = selectImage;
         });
         mRecyclerViewImageList.setAdapter(documentPickerAdapter);
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getUserVisibleHint()) {
-            AndroidPermission androidPermission = new AndroidPermission.Buidler()
-                    .with(this)
-                    .permission(Permission.READ_EXTERNAL_STORAGE,
-                            Permission.WRITE_EXTERNAL_STORAGE)
-                    .callback(new Callback() {
-                        @Override
-                        public void success(Activity permissionActivity) {
-                            searchFile();
-                        }
+        AndroidPermission androidPermission = new AndroidPermission.Buidler()
+                .with(this)
+                .permission(Permission.READ_EXTERNAL_STORAGE,
+                        Permission.WRITE_EXTERNAL_STORAGE)
+                .callback(new Callback() {
+                    @Override
+                    public void success(Activity permissionActivity) {
+                        searchFile();
+                    }
 
-                        @Override
-                        public void failure(Activity permissionActivity) {
-                            Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
-                        }
+                    @Override
+                    public void failure(Activity permissionActivity) {
+                        Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
+                    }
 
-                        @Override
-                        public void nonExecution(Activity permissionActivity) {
-                            //权限已通过，请求未执行
-                            searchFile();
-                        }
-                    })
-                    .build();
-            androidPermission.execute();
-        }
+                    @Override
+                    public void nonExecution(Activity permissionActivity) {
+                        //权限已通过，请求未执行
+                        searchFile();
+                    }
+                })
+                .build();
+        androidPermission.execute();
     }
 
     private void searchFile() {
-        getActivity().startService(new Intent(getContext(), FileService.class));
-        FileService.getInstance().getMediaList(MediaEntity.MEDIA_DOCUMENT, getContext());
-        MediaStoreUtil.setListener(new MediaStoreUtil.DocumentListener() {
+        MediaStoreUtil.setListener(MediaEntity.MEDIA_DOCUMENT, new MediaStoreUtil.DocumentListener() {
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDocumentChange(int imageCount, List<MediaEntity> documents) {
                 for (MediaEntity documentEntity : documents) {
@@ -148,5 +136,12 @@ public class DocumentPickerFragment extends Fragment {
                 getActivity().runOnUiThread(() -> documentPickerAdapter.notifyDataSetChanged());
             }
         });
+        FileService.getInstance().getMediaList(MediaEntity.MEDIA_DOCUMENT, getContext());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        MediaStoreUtil.removeListener(MediaEntity.MEDIA_DOCUMENT);
     }
 }

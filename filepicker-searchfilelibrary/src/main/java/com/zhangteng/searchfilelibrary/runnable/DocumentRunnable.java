@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.zhangteng.searchfilelibrary.callback.GetListCallbak;
+import com.zhangteng.searchfilelibrary.callback.GetListCallback;
 import com.zhangteng.searchfilelibrary.config.SearchCofig;
 import com.zhangteng.searchfilelibrary.entity.DocumentEntity;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
@@ -41,18 +41,18 @@ public class DocumentRunnable implements Runnable {
                 "ppt", "pptx"
         };
         if (handler != null) {
-            getAllFiles(SearchCofig.BASE_SD_PATH, endNamed, new GetListCallbak<MediaEntity>() {
+            getAllFiles(SearchCofig.BASE_SD_PATH, endNamed, new GetListCallback<MediaEntity>() {
                 @Override
                 public void onSuccess(List<MediaEntity> list) {
                     Message message = new Message();
-                    message.what = GetListCallbak.SUCCESS;
+                    message.what = GetListCallback.SUCCESS;
                     message.obj = list;
                     handler.sendMessage(message);
                 }
 
                 @Override
                 public void onFailed(String msg) {
-                    handler.sendEmptyMessage(GetListCallbak.FAILED);
+                    handler.sendEmptyMessage(GetListCallback.FAILED);
                 }
             });
             return;
@@ -60,7 +60,7 @@ public class DocumentRunnable implements Runnable {
         if (!MediaStoreUtil.getDocument().isEmpty()) {
             MediaStoreUtil.clearDocument();
         }
-        getAllFiles(SearchCofig.BASE_SD_PATH, endNamed, new GetListCallbak<MediaEntity>() {
+        getAllFiles(SearchCofig.BASE_SD_PATH, endNamed, new GetListCallback<MediaEntity>() {
             @Override
             public void onSuccess(List<MediaEntity> list) {
                 MediaStoreUtil.addDocument(list);
@@ -74,7 +74,7 @@ public class DocumentRunnable implements Runnable {
     }
 
     //  遍历相应的文件
-    public List<MediaEntity> getAllFiles(String filePath, String[] endName, GetListCallbak<MediaEntity> callBack) {
+    public List<MediaEntity> getAllFiles(String filePath, String[] endName, GetListCallback<MediaEntity> callBack) {
         List<MediaEntity> file_lists = new ArrayList<MediaEntity>();
         try {
             File root = new File(filePath);

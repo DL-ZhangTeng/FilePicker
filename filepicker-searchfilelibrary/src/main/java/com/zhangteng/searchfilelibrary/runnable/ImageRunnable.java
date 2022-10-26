@@ -10,7 +10,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.zhangteng.searchfilelibrary.callback.GetListCallbak;
+import com.zhangteng.searchfilelibrary.callback.GetListCallback;
 import com.zhangteng.searchfilelibrary.entity.ImageEntity;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 import com.zhangteng.searchfilelibrary.utils.MediaStoreUtil;
@@ -59,18 +59,18 @@ public class ImageRunnable implements Runnable {
     @Override
     public void run() {
         if (handler != null) {
-            getImageNames(new GetListCallbak<MediaEntity>() {
+            getImageNames(new GetListCallback<MediaEntity>() {
                 @Override
                 public void onSuccess(List<MediaEntity> list) {
                     Message message = new Message();
-                    message.what = GetListCallbak.SUCCESS;
+                    message.what = GetListCallback.SUCCESS;
                     message.obj = list;
                     handler.sendMessage(message);
                 }
 
                 @Override
                 public void onFailed(String msg) {
-                    handler.sendEmptyMessage(GetListCallbak.FAILED);
+                    handler.sendEmptyMessage(GetListCallback.FAILED);
                 }
             });
             return;
@@ -78,7 +78,7 @@ public class ImageRunnable implements Runnable {
         if (!MediaStoreUtil.getImage().isEmpty()) {
             MediaStoreUtil.clearImage();
         }
-        getImageNames(new GetListCallbak<MediaEntity>() {
+        getImageNames(new GetListCallback<MediaEntity>() {
             @Override
             public void onSuccess(List<MediaEntity> list) {
                 MediaStoreUtil.addImage(list);
@@ -96,7 +96,7 @@ public class ImageRunnable implements Runnable {
      *
      * @return
      */
-    public void getImageNames(final GetListCallbak<MediaEntity> callBack) {
+    public void getImageNames(final GetListCallback<MediaEntity> callBack) {
         List<MediaEntity> list = new ArrayList<MediaEntity>();
         Cursor cursor = context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,

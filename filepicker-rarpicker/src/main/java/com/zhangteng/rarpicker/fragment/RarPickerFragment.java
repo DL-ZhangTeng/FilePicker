@@ -1,8 +1,8 @@
 package com.zhangteng.rarpicker.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,11 +61,6 @@ public class RarPickerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         initData();
     }
 
@@ -101,43 +96,36 @@ public class RarPickerFragment extends Fragment {
             RarPickerFragment.this.selectRar = selectImage;
         });
         mRecyclerViewImageList.setAdapter(rarPickerAdapter);
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getUserVisibleHint()) {
-            AndroidPermission androidPermission = new AndroidPermission.Buidler()
-                    .with(this)
-                    .permission(Permission.READ_EXTERNAL_STORAGE,
-                            Permission.WRITE_EXTERNAL_STORAGE)
-                    .callback(new Callback() {
-                        @Override
-                        public void success(Activity permissionActivity) {
-                            searchFile();
-                        }
+        AndroidPermission androidPermission = new AndroidPermission.Buidler()
+                .with(this)
+                .permission(Permission.READ_EXTERNAL_STORAGE,
+                        Permission.WRITE_EXTERNAL_STORAGE)
+                .callback(new Callback() {
+                    @Override
+                    public void success(Activity permissionActivity) {
+                        searchFile();
+                    }
 
-                        @Override
-                        public void failure(Activity permissionActivity) {
-                            Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
-                        }
+                    @Override
+                    public void failure(Activity permissionActivity) {
+                        Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
+                    }
 
-                        @Override
-                        public void nonExecution(Activity permissionActivity) {
-                            //权限已通过，请求未执行
-                            searchFile();
-                        }
-                    })
-                    .build();
-            androidPermission.execute();
-        }
+                    @Override
+                    public void nonExecution(Activity permissionActivity) {
+                        //权限已通过，请求未执行
+                        searchFile();
+                    }
+                })
+                .build();
+        androidPermission.execute();
     }
 
     private void searchFile() {
-        getActivity().startService(new Intent(getContext(), FileService.class));
-        FileService.getInstance().getMediaList(MediaEntity.MEDIA_ZIP, getContext());
-        MediaStoreUtil.setListener(new MediaStoreUtil.RarListener() {
+        MediaStoreUtil.setListener(MediaEntity.MEDIA_ZIP, new MediaStoreUtil.RarListener() {
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onRarChange(int imageCount, List<MediaEntity> rars) {
                 for (MediaEntity rarEntity : rars) {
@@ -149,5 +137,12 @@ public class RarPickerFragment extends Fragment {
                 getActivity().runOnUiThread(() -> rarPickerAdapter.notifyDataSetChanged());
             }
         });
+        FileService.getInstance().getMediaList(MediaEntity.MEDIA_ZIP, getContext());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        MediaStoreUtil.removeListener(MediaEntity.MEDIA_ZIP);
     }
 }

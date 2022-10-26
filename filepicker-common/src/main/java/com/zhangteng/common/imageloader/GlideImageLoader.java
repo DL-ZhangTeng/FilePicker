@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import androidx.annotation.DrawableRes;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 /**
  * Created by swing on 2018/4/18.
@@ -23,17 +24,20 @@ public class GlideImageLoader implements ImageLoader {
     public void loadImage(Context context, ImageView imageView, Bitmap uri) {
         Glide.with(context)
                 .load(uri)
-                .placeholder(placeHolder)
-                .centerCrop()
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .placeholder(placeHolder))
                 .into(imageView);
+
     }
 
     @Override
     public void loadImage(Context context, ImageView imageView, String path) {
         Glide.with(context)
                 .load(path)
-                .placeholder(placeHolder)
-                .centerCrop()
+                .apply(new RequestOptions()
+                        .centerCrop()
+                        .placeholder(placeHolder))
                 .into(imageView);
     }
 }

@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.zhangteng.searchfilelibrary.callback.GetListCallbak;
+import com.zhangteng.searchfilelibrary.callback.GetListCallback;
 import com.zhangteng.searchfilelibrary.config.SearchCofig;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 import com.zhangteng.searchfilelibrary.utils.FileErgodicUtil;
@@ -44,18 +44,18 @@ public class FolderRunnable implements Runnable {
         };
 
         if (handler != null) {
-            getAllFiles(path == null ? SearchCofig.BASE_SD_PATH : path, endNamed, new GetListCallbak<MediaEntity>() {
+            getAllFiles(path == null ? SearchCofig.BASE_SD_PATH : path, endNamed, new GetListCallback<MediaEntity>() {
                 @Override
                 public void onSuccess(List<MediaEntity> list) {
                     Message message = new Message();
-                    message.what = GetListCallbak.SUCCESS;
+                    message.what = GetListCallback.SUCCESS;
                     message.obj = list;
                     handler.sendMessage(message);
                 }
 
                 @Override
                 public void onFailed(String msg) {
-                    handler.sendEmptyMessage(GetListCallbak.FAILED);
+                    handler.sendEmptyMessage(GetListCallback.FAILED);
                 }
             });
             return;
@@ -63,7 +63,7 @@ public class FolderRunnable implements Runnable {
         if (!MediaStoreUtil.getFolder().isEmpty()) {
             MediaStoreUtil.clearFolder();
         }
-        getAllFiles(path == null ? SearchCofig.BASE_SD_PATH : path, endNamed, new GetListCallbak<MediaEntity>() {
+        getAllFiles(path == null ? SearchCofig.BASE_SD_PATH : path, endNamed, new GetListCallback<MediaEntity>() {
             @Override
             public void onSuccess(List<MediaEntity> list) {
                 MediaStoreUtil.addFolder(list);
@@ -77,7 +77,7 @@ public class FolderRunnable implements Runnable {
     }
 
     //  遍历相应的文件
-    public List<MediaEntity> getAllFiles(String filePath, String[] endName, GetListCallbak<MediaEntity> callBack) {
+    public List<MediaEntity> getAllFiles(String filePath, String[] endName, GetListCallback<MediaEntity> callBack) {
         List<MediaEntity> file_lists = null;
         try {
             file_lists = FileErgodicUtil.getFileList(filePath, endName);

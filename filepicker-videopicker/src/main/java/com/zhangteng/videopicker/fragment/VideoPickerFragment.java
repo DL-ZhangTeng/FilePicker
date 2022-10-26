@@ -72,11 +72,6 @@ public class VideoPickerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         initData();
     }
 
@@ -146,41 +141,34 @@ public class VideoPickerFragment extends Fragment {
             }
         });
         mRecyclerViewVideoList.setAdapter(videoPickerAdapter);
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getUserVisibleHint()) {
-            AndroidPermission androidPermission = new AndroidPermission.Buidler()
-                    .with(this)
-                    .permission(Permission.READ_EXTERNAL_STORAGE,
-                            Permission.WRITE_EXTERNAL_STORAGE)
-                    .callback(new Callback() {
-                        @Override
-                        public void success(Activity permissionActivity) {
-                            searchFile();
-                        }
+        AndroidPermission androidPermission = new AndroidPermission.Buidler()
+                .with(this)
+                .permission(Permission.READ_EXTERNAL_STORAGE,
+                        Permission.WRITE_EXTERNAL_STORAGE)
+                .callback(new Callback() {
+                    @Override
+                    public void success(Activity permissionActivity) {
+                        searchFile();
+                    }
 
-                        @Override
-                        public void failure(Activity permissionActivity) {
-                            Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
-                        }
+                    @Override
+                    public void failure(Activity permissionActivity) {
+                        Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
+                    }
 
-                        @Override
-                        public void nonExecution(Activity permissionActivity) {
-                            //权限已通过，请求未执行
-                            searchFile();
-                        }
-                    })
-                    .build();
-            androidPermission.execute();
-        }
+                    @Override
+                    public void nonExecution(Activity permissionActivity) {
+                        //权限已通过，请求未执行
+                        searchFile();
+                    }
+                })
+                .build();
+        androidPermission.execute();
     }
 
     private void searchFile() {
-        getActivity().startService(new Intent(getContext(), FileService.class));
-        MediaStoreUtil.setListener(new MediaStoreUtil.VideoListener() {
+        MediaStoreUtil.setListener(MediaEntity.MEDIA_VIDEO,new MediaStoreUtil.VideoListener() {
 
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -221,7 +209,7 @@ public class VideoPickerFragment extends Fragment {
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     Uri uri = Uri.fromFile(new File(FileUtilsKt.getFilesDir(mContext) + videoPickerConfig.getFilePath()));
                     intent.setData(uri);
-                    getActivity().sendBroadcast(intent);
+                    requireActivity().sendBroadcast(intent);
                     iHandlerCallBack.onSuccess(selectVideo);
                     FileService.getInstance().getMediaList(MediaEntity.MEDIA_VIDEO, getContext());
                 }
@@ -233,5 +221,11 @@ public class VideoPickerFragment extends Fragment {
                 }
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        MediaStoreUtil.removeListener(MediaEntity.MEDIA_VIDEO);
     }
 }

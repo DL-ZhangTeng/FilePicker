@@ -1,8 +1,8 @@
 package com.zhangteng.folderpicker.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,11 +65,6 @@ public class FolderPickerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         initData();
     }
 
@@ -133,43 +128,36 @@ public class FolderPickerFragment extends Fragment {
             }
         });
         mRecyclerViewImageList.setAdapter(folderPickerAdapter);
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getUserVisibleHint()) {
-            AndroidPermission androidPermission = new AndroidPermission.Buidler()
-                    .with(this)
-                    .permission(Permission.READ_EXTERNAL_STORAGE,
-                            Permission.WRITE_EXTERNAL_STORAGE)
-                    .callback(new Callback() {
-                        @Override
-                        public void success(Activity permissionActivity) {
-                            searchFile();
-                        }
+        AndroidPermission androidPermission = new AndroidPermission.Buidler()
+                .with(this)
+                .permission(Permission.READ_EXTERNAL_STORAGE,
+                        Permission.WRITE_EXTERNAL_STORAGE)
+                .callback(new Callback() {
+                    @Override
+                    public void success(Activity permissionActivity) {
+                        searchFile();
+                    }
 
-                        @Override
-                        public void failure(Activity permissionActivity) {
-                            Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
-                        }
+                    @Override
+                    public void failure(Activity permissionActivity) {
+                        Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
+                    }
 
-                        @Override
-                        public void nonExecution(Activity permissionActivity) {
-                            //权限已通过，请求未执行
-                            searchFile();
-                        }
-                    })
-                    .build();
-            androidPermission.execute();
-        }
+                    @Override
+                    public void nonExecution(Activity permissionActivity) {
+                        //权限已通过，请求未执行
+                        searchFile();
+                    }
+                })
+                .build();
+        androidPermission.execute();
     }
 
     private void searchFile() {
-        getActivity().startService(new Intent(getContext(), FileService.class));
-        FileService.getInstance().getFileList(null);
-        MediaStoreUtil.setListener(new MediaStoreUtil.FolderListener() {
+        MediaStoreUtil.setListener(MediaEntity.MEDIA_FOLDER, new MediaStoreUtil.FolderListener() {
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onFolderChange(int imageCount, List<MediaEntity> folders) {
                 imageInfos.clear();
@@ -180,5 +168,12 @@ public class FolderPickerFragment extends Fragment {
                 getActivity().runOnUiThread(() -> folderPickerAdapter.notifyDataSetChanged());
             }
         });
+        FileService.getInstance().getFileList(null);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        MediaStoreUtil.removeListener(MediaEntity.MEDIA_FOLDER);
     }
 }

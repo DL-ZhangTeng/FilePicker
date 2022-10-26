@@ -1,12 +1,13 @@
 package com.zhangteng.searchfilelibrary.utils;
 
+import android.util.SparseArray;
+
 import androidx.annotation.NonNull;
 
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 
 /**
@@ -29,12 +30,15 @@ public class MediaStoreUtil {
     private static final List<MediaEntity> video = new ArrayList<>();
     private static final List<MediaEntity> folder = new ArrayList<>();
 
-    private static final List<MediaStoreListener> listeners = new CopyOnWriteArrayList<>();
+    private static final SparseArray<MediaStoreListener> listeners = new SparseArray();
 
     public static void addApk(@NonNull List<MediaEntity> list) {
         MediaStoreUtil.apk.addAll(list);
         MediaStoreUtil.apk_count += list.size();
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onApkChange(apk_count, apk);
         }
     }
@@ -42,7 +46,10 @@ public class MediaStoreUtil {
     public static void addAudio(@NonNull List<MediaEntity> list) {
         MediaStoreUtil.audio.addAll(list);
         MediaStoreUtil.audio_count += list.size();
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onAudioChange(audio_count, audio);
         }
     }
@@ -50,7 +57,10 @@ public class MediaStoreUtil {
     public static void addDocument(@NonNull List<MediaEntity> list) {
         MediaStoreUtil.document.addAll(list);
         MediaStoreUtil.document_count += list.size();
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onDocumentChange(document_count, document);
         }
     }
@@ -58,7 +68,10 @@ public class MediaStoreUtil {
     public static void addImage(@NonNull List<MediaEntity> list) {
         MediaStoreUtil.image.addAll(list);
         MediaStoreUtil.image_count += list.size();
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onImageChange(image_count, image);
         }
     }
@@ -66,7 +79,10 @@ public class MediaStoreUtil {
     public static void addRar(@NonNull List<MediaEntity> list) {
         MediaStoreUtil.rar.addAll(list);
         MediaStoreUtil.rar_count += list.size();
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onRarChange(rar_count, rar);
         }
     }
@@ -74,7 +90,10 @@ public class MediaStoreUtil {
     public static void addVideo(@NonNull List<MediaEntity> list) {
         MediaStoreUtil.video.addAll(list);
         MediaStoreUtil.video_count += list.size();
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onVideoChange(video_count, video);
         }
     }
@@ -82,7 +101,10 @@ public class MediaStoreUtil {
     public static void addFolder(@NonNull List<MediaEntity> list) {
         MediaStoreUtil.folder.addAll(list);
         MediaStoreUtil.folder_count += list.size();
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onFolderChange(folder_count, folder);
         }
     }
@@ -90,7 +112,10 @@ public class MediaStoreUtil {
     public static void clearApk() {
         MediaStoreUtil.apk.clear();
         MediaStoreUtil.apk_count = 0;
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onApkChange(apk_count, apk);
         }
     }
@@ -98,7 +123,10 @@ public class MediaStoreUtil {
     public static void clearAudio() {
         MediaStoreUtil.audio.clear();
         MediaStoreUtil.audio_count = 0;
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onAudioChange(audio_count, audio);
         }
     }
@@ -106,7 +134,10 @@ public class MediaStoreUtil {
     public static void clearDocument() {
         MediaStoreUtil.document.clear();
         MediaStoreUtil.document_count = 0;
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onDocumentChange(document_count, document);
         }
     }
@@ -114,7 +145,10 @@ public class MediaStoreUtil {
     public static void clearImage() {
         MediaStoreUtil.image.clear();
         MediaStoreUtil.image_count = 0;
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onImageChange(image_count, image);
         }
     }
@@ -122,7 +156,10 @@ public class MediaStoreUtil {
     public static void clearRar() {
         MediaStoreUtil.rar.clear();
         MediaStoreUtil.rar_count = 0;
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onRarChange(rar_count, rar);
         }
     }
@@ -130,7 +167,10 @@ public class MediaStoreUtil {
     public static void clearVideo() {
         MediaStoreUtil.video.clear();
         MediaStoreUtil.video_count = 0;
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onVideoChange(video_count, video);
         }
     }
@@ -138,7 +178,10 @@ public class MediaStoreUtil {
     public static void clearFolder() {
         MediaStoreUtil.folder.clear();
         MediaStoreUtil.folder_count = 0;
-        for (MediaStoreListener listener : listeners) {
+
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener listener = listeners.get(key);
             listener.onFolderChange(folder_count, folder);
         }
     }
@@ -199,20 +242,30 @@ public class MediaStoreUtil {
         return folder;
     }
 
-    public static void setListener(MediaStoreListener listener) {
-        MediaStoreUtil.listeners.add(listener);
+    /***
+     * public static final int MEDIA_IMAGE = 0;  //图片类型
+     * public static final int MEDIA_AUDIO = 1;  //音频类型
+     * public static final int MEDIA_VIDEO = 2;  //视频类型
+     * public static final int MEDIA_DOCUMENT = 3;  //文档类型
+     * public static final int MEDIA_ZIP = 4;  //压缩类型
+     * public static final int MEDIA_APK = 10;  //APK类型
+     */
+    public static void setListener(int fileModel, MediaStoreListener listener) {
+        MediaStoreUtil.listeners.put(fileModel, listener);
     }
 
     public static void removeListener(MediaStoreListener listener) {
-        for (MediaStoreListener mediaStoreListener : listeners) {
+        for (int i = 0; i < listeners.size(); i++) {
+            int key = listeners.keyAt(i);
+            MediaStoreListener mediaStoreListener = listeners.get(key);
             if (mediaStoreListener == listener) {
-                listeners.remove(listener);
+                listeners.remove(key);
             }
         }
     }
 
-    public static void removeListener(int index) {
-        listeners.remove(index);
+    public static void removeListener(int fileModel) {
+        listeners.remove(fileModel);
     }
 
     /**

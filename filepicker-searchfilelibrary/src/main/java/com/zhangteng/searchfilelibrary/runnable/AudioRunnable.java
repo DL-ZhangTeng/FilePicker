@@ -8,7 +8,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.zhangteng.searchfilelibrary.callback.GetListCallbak;
+import com.zhangteng.searchfilelibrary.callback.GetListCallback;
 import com.zhangteng.searchfilelibrary.entity.AudioEntity;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 import com.zhangteng.searchfilelibrary.utils.MediaStoreUtil;
@@ -34,18 +34,18 @@ public class AudioRunnable implements Runnable {
     @Override
     public void run() {
         if (handler != null) {
-            getAllAudio(new GetListCallbak<MediaEntity>() {
+            getAllAudio(new GetListCallback<MediaEntity>() {
                 @Override
                 public void onSuccess(List<MediaEntity> list) {
                     Message message = new Message();
-                    message.what = GetListCallbak.SUCCESS;
+                    message.what = GetListCallback.SUCCESS;
                     message.obj = list;
                     handler.sendMessage(message);
                 }
 
                 @Override
                 public void onFailed(String msg) {
-                    handler.sendEmptyMessage(GetListCallbak.FAILED);
+                    handler.sendEmptyMessage(GetListCallback.FAILED);
                 }
             });
             return;
@@ -53,7 +53,7 @@ public class AudioRunnable implements Runnable {
         if (!MediaStoreUtil.getAudio().isEmpty()) {
             MediaStoreUtil.clearAudio();
         }
-        getAllAudio(new GetListCallbak<MediaEntity>() {
+        getAllAudio(new GetListCallback<MediaEntity>() {
             @Override
             public void onSuccess(List<MediaEntity> list) {
                 MediaStoreUtil.addAudio(list);
@@ -66,7 +66,7 @@ public class AudioRunnable implements Runnable {
         });
     }
 
-    public void getAllAudio(final GetListCallbak<MediaEntity> callBack) {
+    public void getAllAudio(final GetListCallback<MediaEntity> callBack) {
         List<MediaEntity> audios = new ArrayList<>();
         ContentResolver mContentResolver = context.getContentResolver();
         String[] projection = new String[]{MediaStore.Audio.AudioColumns._ID,

@@ -71,11 +71,6 @@ public class AudioPickerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         initData();
     }
 
@@ -145,42 +140,34 @@ public class AudioPickerFragment extends Fragment {
             }
         });
         mRecyclerViewImageList.setAdapter(audioPickerAdapter);
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getUserVisibleHint()) {
-            AndroidPermission androidPermission = new AndroidPermission.Buidler()
-                    .with(this)
-                    .permission(Permission.READ_EXTERNAL_STORAGE,
-                            Permission.WRITE_EXTERNAL_STORAGE)
-                    .callback(new Callback() {
-                        @Override
-                        public void success(Activity permissionActivity) {
-                            searchFile();
-                        }
+        AndroidPermission androidPermission = new AndroidPermission.Buidler()
+                .with(this)
+                .permission(Permission.READ_EXTERNAL_STORAGE,
+                        Permission.WRITE_EXTERNAL_STORAGE)
+                .callback(new Callback() {
+                    @Override
+                    public void success(Activity permissionActivity) {
+                        searchFile();
+                    }
 
-                        @Override
-                        public void failure(Activity permissionActivity) {
-                            Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
-                        }
+                    @Override
+                    public void failure(Activity permissionActivity) {
+                        Toast.makeText(mContext, "请开启文件读写权限！", Toast.LENGTH_SHORT).show();
+                    }
 
-                        @Override
-                        public void nonExecution(Activity permissionActivity) {
-                            //权限已通过，请求未执行
-                            searchFile();
-                        }
-                    })
-                    .build();
-            androidPermission.execute();
-        }
+                    @Override
+                    public void nonExecution(Activity permissionActivity) {
+                        //权限已通过，请求未执行
+                        searchFile();
+                    }
+                })
+                .build();
+        androidPermission.execute();
     }
 
     private void searchFile() {
-        getActivity().startService(new Intent(getActivity(), FileService.class));
-        FileService.getInstance().getMediaList(MediaEntity.MEDIA_AUDIO, getActivity());
-        MediaStoreUtil.setListener(new MediaStoreUtil.AudioListener() {
+        MediaStoreUtil.setListener(MediaEntity.MEDIA_AUDIO, new MediaStoreUtil.AudioListener() {
 
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -194,6 +181,7 @@ public class AudioPickerFragment extends Fragment {
                 getActivity().runOnUiThread(() -> audioPickerAdapter.notifyDataSetChanged());
             }
         });
+        FileService.getInstance().getMediaList(MediaEntity.MEDIA_AUDIO, requireActivity());
     }
 
     private void startRecord() {
@@ -220,9 +208,9 @@ public class AudioPickerFragment extends Fragment {
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     Uri uri = Uri.fromFile(new File(FileUtilsKt.getFilesDir(mContext) + audioPickerConfig.getFilePath()));
                     intent.setData(uri);
-                    getActivity().sendBroadcast(intent);
+                    requireActivity().sendBroadcast(intent);
                     iHandlerCallBack.onSuccess(selectAudio);
-                    FileService.getInstance().getMediaList(MediaEntity.MEDIA_IMAGE, getContext());
+                    FileService.getInstance().getMediaList(MediaEntity.MEDIA_AUDIO, getContext());
                 }
             } else {
                 if (recordTempFile != null && recordTempFile.exists()) {
@@ -230,5 +218,11 @@ public class AudioPickerFragment extends Fragment {
                 }
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        MediaStoreUtil.removeListener(MediaEntity.MEDIA_AUDIO);
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by swing on 2018/8/27.
  */
-public interface GetListCallbak<T> {
+public interface GetListCallback<T> {
     int SUCCESS = 100;
     int FAILED = 101;
 

@@ -19,44 +19,44 @@ implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-searchfilelibrary:
 implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-common:1.2.0'
     //使用的三方库
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
 //压缩包UI
 implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-rarpicker:1.2.0'
     //使用的三方库
-    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
-    implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng:Utils:2.0.1'
 //文件夹UI
 implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-folderpicker:1.2.0'
     //使用的三方库
-    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
-    implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng:Utils:2.0.1'
 //图片UI
 implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-imagepicker:1.2.0'
     //使用的三方库
-    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
-    implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng:Utils:2.0.1'
 //视频UI
 implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-videopicker:1.2.0'
     //使用的三方库
-    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
-    implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng:Utils:2.0.1'
 //音频UI
 implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-audiopicker:1.2.0'
     //使用的三方库
-    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
-    implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng:Utils:2.0.1'
 //文档UI
 implementation 'com.github.DL-ZhangTeng.FilePicker:filepicker-documentpicker:1.2.0'
     //使用的三方库
-    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
-    implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng:Utils:2.0.1'
 //或直接使用
 implementation 'com.github.DL-ZhangTeng:FilePicker:1.2.0'
     //使用的三方库
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
-    implementation 'com.github.DL-ZhangTeng:Utils:1.0.+'
-    implementation('com.github.DL-ZhangTeng.BaseLibrary:base:1.5.+') {
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
+    implementation 'com.github.DL-ZhangTeng:Utils:2.0.1'
+    implementation('com.github.DL-ZhangTeng:BaseLibrary:2.0.1') {
         transitive false
     }
 ```
@@ -94,7 +94,6 @@ public class FolderPickerFragment extends Fragment {
     //...
      
      private void searchFile() {
-          getActivity().startService(new Intent(getContext(), FileService.class));
           FileService.getInstance().getFileList(null);
           MediaStoreUtil.setListener(new MediaStoreUtil.FolderListener() {
 

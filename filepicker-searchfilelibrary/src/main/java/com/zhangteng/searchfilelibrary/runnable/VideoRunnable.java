@@ -10,7 +10,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.zhangteng.searchfilelibrary.callback.GetListCallbak;
+import com.zhangteng.searchfilelibrary.callback.GetListCallback;
 import com.zhangteng.searchfilelibrary.entity.MediaEntity;
 import com.zhangteng.searchfilelibrary.entity.VideoEntity;
 import com.zhangteng.searchfilelibrary.utils.MediaStoreUtil;
@@ -36,18 +36,18 @@ public class VideoRunnable implements Runnable {
     @Override
     public void run() {
         if (handler != null) {
-            getVideoInfo(new GetListCallbak<MediaEntity>() {
+            getVideoInfo(new GetListCallback<MediaEntity>() {
                 @Override
                 public void onSuccess(List<MediaEntity> list) {
                     Message message = new Message();
-                    message.what = GetListCallbak.SUCCESS;
+                    message.what = GetListCallback.SUCCESS;
                     message.obj = list;
                     handler.sendMessage(message);
                 }
 
                 @Override
                 public void onFailed(String msg) {
-                    handler.sendEmptyMessage(GetListCallbak.FAILED);
+                    handler.sendEmptyMessage(GetListCallback.FAILED);
                 }
             });
             return;
@@ -55,7 +55,7 @@ public class VideoRunnable implements Runnable {
         if (!MediaStoreUtil.getVideo().isEmpty()) {
             MediaStoreUtil.clearVideo();
         }
-        getVideoInfo(new GetListCallbak<MediaEntity>() {
+        getVideoInfo(new GetListCallback<MediaEntity>() {
             @Override
             public void onSuccess(List<MediaEntity> list) {
                 MediaStoreUtil.addVideo(list);
@@ -73,7 +73,7 @@ public class VideoRunnable implements Runnable {
      *
      * @param
      */
-    public void getVideoInfo(final GetListCallbak<MediaEntity> callBack) {
+    public void getVideoInfo(final GetListCallback<MediaEntity> callBack) {
         List<MediaEntity> videoList = new ArrayList<MediaEntity>();
         String[] mediaColumns = new String[]{
                 MediaStore.Video.Media.DATA,
